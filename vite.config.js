@@ -3,7 +3,7 @@ const externalFiles = [
   'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
   'plugins/icheck-bootstrap/icheck-bootstrap.min.css',
   'plugins/jqvmap/jqvmap.min.css',
-  'dist/css/adminlte.min.css',
+  'extra/css/adminlte.min.css',
   'plugins/overlayScrollbars/css/OverlayScrollbars.min.css',
   'plugins/daterangepicker/daterangepicker.css',
   'plugins/summernote/summernote-bs4.min.css',
@@ -20,8 +20,9 @@ const externalFiles = [
   'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js',
   'plugins/summernote/summernote-bs4.min.js',
   'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js',
-  'dist/js/adminlte.js',
-  'dist/js/pages/dashboard.js',
+  'extra/js/adminlte.js',
+  'extra/js/pages/dashboard.js',
+
 ];
 
 module.exports = {
