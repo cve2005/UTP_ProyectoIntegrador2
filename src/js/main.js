@@ -10,6 +10,4 @@ axios.get("https://cna-cms.onrender.com/items/empresa").then((res) => {
         li.appendChild(document.createTextNode(element.emp_razon_social));
         lista.appendChild(li);
     } );
-
-  
 });
