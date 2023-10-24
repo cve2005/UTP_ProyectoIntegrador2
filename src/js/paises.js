@@ -18,4 +18,10 @@ axios.get("https://restcountries.com/v2/all").then((res) => {
     } );
 });
 
+axios.get("https://cna-cms.onrender.com/items/paises").then((res) => {
+  
+        res.data.forEach((element) => {
+        console.log(element)                                                                                                            
+    } );
+});
 
