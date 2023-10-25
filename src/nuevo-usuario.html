@@ -129,7 +129,7 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Tablero
@@ -277,7 +277,7 @@
                 </li>
               </ul>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="#" class="nav-link active">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
                   Usuarios
@@ -317,12 +317,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Tablero</h1>
+              <h1 class="m-0">Cliente</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                <li class="breadcrumb-item active">Tablero</li>
+                <li class="breadcrumb-item active">Cliente</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -337,7 +337,7 @@
         <div class="container-fluid">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Nueva Cotización 1 / 2</h3>
+              <h3 class="card-title" id="cabeceraCliente">Cliente</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -358,32 +358,32 @@
                   <h4> Datos de la empresa</h4>
                   <hr>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
                   <label class="form-label">Razon Social</label>
                   <input type="text" class="form-control" id="frazonSocial" required>
                 </div>
                 <!--Formulario busqueda RUC -->
-   
 
-                
-                <div class="col-md-12">
+
+
+                <div class="col-md-6">
                   <label for="validationCustom02" class="form-label">RUC</label>
                   <div class="form-inline">
                     <input class="form-control form-control-navbar col-md-8" type="search" placeholder="RUC"
                       aria-label="Search" id="fruc">
                     <div>
-                      <button class="btn btn-navbar"  id="btnBuscarEmpresa">
-                        <i class="fas fa-search" ></i>
+                      <button class="btn btn-navbar" id="btnBuscarEmpresa">
+                        <i class="fas fa-search"></i>
                       </button>
-                     
+
                       <button class="btn btn-navbar" id="btnAgregarEmpresa">
                         <i class="fas fa-solid fa-plus"></i>
                       </button>
                     </div>
                   </div>
                 </div>
-               
-              
+
+
                 <div class="col-md-8">
                   <label for="validationCustom03" class="form-label">Dirección</label>
                   <input type="text" class="form-control" id="fdireccionEmpresa" required>
@@ -414,30 +414,44 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label> DNIN</label>
-                    <input type="text" class="form-control" id="fusu_dni" required>
+                  <label> DNI</label>
+                  <div class="form-inline">
+                    <input class="form-control form-control-navbar col-md-6" type="search" placeholder="DNI"
+                      aria-label="Search" id="fusu_dni">
+                    <button class="btn btn-navbar" id="btnBuscarCliente">
+                      <i class="fas fa-search"></i>
+                    </button>
+                    <button class="btn btn-navbar" id="btnAgregarCliente">
+                      <i class="fas fa-solid fa-save"></i>
+                    </button>
+                    <div>
+
+                    </div>
+                    <!-- <input type="text" class="form-control" id="fusu_dni" required> -->
                   </div>
+                </div>  
 
                   <div class="col-md-4">
                     <label> E-mail</label>
                     <input type="text" class="form-control" id="fusu_email" required>
                   </div>
 
-                <div class="col-md-4">
-                  <label> Celular</label>
-                  <input type="text" class="form-control" id="fusu_telefono" required>
-                </div>
+                  <div class="col-md-4">
+                    <label> Celular</label>
+                    <input type="text" class="form-control" id="fusu_telefono" required>
+                  </div>
+                  <input type="text" class="form-control" id="fidcliente" hidden="true" required>
+                  <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->
+                
+                <!-- FORM-->
 
-                <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->
+                <!-- /.row -->
               </div>
-              <!-- FORM-->
-
-              <!-- /.row -->
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer mt-4">
-              <button type="button" class="btn btn-info float-right px-5"  id="btnRegistrarUsuario">Registrar Usuario</button>
-              <!-- <div class="card-tools">
+              <!-- /.card-body -->
+              <div class="card-footer mt-4">
+                <button type="button" class="btn btn-info float-right px-5" id="btnRegistrarUsuario">Registrar
+                  Usuario</button>
+                <!-- <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>
@@ -445,12 +459,13 @@
                     <i class="fas fa-times"></i>
                   </button>
                 </div> -->
+              </div>
             </div>
-          </div>
-          <!-- /.card -->
-          <!-- Main content -->
+            <!-- /.card -->
+            <!-- Main content -->
 
-    
+
+          </div>
         </div>
         <!-- /.row -->
       </section>
@@ -499,7 +514,7 @@
   <!-- AdminLTE App -->
   <script src="extra/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
- 
+
   <!-- Page specific script -->
   <script>
     $(function () {
