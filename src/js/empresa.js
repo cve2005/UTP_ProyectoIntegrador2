@@ -67,11 +67,11 @@ agregarUsuarioButton.addEventListener('click', () => {
   const fusu_apellido = document.querySelector('#fusu_apellido').value;
   const fusu_dni = document.querySelector('#fusu_dni').value;
   const fusu_email = document.querySelector('#fusu_email').value;
-  const fusu_contrasena = document.querySelector('#fusu_dni').value;
+  const fusu_contrasena = document.querySelector('#fusu_contrasena').value;
   const fusu_telefono = document.querySelector('#fusu_telefono').value;
-  const fusu_direccion = document.querySelector('#fdireccionEmpresa').value;
-  const fusu_rol = 5;
-  const fusu_comision = 0;
+  const fusu_direccion = document.querySelector('#fusu_direccion').value;
+  const fusu_rol =document.querySelector('#selectRolUsuario').value;
+  const fusu_comision =document.querySelector('#fusu_comision').value;
 
 
   const data = {
@@ -100,6 +100,31 @@ agregarUsuarioButton.addEventListener('click', () => {
     });
 });
 
+//Buscar usuario
+
+const buscarUsuarioButton = document.getElementById('btnBuscarUsuario')
+buscarUsuarioButton.addEventListener('click', () => {
+  const dni = document.getElementById('fusu_dni').value;
+  conexApi.get(`usuario?filter[usu_dni]=${dni}`).then((res) => {
+    const cliente = res.data.data[0]
+    document.getElementById('fusu_nombre').value = cliente.usu_nombre;
+    document.getElementById('fusu_apellido').value = cliente.usu_apellido;
+    document.getElementById('fusu_dni').value = cliente.usu_dni;
+    document.getElementById('fusu_email').value = cliente.usu_email;
+    document.getElementById('fusu_telefono').value = cliente.usu_telefono;
+    document.querySelector('#fusu_contrasena').value = cliente.usu_contrasena;
+    document.querySelector('#fusu_direccion').value =cliente.usu_direccion;
+    document.querySelector('#selectRolUsuario').value=cliente.usu_rol;
+    document.querySelector('#fusu_comision').value=cliente.usu_comision
+    document.getElementById('fidEmpresa').value = cliente.emp_id;
+   document.getElementById('fidcliente').value =cliente.usu_id
+  
+
+  })
+    .catch((error) => {
+      console.error('Hubo un error:', error);
+    });
+});
 
 //Buscar cliente y empresa
 const buscarClienteButton = document.getElementById('btnBuscarCliente')
