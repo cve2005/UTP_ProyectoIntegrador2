@@ -728,6 +728,15 @@
 
   <!-- Page specific script -->
   <script>
+
+    let url = new URL(window.location.href);
+
+    // Usar URLSearchParams para obtener el valor de 'miVariable'
+    let id = url.searchParams.get("id");
+
+    alert(id);
+    
+
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()
