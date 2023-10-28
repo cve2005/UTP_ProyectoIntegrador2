@@ -74,3 +74,54 @@ window.addEventListener('load', function () {
   //     onPageLoad2();
   // }
 });
+
+
+
+//listar cotizaciones
+async function cargarCotizacionesVendedor() {
+  conexApi.get(`documento`).then((res) => {
+    const data = res.data.data;
+    const tableBody = document.getElementById("listarCotizacionesVendedor");
+    tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
+    console.log(data)
+    data.forEach((element) => {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+              <td>${element.doc_id}</td>
+              <td>${element.doc_fecha}</td>
+              <td>${element.cliente_id}</td>
+              <td>${element.cliente_id}</td>
+              <td>${element.est_id}</td>
+              <td>
+                          <i class="nav-icon fas fa-solid fa-file-invoice"></i>
+                          <i class="nav-icon fas fa-solid fa-pen" id="editarCotizacion${element.doc_id}" value="${element.doc_id}"></i>
+                          <i class="nav-icon fas fa-solid fa-file-pdf"></i>
+                          </td>
+          `;
+      tableBody.appendChild(row);
+    })
+    // .catch((error) => {
+    //   console.error('Hubo un error:', error);
+    // });
+  });
+}
+
+
+//total cotizado=suma de los servicios
+
+
+window.addEventListener('load', function () {
+  if (window.location.href.includes("cotizaciones-ven.html")) {
+    cargarCotizacionesVendedor();
+  }
+  //else if (window.location.href.includes("2.html")) {
+  //     onPageLoad2();
+  // }
+});
+
+
+const buscarButton = document.getElementById(`editarCotizacion`)
+buscarButton.addEventListener('click', () => {
+  window.location.href=`editar_cot.html?id=${element.doc_id}`
+});
