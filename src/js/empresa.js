@@ -90,10 +90,6 @@ agregarUsuarioButton.addEventListener('click', () => {
 
   conexApi.post(`usuario`, data).then((res) => {
     console.log('Se agrego correctamente los datos')
-    console.log(res.data.data)
-    console.log(res.data)
-    console.log(res)
-
   })
     .catch((error) => {
       console.error('Hubo un error:', error);
@@ -117,7 +113,7 @@ buscarUsuarioButton.addEventListener('click', () => {
     document.querySelector('#selectRolUsuario').value=cliente.usu_rol;
     document.querySelector('#fusu_comision').value=cliente.usu_comision
     document.getElementById('fidEmpresa').value = cliente.emp_id;
-   document.getElementById('fidcliente').value =cliente.usu_id
+   document.getElementById('fidCliente').value =cliente.usu_id
   
 
   })
@@ -166,8 +162,8 @@ function buscarEmpresaId(id) {
 }
 
 //Actualizar cliente
-const agregarClienteButton = document.getElementById('btnAgregarCliente')
-agregarClienteButton.addEventListener('click', () => {
+const actualizarClienteButton = document.getElementById('btnAgregarCliente')
+actualizarClienteButton.addEventListener('click', () => {
   const idCliente= document.getElementById('fidcliente').value
   const fusu_nombre = document.getElementById('fusu_nombre').value;
   const fusu_apellido = document.getElementById('fusu_apellido').value;
@@ -193,7 +189,40 @@ agregarClienteButton.addEventListener('click', () => {
 
 
 
-//Listar Clientes
+//Actualiza Usuario
+
+const actualizarUsuarioButton = document.getElementById('btnActualizarUsuario')
+actualizarUsuarioButton.addEventListener('click', () => {
+  const idCliente= document.getElementById('fidCliente').value
+  const fusu_nombre = document.getElementById('fusu_nombre').value;
+  const fusu_apellido = document.getElementById('fusu_apellido').value;
+  const fusu_email = document.getElementById('fusu_email').value;
+  const fusu_contrasena = document.getElementById('fusu_contrasena').value;
+  const fusu_telefono = document.getElementById('fusu_telefono').value;
+  const fusu_direccion = document.getElementById('fusu_direccion').value;
+  const fusu_rol =document.getElementById('selectRolUsuario').value;
+  const fusu_comision =document.getElementById('fusu_comision').value;
+
+  const data = {
+    usu_nombre: fusu_nombre,
+    usu_apellido: fusu_apellido,
+    usu_email: fusu_email,
+    usu_contrasena:fusu_contrasena,
+    usu_telefono: fusu_telefono,
+    usu_direccion:fusu_direccion,
+    usu_rol:fusu_rol,
+    usu_comision:fusu_comision
+  }
+  
+  console.log(data)
+
+  conexApi.patch(`usuario/${idCliente}`,data).then((res) => {
+    console.log(res)
+  })
+    .catch((error) => {
+      console.error('Hubo un error:', error);
+    });
+});
 
 
 
