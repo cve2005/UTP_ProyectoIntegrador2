@@ -16,6 +16,7 @@ export default {
             input: {
                 main: 'src/js/main.js', // Punto de entrada para index.html
                 login: 'src/js/login.js', // Punto de entrada para about.html
+                listar: 'src/js/listar.js', // Punto de entrada para about.html 
                 cssLogin: 'src/css/login.css', // Punto de entrada para about.html
             },
             output: {
