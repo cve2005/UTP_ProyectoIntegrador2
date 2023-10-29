@@ -378,15 +378,10 @@
                         </div>
                         <div class="col-md-3">
                           <label for="validationCustom02" class="form-label">DNI</label>
-                          <div class="form-inline">
-                            <input class="form-control form-control-navbar col-md-6" type="search" placeholder="DNI" id="fusu_dni"
-                              aria-label="Search">
-                            <div>
-                              <button class="btn btn-navbar" id="btnBuscarCliente">
-                                <i class="fas fa-search"></i>
-                              </button>
-                            </div>
-                          </div>
+                          <input type="text" class="form-control" id="fusu_dni" required>
+                          <label id="fdoc_fecha"></label>
+                          <label id="fvendedor_id"></label>
+
                         </div>
 
                         <div class="col-md-4">
@@ -611,6 +606,7 @@
                               <input type="text" class="form-control" id="fdoc_dsTransInt" required>
                               <label class="form-label">Otros N.E.</label>
                               <input type="text" class="form-control" id="fdoc_dsOtros" required>
+
                             </div>
                           </div>
                         </div>
@@ -689,7 +685,7 @@
                     </div>
                     <!-- Cuerpo -->
                     <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
-                    <button class="btn btn-primary" id="btnAgregarDocumento">Submit</button>
+                    <button class="btn btn-primary" id="btnActualizarDocumento">Actualizar Documento</button>
                   </div>
                 </div>
               </div>
@@ -750,17 +746,18 @@
   <script src="plugins/dropzone/min/dropzone.min.js"></script>
   <!-- AdminLTE App -->
   <script src="extra/js/adminlte.min.js"></script>
+  <script type="module" src="./js/editarcotizacion.js"></script>
   <!-- AdminLTE for demo purposes -->
 
   <!-- Page specific script -->
   <script>
 
-    let url = new URL(window.location.href);
+    // let url = new URL(window.location.href);
 
-    // Usar URLSearchParams para obtener el valor de 'miVariable'
-    let id = url.searchParams.get("id");
+    // // Usar URLSearchParams para obtener el valor de 'miVariable'
+    // let id = url.searchParams.get("id");
 
-    alert(id);
+    // alert(id);
     
 
     $(function () {
@@ -847,53 +844,53 @@
     Dropzone.autoDiscover = false
 
     // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-    var previewNode = document.querySelector("#template")
-    previewNode.id = ""
-    var previewTemplate = previewNode.parentNode.innerHTML
-    previewNode.parentNode.removeChild(previewNode)
+    // var previewNode = document.querySelector("#template")
+    // previewNode.id = ""
+    // var previewTemplate = previewNode.parentNode.innerHTML
+    // previewNode.parentNode.removeChild(previewNode)
 
-    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-      url: "/target-url", // Set the url
-      thumbnailWidth: 80,
-      thumbnailHeight: 80,
-      parallelUploads: 20,
-      previewTemplate: previewTemplate,
-      autoQueue: false, // Make sure the files aren't queued until manually added
-      previewsContainer: "#previews", // Define the container to display the previews
-      clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-    })
+    // var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+    //   url: "/target-url", // Set the url
+    //   thumbnailWidth: 80,
+    //   thumbnailHeight: 80,
+    //   parallelUploads: 20,
+    //   previewTemplate: previewTemplate,
+    //   autoQueue: false, // Make sure the files aren't queued until manually added
+    //   previewsContainer: "#previews", // Define the container to display the previews
+    //   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+    // })
 
-    myDropzone.on("addedfile", function (file) {
-      // Hookup the start button
-      file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
-    })
+    // myDropzone.on("addedfile", function (file) {
+    //   // Hookup the start button
+    //   file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
+    // })
 
-    // Update the total progress bar
-    myDropzone.on("totaluploadprogress", function (progress) {
-      document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-    })
+    // // Update the total progress bar
+    // myDropzone.on("totaluploadprogress", function (progress) {
+    //   document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+    // })
 
-    myDropzone.on("sending", function (file) {
-      // Show the total progress bar when upload starts
-      document.querySelector("#total-progress").style.opacity = "1"
-      // And disable the start button
-      file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-    })
+    // myDropzone.on("sending", function (file) {
+    //   // Show the total progress bar when upload starts
+    //   document.querySelector("#total-progress").style.opacity = "1"
+    //   // And disable the start button
+    //   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+    // })
 
-    // Hide the total progress bar when nothing's uploading anymore
-    myDropzone.on("queuecomplete", function (progress) {
-      document.querySelector("#total-progress").style.opacity = "0"
-    })
+    // // Hide the total progress bar when nothing's uploading anymore
+    // myDropzone.on("queuecomplete", function (progress) {
+    //   document.querySelector("#total-progress").style.opacity = "0"
+    // })
 
-    // Setup the buttons for all transfers
-    // The "add files" button doesn't need to be setup because the config
-    // `clickable` has already been specified.
-    document.querySelector("#actions .start").onclick = function () {
-      myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-    }
-    document.querySelector("#actions .cancel").onclick = function () {
-      myDropzone.removeAllFiles(true)
-    }
+    // // Setup the buttons for all transfers
+    // // The "add files" button doesn't need to be setup because the config
+    // // `clickable` has already been specified.
+    // document.querySelector("#actions .start").onclick = function () {
+    //   myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+    // }
+    // document.querySelector("#actions .cancel").onclick = function () {
+    //   myDropzone.removeAllFiles(true)
+    // }
     // DropzoneJS Demo Code End
   </script>
 </body>

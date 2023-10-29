@@ -120,8 +120,6 @@ agregarDocumentoButton.addEventListener('click', () => {
   }
   console.log(data)
 
-
-
   //detalle_servicio
   // fdoc_dsFlete
   // fdoc_dsGasExt
@@ -168,25 +166,6 @@ const fdoc_daISC = document.getElementById('fdoc_daISC').value;
 const fdoc_daIPM = document.getElementById('fdoc_daIPM').value;
 const fdoc_daIGV = document.getElementById('fdoc_daIGV').value;
 const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
-
-// fdoc_daValorFOB
-
-// fdoc_daValorFlete
-
-// fdoc_daSeguro
-
-// fdoc_daValorCIF
-
-// fdoc_daAdValorem
-
-// fdoc_daISC
-
-// fdoc_daIPM
-
-// fdoc_daIGV
-
-// fdoc_daPercepcion
-
 
   const servicios = [
     {
