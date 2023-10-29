@@ -1,15 +1,14 @@
 import axios from "axios";
 
 
-axios.get("https://cna-cms.onrender.com/items/empresa").then((res) => {
 
-    const lista = document.getElementById("lista");
+// axios.get("https://cna-cms.onrender.com/items/usuario").then((res) => {
 
-    res.data.data.forEach((element) => {
-        const li = document.createElement("li");
-        li.appendChild(document.createTextNode(element.emp_razon_social));
-        lista.appendChild(li);
-    } );
-
-  
-});
+//     const clientes = document.getElementById("lista-clientes");
+//     clientes.innerHTML = '';
+//     res.data.data.forEach((element) => {
+//             const option = document.createElement("option");
+//             option.text = element.usu_nombre;
+//             clientes.add(option);
+//     });
+// });

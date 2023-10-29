@@ -1,36 +1,28 @@
-const externalFiles = [
-  'plugins/fontawesome-free/css/all.min.css',
-  'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
-  'plugins/icheck-bootstrap/icheck-bootstrap.min.css',
-  'plugins/jqvmap/jqvmap.min.css',
-  'extra/css/adminlte.min.css',
-  'plugins/overlayScrollbars/css/OverlayScrollbars.min.css',
-  'plugins/daterangepicker/daterangepicker.css',
-  'plugins/summernote/summernote-bs4.min.css',
-  'plugins/jquery/jquery.min.js',
-  'plugins/jquery-ui/jquery-ui.min.js',
-  'plugins/bootstrap/js/bootstrap.bundle.min.js',
-  'plugins/chart.js/Chart.min.js',
-  'plugins/sparklines/sparkline.js',
-  'plugins/jqvmap/jquery.vmap.min.js',
-  'plugins/jqvmap/maps/jquery.vmap.usa.js',
-  'plugins/jquery-knob/jquery.knob.min.js',
-  'plugins/moment/moment.min.js',
-  'plugins/daterangepicker/daterangepicker.js',
-  'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js',
-  'plugins/summernote/summernote-bs4.min.js',
-  'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js',
-  'extra/js/adminlte.js',
-  'extra/js/pages/dashboard.js',
-
-];
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default {
-  root: 'src',
-  build: {
-    rollupOptions: {
-      external: externalFiles
+    root: 'src',
+    plugins: [
+      viteStaticCopy({
+        targets: [
+          { src: '*.html', dest: '../dist' },
+          { src: 'img/*', dest: '../dist/img' }
+        ]
+      })
+    ],
+    build: {
+        outDir: '../dist',
+        rollupOptions: {
+            input: {
+                main: 'src/js/main.js', // Punto de entrada para index.html
+                login: 'src/js/login.js', // Punto de entrada para about.html
+                cssLogin: 'src/css/login.css', // Punto de entrada para about.html
+            },
+            output: {
+                entryFileNames: 'js/[name].js', // Genera main.js y about.js
+                chunkFileNames: 'js/[name].js', // Genera main.js y about.js
+                assetFileNames: 'css/[name].css', // Genera main.css y about.css
+            },
+        },
     },
-    outDir: '../dist'
-  }
-}
+};
