@@ -8,36 +8,8 @@ const conexApi = axios.create({
     baseURL: 'https://cna-cms.onrender.com/items/',
 });
 
-//listar empresa
-// conexApi.get(`empresa`).then((res) => {
-//   const data = res.data.data;
-//   const tableBody = document.getElementById("listarCotizacionesCliente");
-//   tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
 
-//   data.forEach((element) => {
-//     const row = document.createElement("tr");
-
-//     row.innerHTML = `
-//             <td>${element.emp_id}</td>
-//             <td>${element.emp_razon_social}</td>
-//             <td>${element.emp_direccion}</td>
-//             <td>${element.emp_telefono}</td>
-//             <td>${element.emp_ruc}</td>
-//             <td>
-//             <i class="nav-icon fas fa-solid fa-file-invoice"></i>
-//             <i class="nav-icon fas fa-solid fa-pen"></i>
-//             <i class="nav-icon fas fa-solid fa-file-pdf"></i>
-//             </td>
-//         `;
-//     tableBody.appendChild(row);
-
-//   })
-//     .catch((error) => {
-//       console.error('Hubo un error:', error);
-//     });
-// });
-
-//listar usuarios
+//listar todos los usuarios
 async function cargarUsuariosAdmin() {
     conexApi.get(`usuario`).then((res) => {
         const data = res.data.data;
@@ -47,17 +19,20 @@ async function cargarUsuariosAdmin() {
         data.forEach((element) => {
             const row = document.createElement('tr');
 
-            row.innerHTML = `
-              <td>${element.usu_id}</td>
-              <td>${element.usu_nombre}</td>
-              <td>${element.usu_apellido}</td>
-              <td>${element.usu_rol}</td>
-              <td>
-                          <i class="nav-icon fas fa-solid fa-file-invoice"></i>
-                          <i class="nav-icon fas fa-solid fa-pen"></i>
-                          <i class="nav-icon fas fa-solid fa-file-pdf"></i>
-                          </td>
-          `;
+         
+              row.appendChild(createItem(element.usu_id));
+              row.appendChild(createItem(element.usu_nombre));
+              row.appendChild(createItem(element.usu_apellido));
+              row.appendChild(createItem(element.usu_rol));
+                //columna acciones
+            const url=""
+
+                const acciones = document.createElement('td');
+                acciones.appendChild(createItemAcction(element.usu_id, VER,url));
+                acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
+                acciones.appendChild(createItemAcction(element.usu_id, EDITAR,url));
+                row.appendChild(acciones);
+         
             tableBody.appendChild(row);
         });
         // .catch((error) => {
@@ -65,7 +40,7 @@ async function cargarUsuariosAdmin() {
         // });
     });
 }
-//listar usuarios clientes
+//listar usuarios clientes = 5
 async function cargarUsuarios() {
     conexApi.get(`usuario?filter[usu_rol]=5`).then((res) => {
         const data = res.data.data;
@@ -74,37 +49,31 @@ async function cargarUsuarios() {
         console.log(data);
         data.forEach((element) => {
             const row = document.createElement('tr');
+            row.appendChild(createItem(element.usu_id));
+              row.appendChild(createItem(element.usu_nombre));
+              row.appendChild(createItem(element.usu_apellido));
+              row.appendChild(createItem(element.usu_rol));
+                //columna acciones
+            const url=""
 
-            row.innerHTML = `
-              <td>${element.usu_id}</td>
-              <td>${element.usu_nombre}</td>
-              <td>${element.usu_apellido}</td>
-              <td>${element.usu_rol}</td>
-              <td>
-                          <i class="nav-icon fas fa-solid fa-file-invoice"></i>
-                          <i class="nav-icon fas fa-solid fa-pen"></i>
-                          <i class="nav-icon fas fa-solid fa-file-pdf"></i>
-                          </td>
-          `;
+            const acciones = document.createElement('td');
+            acciones.appendChild(createItemAcction(element.usu_id, VER,url));
+            acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
+            acciones.appendChild(createItemAcction(element.usu_id, EDITAR,url));
+            row.appendChild(acciones);
             tableBody.appendChild(row);
         });
+ 
+
         // .catch((error) => {
         //   console.error('Hubo un error:', error);
         // });
     });
 }
-window.addEventListener('load', function () {
-    if (window.location.href.includes('listarusuariosadm.html')) {
-        cargarUsuariosAdmin();
-    }
-    if (window.location.href.includes("listarusuarios.html")) {
-        cargarUsuarios();
-    }
-});
 
-//listar cotizaciones
+//listar cotizaciones vendedor
 async function cargarCotizacionesVendedor() {
-    conexApi.get(`documento`).then((res) => {
+    conexApi.get(`documento?fields=*.*.*`).then((res) => {
         const data = res.data.data;
         const tableBody = document.getElementById('listarCotizacionesVendedor');
         tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
@@ -113,29 +82,17 @@ async function cargarCotizacionesVendedor() {
             const row = document.createElement('tr');
             row.appendChild(createItem(element.doc_id));
             row.appendChild(createItem(element.doc_fecha));
-            row.appendChild(createItem(element.cliente_id));
-            row.appendChild(createItem(element.cliente_id));
-            row.appendChild(createItem(element.est_id));
+            row.appendChild(createItem(element.cliente_id.usu_nombre +" "+ element.cliente_id.usu_apellido));
+            row.appendChild(createItem(element.cliente_id.emp_id.emp_razon_social));
+            row.appendChild(createItem(element.est_id.est_nombre));
             //columena acciones
-            const acciones = document.createElement('td');
-            acciones.appendChild(createItemAcction(element.doc_id, VER));
-            acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR));
-            acciones.appendChild(createItemAcction(element.doc_id, EDITAR));
-            row.appendChild(acciones);
-    
+            const url="editar_cot"
 
-            /* row.innerHTML = `
-              <td>${element.doc_id}</td>
-              <td>${element.doc_fecha}</td>
-              <td>${element.cliente_id}</td>
-              <td>${element.cliente_id}</td>
-              <td>${element.est_id}</td>
-              <td>
-                          <i class="nav-icon fas fa-solid fa-file-invoice"></i>
-                          
-                          <i class="nav-icon fas fa-solid fa-file-pdf"></i>
-                          </td>
-          `;*/
+            const acciones = document.createElement('td');
+            acciones.appendChild(createItemAcction(element.doc_id, VER,url));
+            acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR,url));
+            acciones.appendChild(createItemAcction(element.doc_id, EDITAR,url));
+            row.appendChild(acciones);
             tableBody.appendChild(row);
         });
         // .catch((error) => {
@@ -144,6 +101,8 @@ async function cargarCotizacionesVendedor() {
     });
 }
 
+
+//listar operaciones del vendedor
 async function cargarOperacionesVendedor() {
     conexApi.get(`documento?filter[est_id]=2`).then((res) => {
         const data = res.data.data;
@@ -173,20 +132,81 @@ async function cargarOperacionesVendedor() {
     });
 }
 
+//listar agentes tag_id=1
+async function cargarAgentes() {
+    conexApi.get(`agente?filter[tag_id]=1&fields=*.*`).then((res) => {
+        const data = res.data.data;
+        const tableBody = document.getElementById('listarAgentes');
+        tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
+        console.log(data);
+        data.forEach((element) => {
+            const row = document.createElement('tr');
+            row.appendChild(createItem(element.age_id));
+            row.appendChild(createItem(element.age_razon_social));
+            row.appendChild(createItem(element.age_telefono));
+            row.appendChild(createItem(element.age_correo));
+            row.appendChild(createItem(element.age_nombre));
+            row.appendChild(createItem(element.tag_id.tag_nombre));
+            //columena acciones
+            const url="editar-agente"
+            const acciones = document.createElement('td');
+            acciones.appendChild(createItemAcction(element.age_id, VER,url));
+            acciones.appendChild(createItemAcction(element.age_id, DESCARGAR,url));
+            acciones.appendChild(createItemAcction(element.age_id, EDITAR,url));
+            row.appendChild(acciones);
+            tableBody.appendChild(row);
+        });
+        // .catch((error) => {
+        //   console.error('Hubo un error:', error);
+        // });
+    });
+}
+
+//listar shippers tag_id=1
+async function cargarShippers() {
+    conexApi.get(`agente?filter[tag_id]=2&fields=*.*`).then((res) => {
+        const data = res.data.data;
+        const tableBody = document.getElementById('listarShippers');
+        tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
+        console.log(data);
+        data.forEach((element) => {
+            const row = document.createElement('tr');
+            row.appendChild(createItem(element.age_id));
+            row.appendChild(createItem(element.age_razon_social));
+            row.appendChild(createItem(element.age_telefono));
+            row.appendChild(createItem(element.age_correo));
+            row.appendChild(createItem(element.age_nombre));
+            row.appendChild(createItem(element.tag_id.tag_nombre));
+            //columena acciones
+            const url="editar-shipper"
+            const acciones = document.createElement('td');
+            acciones.appendChild(createItemAcction(element.age_id, VER,url));
+            acciones.appendChild(createItemAcction(element.age_id, DESCARGAR,url));
+            acciones.appendChild(createItemAcction(element.age_id, EDITAR,url));
+            row.appendChild(acciones);
+            tableBody.appendChild(row);
+        });
+        // .catch((error) => {
+        //   console.error('Hubo un error:', error);
+        // });
+    });
+}
+
+
 const createItem = (value) => {
     const td = document.createElement('td');
     td.innerText = value;
     return td;
 };
 
-const createItemAcction = (doc_id, type) => {
+const createItemAcction = (doc_id, type,url) => {
     
     const icon = document.createElement('i');
     const button = document.createElement('button');
     if (type === EDITAR) {
         button.addEventListener('click', () => {
           //alert('editar'  + doc_id);  
-          window.location.href = `editar_cot.html?id=${doc_id}`;
+          window.location.href = url+`.html?id=${doc_id}`;
         });
         icon.classList.add('nav-icon', 'fas', 'fa-solid', 'fa-pen');
     }
@@ -220,9 +240,19 @@ window.addEventListener('load', function () {
      if (window.location.href.includes("operaciones-ven.html")) {
         cargarOperacionesVendedor();
     }
-    // if (window.location.href.includes("operaciones-ven.html")) {
-    //     cargarOperacionesVendedor();
-    // }
+    if (window.location.href.includes('listarusuariosadm.html')) {
+        cargarUsuariosAdmin();
+    }
+    if (window.location.href.includes("listarusuarios.html")) {
+        cargarUsuarios();
+    }
+    if (window.location.href.includes("listaragentes.html")) {
+        cargarAgentes();
+    }
+    if (window.location.href.includes("listarshippers.html")) {
+        cargarShippers();
+    }
 });
+
 
 
