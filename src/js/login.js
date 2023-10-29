@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 async function loginUser(email, password) {
-    document.getElementById("spinner").style.display = "inline-block";
-    const endpoint = 'https://cna-cms.onrender.com/auth/login';
+    const BASE_URL = 'https://cna-cms.onrender.com';
+
+    document.getElementById('spinner').style.display = 'inline-block';
+    const endpoint = `${BASE_URL}/auth/login`;
     // Datos de inicio de sesión. Estos deberían ser recopilados de alguna forma segura, por ejemplo, un formulario.
     const loginData = {
         email, // Reemplaza con el email del usuario
@@ -12,15 +14,23 @@ async function loginUser(email, password) {
     try {
         const response = await axios.post(endpoint, loginData);
         console.log('Datos recibidos:', response.data);
-        window.location = "index.html";
+        const jwtPayload = decodeJWT(response.data.data.access_token);
+
+        const userInfo = await axios.get(
+            `${BASE_URL}/users/${jwtPayload.id}?fields=*.*`,
+            loginData
+        );
+        console.log('Datos recibidos:', userInfo.data);
+        sessionStorage.setItem('userInfo', JSON.stringify(userInfo.data.data));
+        window.location = 'index.html';
         // Aquí puedes gestionar la respuesta. Por ejemplo, guardar tokens, redirigir al usuario, etc.
     } catch (error) {
         console.error('Error al iniciar sesión:', error.response.data);
-       const errorMessage = document.getElementById('error-message');
-         errorMessage.innerHTML = "Datos Incorrectos";
-         errorMessage.style.display = "block";  
+        const errorMessage = document.getElementById('error-message');
+        errorMessage.innerHTML = 'Datos Incorrectos';
+        errorMessage.style.display = 'block';
     } finally {
-        document.getElementById("spinner").style.display = "none";
+        document.getElementById('spinner').style.display = 'none';
     }
 }
 
@@ -30,3 +40,11 @@ document.getElementById('btnLogin').addEventListener('click', (e) => {
     const password = document.getElementById('txtPass').value;
     loginUser(email, password);
 }); //
+
+const decodeJWT = (token) => {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    const payload = JSON.parse(atob(base64));
+
+    return payload;
+};
