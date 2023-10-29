@@ -65,14 +65,41 @@ async function cargarUsuariosAdmin() {
         // });
     });
 }
+//listar usuarios clientes
+async function cargarUsuarios() {
+    conexApi.get(`usuario?filter[usu_rol]=5`).then((res) => {
+        const data = res.data.data;
+        const tableBody = document.getElementById('listarUsuariosAdmin');
+        tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
+        console.log(data);
+        data.forEach((element) => {
+            const row = document.createElement('tr');
 
+            row.innerHTML = `
+              <td>${element.usu_id}</td>
+              <td>${element.usu_nombre}</td>
+              <td>${element.usu_apellido}</td>
+              <td>${element.usu_rol}</td>
+              <td>
+                          <i class="nav-icon fas fa-solid fa-file-invoice"></i>
+                          <i class="nav-icon fas fa-solid fa-pen"></i>
+                          <i class="nav-icon fas fa-solid fa-file-pdf"></i>
+                          </td>
+          `;
+            tableBody.appendChild(row);
+        });
+        // .catch((error) => {
+        //   console.error('Hubo un error:', error);
+        // });
+    });
+}
 window.addEventListener('load', function () {
     if (window.location.href.includes('listarusuariosadm.html')) {
         cargarUsuariosAdmin();
     }
-    //else if (window.location.href.includes("2.html")) {
-    //     onPageLoad2();
-    // }
+    if (window.location.href.includes("listarusuarios.html")) {
+        cargarUsuarios();
+    }
 });
 
 //listar cotizaciones
@@ -109,6 +136,35 @@ async function cargarCotizacionesVendedor() {
                           <i class="nav-icon fas fa-solid fa-file-pdf"></i>
                           </td>
           `;*/
+            tableBody.appendChild(row);
+        });
+        // .catch((error) => {
+        //   console.error('Hubo un error:', error);
+        // });
+    });
+}
+
+async function cargarOperacionesVendedor() {
+    conexApi.get(`documento?filter[est_id]=2`).then((res) => {
+        const data = res.data.data;
+        const tableBody = document.getElementById('listarOperacionesVendedor');
+        tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
+        console.log(data);
+        data.forEach((element) => {
+            const row = document.createElement('tr');
+            row.appendChild(createItem(element.doc_id));
+            row.appendChild(createItem(element.doc_fecha));
+            row.appendChild(createItem(element.cliente_id));
+            row.appendChild(createItem(element.cliente_id));
+            row.appendChild(createItem(element.cliente_id));
+            row.appendChild(createItem(element.cliente_id));
+            row.appendChild(createItem(element.est_id));
+            //columena acciones
+            const acciones = document.createElement('td');
+            acciones.appendChild(createItemAcction(element.doc_id, VER));
+            acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR));
+            acciones.appendChild(createItemAcction(element.doc_id, EDITAR));
+            row.appendChild(acciones);
             tableBody.appendChild(row);
         });
         // .catch((error) => {
@@ -161,8 +217,11 @@ window.addEventListener('load', function () {
     if (window.location.href.includes('cotizaciones-ven.html')) {
         cargarCotizacionesVendedor();
     }
-    //else if (window.location.href.includes("2.html")) {
-    //     onPageLoad2();
+     if (window.location.href.includes("operaciones-ven.html")) {
+        cargarOperacionesVendedor();
+    }
+    // if (window.location.href.includes("operaciones-ven.html")) {
+    //     cargarOperacionesVendedor();
     // }
 });
 
