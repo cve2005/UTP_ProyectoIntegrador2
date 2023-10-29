@@ -332,9 +332,9 @@
       <section class="content">
         <div class="container-fluid">
           <!-- SELECT2 EXAMPLE -->
-          <div class="card card-warning">
+          <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Editar Cotización</h3>
+              <h3 class="card-title">Cotización</h3>
             </div>
             <div class="card-body p-0">
               <div class="bs-stepper">
@@ -368,46 +368,38 @@
                           <h4> Datos del cliente</h4>
                           <hr>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                           <label class="form-label">Razon Social</label>
-                          <div class="form-inline">
-                            <input class="form-control form-control-navbar col-md-8" type="search"
-                              placeholder="Razon Social" aria-label="Search">
-                            <div>
-                              <button class="btn btn-navbar" type="submit">
-                                <i class="fas fa-search"></i>
-                              </button>
-                            </div>
-                          </div>
+                          <input type="text" class="form-control" id="frazonSocial" required>
                         </div>
+                        <div class="col-md-3">
+                          <label for="validationCustom03" class="form-label">RUC</label>
+                          <input type="text" class="form-control" id="fruc" required>
+                        </div>
+                        <div class="col-md-3">
+                          <label for="validationCustom02" class="form-label">DNI</label>
+                          <input type="text" class="form-control" id="fusu_dni" required>
+                          <label id="fdoc_fecha"></label>
+                          <label id="fvendedor_id"></label>
 
-                        <div class="col-md-4">
-                          <label for="validationCustom02" class="form-label">RUC</label>
-                          <div class="form-inline">
-                            <input class="form-control form-control-navbar col-md-6" type="search" placeholder="RUC"
-                              aria-label="Search">
-                            <div>
-                              <button class="btn btn-navbar" type="submit">
-                                <i class="fas fa-search"></i>
-                              </button>
-                            </div>
-                          </div>
                         </div>
 
                         <div class="col-md-4">
                           <label for="validationCustom03" class="form-label">Contacto</label>
-                          <input type="text" class="form-control" id="validationCustom03" required>
+                          <input type="text" class="form-control" id="fusu_nombre_apellido" required>
                         </div>
 
                         <div class="col-md-4">
                           <label for="validationCustom05" class="form-label">Email</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <input type="text" class="form-control" id="fusu_email" required>
 
                         </div>
                         <div class="col-md-4">
                           <label for="validationCustom05" class="form-label">Teléfono</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
-
+                          <input type="text" class="form-control" id="fusu_telefono" required>
+                          <input type="text" class="form-control" id="fcliente_id" hidden="true">
+                          <input type="text" class="form-control" id="fidEmpresa" hidden="true">
+                          
                         </div>
                       </div>
                       <!-- FORM-->
@@ -420,39 +412,49 @@
                         </div>
                         <div class="col-md-3">
                           <label class="form-label">Tipo de operación</label>
-                          <select class="custom-select rounded-0" id="exampleSelectRounded0">
-                            <option>Value 1</option>
-                            <option>Value 2</option>
-                            <option>Value 3</option>
+                          <select class="custom-select rounded-0" id="ftop_id">
+                            <option value="1">IMPORTACIÓN</option>
+                            <option value="2">EXPORTACIÓN</option>
                           </select>
                         </div>
 
                         <div class="col-md-3">
                           <label class="form-label">Medio de transporte</label>
-                          <select class="custom-select rounded-0" id="exampleSelectRounded0">
-                            <option>Value 1</option>
-                            <option>Value 2</option>
-                            <option>Value 3</option>
+                          <select class="custom-select rounded-0" id="fmtx_id">
+                            <option value="1">MARITIMO</option>
+                            <option value="2">AEREO</option>
+                            <option value="3">TERRESTRE</option>
                           </select>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label">INCOTERM</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <select class="custom-select rounded-0" id="fdoc_incoterm">
+                            <option value="FOB">FOB</option>
+                            <option value="CIF">CIF</option>
+                            <option value="CFR">CFR</option>
+                            <option value="FAS">FAS</option>
+                            <option value="FCA">FCA</option>
+                            <option value="EXW">EXW</option>
+                            <option value="CPT">CPT</option>
+                            <option value="CIP">CIP</option>
+                            <option value="DAP">DAP</option>
+                            <option value="DPU">DPU</option>
+                            <option value="DDP">DDP</option>
+                          </select>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label">Tipo de carga</label>
-                          <select class="custom-select rounded-0" id="exampleSelectRounded0">
-                            <option>Value 1</option>
-                            <option>Value 2</option>
-                            <option>Value 3</option>
+                          <select class="custom-select rounded-0" id="fdoc_tcarga">
+                            <option value="LCL">LCL</option>
+                            <option value="FCL">FCL</option>
                           </select>
                         </div>
 
                         <div class="col-md-4">
                           <label> País de origen</label>
                           <div class="form-group">
-                            <select class="form-control select2bs4" style="width: 100%;" id="lista-paises">
-                              <option selected="selected">Alabama</option>
+                            <select class="form-control select2bs4" style="width: 100%;" id="fpais_origen_id">
+                              <option selected="selected">Peru</option>
                               <option>Alaska</option>
                               <option>California</option>
                               <option>Delaware</option>
@@ -465,20 +467,20 @@
 
                         <div class="col-md-4">
                           <label> Puerto / Aeropuerto</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <input type="text" class="form-control" id="fdoc_puerto_ori" required>
                         </div>
 
                         <div class="col-md-4">
                           <label> Puerto de recojo</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <input type="text" class="form-control" id="fdoc_recojo" required>
                         </div>
 
 
                         <div class="col-md-4">
                           <label> País de destino</label>
                           <div class="form-group">
-                            <select class="form-control select2bs4" style="width: 100%;">
-                              <option selected="selected">Alabama</option>
+                            <select class="form-control select2bs4" style="width: 100%;" id="fpais_destino_id">
+                              <option selected="selected">Peru</option>
                               <option>Alaska</option>
                               <option>California</option>
                               <option>Delaware</option>
@@ -491,12 +493,12 @@
 
                         <div class="col-md-4">
                           <label> Puerto / Aeropuerto</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <input type="text" class="form-control" id="fdoc_puerto_dest" required>
                         </div>
 
                         <div class="col-md-4">
                           <label> Puerto de entrega</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <input type="text" class="form-control" id="fdoc_entrega" required>
                         </div>
                       </div>
                       <!-- FORM-->
@@ -510,24 +512,29 @@
                         </div>
                         <div class="col-md-12">
                           <label class="form-label">Tipo de mercaderia</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <input type="text" class="form-control" id="fdoc_producto" required>
                         </div>
                         <div class="col-md-3">
-                          <label class="form-label">Bultos (Cant)</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <label class="form-label">Bultos (Cant)</label> 
+                          <!-- numero entero -->
+                          <input type="text" class="form-control" id="fdoc_bultos" required>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label">Medidas (Ref)</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
-                        </div>
-                        <div class="col-md-3">
-                          <label class="form-label">Peso / Volumen (CBM)</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <!-- texto -->
+                          <input type="text" class="form-control" id="fdoc_medidas" required>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label">Peso - Kg</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <!-- decimal -->
+                          <input type="text" class="form-control" id="fdoc_peso" required>
                         </div>
+                        <div class="col-md-3">
+                          <label class="form-label">Peso / Volumen (CBM)</label>
+                          <!-- decimal -->
+                          <input type="text" class="form-control" id="fdoc_volumen" required>
+                        </div>
+                   
                       </div>
                       <!-- FORM-->
 
@@ -539,15 +546,19 @@
                         </div>
                         <div class="col-md-4">
                           <label class="form-label">Tipo de pago</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <select class="custom-select rounded-0" id="fdoc_pago">
+                            <option value="CONTADO">CONTADO</option>
+                            <option value="CREDITO15">CREDITO 15 DIAS</option>
+                            <option value="CREDITO30">CREDITO 30 DIAS</option>
+                          </select>
                         </div>
                         <div class="col-md-4">
                           <label class="form-label">Moneda</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <input type="text" class="form-control" id="fdoc_moneda" value="USD" required>
                         </div>
                         <div class="col-md-4">
                           <label class="form-label">Validez</label>
-                          <input type="text" class="form-control" id="validationCustom05" required>
+                          <input type="text" class="form-control" id="fdoc_validez" placeholder="EN DIAS" required>
                         </div>
                       </div>
                       <!-- FORM-->
@@ -570,31 +581,32 @@
                               <hr>
                               <br>
                               <label class="form-label">Flete</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsFlete" required>
                               <label class="form-label">Gastos Extranjero</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsGasExt" required>
                               <label class="form-label">BL / AWB / C.Porte</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsBLAWB" required>
                               <label class="form-label">Handling</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsHandling" required>
                               <label class="form-label">Seguro</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsSeguro" required>
                               <label class="form-label">Ag. Aduanas</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsAgAduanas" required>
                               <label class="form-label">Gastos Operativos</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsGasOpe" required>
                               <label class="form-label">Visto Bueno</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsVistoBueno" required>
                               <label class="form-label">Gate IN</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsGateIn" required>
                               <label class="form-label">Desconsolidación</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsDescon" required>
                               <label class="form-label">Almacén / D.Antic.</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsAlmacen" required>
                               <label class="form-label">Transporte Interno</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsTransInt" required>
                               <label class="form-label">Otros N.E.</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_dsOtros" required>
+
                             </div>
                           </div>
                         </div>
@@ -608,42 +620,49 @@
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Valor FOB</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_daValorFOB" required>
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Ad Valorem</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_daAdValorem" required>
+
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Valor Flete</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_daValorFlete" required>
+
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">ISC</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_daISC" required>
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Seguro</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_daSeguro" required>
+
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">IPM</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              
+                              <input type="text" class="form-control" id="fdoc_daIPM" required>
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Valor CIF</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_daValorCIF" required>
+
+                    
+                             
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">IGV</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_daIGV" required>
                             </div>
                             <div class="col-md-5 mx-1">
 
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Percepción</label>
-                              <input type="text" class="form-control" id="validationCustom05" required>
+                              <input type="text" class="form-control" id="fdoc_daPercepcion" required>
                             </div>
                           </div>
                           <br>
@@ -652,9 +671,12 @@
                             <hr>
                             <br>
                             <div class="form-group">
-                              <textarea class="form-control" rows="5" placeholder="Enter ..."></textarea>
+                              <textarea class="form-control" rows="5" placeholder="Enter ..." id="fdoc_cotizacion_notas"></textarea>
                             </div>
                           </div>
+                          <input type="text" class="form-control" id="fest_id" hidden="true" required>
+                          <input type="text" class="form-control" id="fdoc_id" hidden="true" required>
+
                           <!-- <button type="submit" class="btn btn-default float-right">Cancel</button> -->
                         </div>
                         <!-- /.row -->
@@ -663,7 +685,7 @@
                     </div>
                     <!-- Cuerpo -->
                     <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button class="btn btn-primary" id="btnActualizarDocumento">Actualizar Documento</button>
                   </div>
                 </div>
               </div>
@@ -724,10 +746,20 @@
   <script src="plugins/dropzone/min/dropzone.min.js"></script>
   <!-- AdminLTE App -->
   <script src="extra/js/adminlte.min.js"></script>
+  <script type="module" src="./js/editarcotizacion.js"></script>
   <!-- AdminLTE for demo purposes -->
 
   <!-- Page specific script -->
   <script>
+
+    // let url = new URL(window.location.href);
+
+    // // Usar URLSearchParams para obtener el valor de 'miVariable'
+    // let id = url.searchParams.get("id");
+
+    // alert(id);
+    
+
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()
@@ -812,53 +844,53 @@
     Dropzone.autoDiscover = false
 
     // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-    var previewNode = document.querySelector("#template")
-    previewNode.id = ""
-    var previewTemplate = previewNode.parentNode.innerHTML
-    previewNode.parentNode.removeChild(previewNode)
+    // var previewNode = document.querySelector("#template")
+    // previewNode.id = ""
+    // var previewTemplate = previewNode.parentNode.innerHTML
+    // previewNode.parentNode.removeChild(previewNode)
 
-    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-      url: "/target-url", // Set the url
-      thumbnailWidth: 80,
-      thumbnailHeight: 80,
-      parallelUploads: 20,
-      previewTemplate: previewTemplate,
-      autoQueue: false, // Make sure the files aren't queued until manually added
-      previewsContainer: "#previews", // Define the container to display the previews
-      clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-    })
+    // var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+    //   url: "/target-url", // Set the url
+    //   thumbnailWidth: 80,
+    //   thumbnailHeight: 80,
+    //   parallelUploads: 20,
+    //   previewTemplate: previewTemplate,
+    //   autoQueue: false, // Make sure the files aren't queued until manually added
+    //   previewsContainer: "#previews", // Define the container to display the previews
+    //   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+    // })
 
-    myDropzone.on("addedfile", function (file) {
-      // Hookup the start button
-      file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
-    })
+    // myDropzone.on("addedfile", function (file) {
+    //   // Hookup the start button
+    //   file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
+    // })
 
-    // Update the total progress bar
-    myDropzone.on("totaluploadprogress", function (progress) {
-      document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-    })
+    // // Update the total progress bar
+    // myDropzone.on("totaluploadprogress", function (progress) {
+    //   document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+    // })
 
-    myDropzone.on("sending", function (file) {
-      // Show the total progress bar when upload starts
-      document.querySelector("#total-progress").style.opacity = "1"
-      // And disable the start button
-      file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-    })
+    // myDropzone.on("sending", function (file) {
+    //   // Show the total progress bar when upload starts
+    //   document.querySelector("#total-progress").style.opacity = "1"
+    //   // And disable the start button
+    //   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+    // })
 
-    // Hide the total progress bar when nothing's uploading anymore
-    myDropzone.on("queuecomplete", function (progress) {
-      document.querySelector("#total-progress").style.opacity = "0"
-    })
+    // // Hide the total progress bar when nothing's uploading anymore
+    // myDropzone.on("queuecomplete", function (progress) {
+    //   document.querySelector("#total-progress").style.opacity = "0"
+    // })
 
-    // Setup the buttons for all transfers
-    // The "add files" button doesn't need to be setup because the config
-    // `clickable` has already been specified.
-    document.querySelector("#actions .start").onclick = function () {
-      myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-    }
-    document.querySelector("#actions .cancel").onclick = function () {
-      myDropzone.removeAllFiles(true)
-    }
+    // // Setup the buttons for all transfers
+    // // The "add files" button doesn't need to be setup because the config
+    // // `clickable` has already been specified.
+    // document.querySelector("#actions .start").onclick = function () {
+    //   myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+    // }
+    // document.querySelector("#actions .cancel").onclick = function () {
+    //   myDropzone.removeAllFiles(true)
+    // }
     // DropzoneJS Demo Code End
   </script>
 </body>

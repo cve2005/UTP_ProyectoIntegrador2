@@ -120,8 +120,6 @@ agregarDocumentoButton.addEventListener('click', () => {
   }
   console.log(data)
 
-
-
   //detalle_servicio
   // fdoc_dsFlete
   // fdoc_dsGasExt
@@ -139,24 +137,35 @@ agregarDocumentoButton.addEventListener('click', () => {
 
   //id del documento
   //const doc_id = document.getElementById('fdoc_id').value;
+
+
+
   //para los datos del servicio
   const fdoc_dsFlete = document.getElementById('fdoc_dsFlete').value;
   const fdoc_dsGasExt = document.getElementById('fdoc_dsGasExt').value;
+  const fdoc_dsBLAWB = document.getElementById('fdoc_dsBLAWB').value;
+  const fdoc_dsHandling = document.getElementById('fdoc_dsHandling').value;
+  const fdoc_dsSeguro = document.getElementById('fdoc_dsSeguro').value;
+  const fdoc_dsAgAduanas = document.getElementById('fdoc_dsAgAduanas').value;
+  const fdoc_dsGasOpe = document.getElementById('fdoc_dsGasOpe').value;
+  const fdoc_dsVistoBueno = document.getElementById('fdoc_dsVistoBueno').value;
+  const fdoc_dsGateIn = document.getElementById('fdoc_dsGateIn').value;
+  const fdoc_dsDescon = document.getElementById('fdoc_dsDescon').value;
+  const fdoc_dsAlmacen = document.getElementById('fdoc_dsAlmacen').value;
+  const fdoc_dsTransInt = document.getElementById('fdoc_dsTransInt').value;
+  const fdoc_dsOtros = document.getElementById('fdoc_dsOtros').value;
 
 
-  // const fdoc_dsBLAWB = document.getElementById('fdoc_dsBLAWB').value;
-  // const fdoc_dsHandling = document.getElementById('fdoc_dsHandling').value;
-  // const fdoc_dsSeguro = document.getElementById('fdoc_dsSeguro').value;
-  // const fdoc_dsAgAduanas = document.getElementById('fdoc_dsAgAduanas').value;
-  // const fdoc_dsGasOpe = document.getElementById('fdoc_dsGasOpe').value;
-  // const fdoc_dsVistoBueno = document.getElementById('fdoc_dsVistoBueno').value;
-  // const fdoc_dsGateIn = document.getElementById('fdoc_dsGateIn').value;
-  // const fdoc_dsDescon = document.getElementById('fdoc_dsDescon').value;
-  // const fdoc_dsAlmacen = document.getElementById('fdoc_dsAlmacen').value;
-  // const fdoc_dsTransInt = document.getElementById('fdoc_dsTransInt').value;
-  // const fdoc_dsOtros = document.getElementById('fdoc_dsOtros').value;
-
-
+//para el derecho aduanas
+const fdoc_daValorFOB = document.getElementById('fdoc_daValorFOB').value;
+const fdoc_daValorFlete = document.getElementById('fdoc_daValorFlete').value;
+const fdoc_daSeguro = document.getElementById('fdoc_daSeguro').value;
+const fdoc_daValorCIF = document.getElementById('fdoc_daValorCIF').value;
+const fdoc_daAdValorem = document.getElementById('fdoc_daAdValorem').value;
+const fdoc_daISC = document.getElementById('fdoc_daISC').value;
+const fdoc_daIPM = document.getElementById('fdoc_daIPM').value;
+const fdoc_daIGV = document.getElementById('fdoc_daIGV').value;
+const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
 
   const servicios = [
     {
@@ -167,17 +176,149 @@ agregarDocumentoButton.addEventListener('click', () => {
     },
     {
       // dse_id:,
-      dse_nombre: "GastosExternos",
+      dse_nombre: "GastosExtranjero",
       dse_precio: fdoc_dsGasExt,
       dse_igv: 0,
 
+    },
+    {
+      // dse_id:,
+      dse_nombre: "BL-AWB-CPORTE",
+      dse_precio: fdoc_dsBLAWB,
+      dse_igv: 0,
+
+    },
+    {
+      // dse_id:,
+      dse_nombre: "Handling",
+      dse_precio: fdoc_dsHandling,
+      dse_igv: 0,
+
+    },
+    {
+      // dse_id:,
+      dse_nombre: "Seguro",
+      dse_precio: fdoc_dsSeguro,
+      dse_igv: 0,
+
+    },
+    {
+      // dse_id:,
+      dse_nombre: "AdAduanas",
+      dse_precio: fdoc_dsAgAduanas,
+      dse_igv: 0,
+
+    },
+    {
+      // dse_id:,
+      dse_nombre: "GastosOperativos",
+      dse_precio: fdoc_dsGasOpe,
+      dse_igv: 0,
+
+    },
+    {
+      // dse_id:,
+      dse_nombre: "VistoBueno",
+      dse_precio: fdoc_dsVistoBueno,
+      dse_igv: 0,
+
+    },
+    {
+      // dse_id:,
+      dse_nombre: "GateIN",
+      dse_precio: fdoc_dsGateIn,
+      dse_igv: 0,
+
+    },
+    {
+      // dse_id:,
+      dse_nombre: "Desconsolidacion",
+      dse_precio: fdoc_dsDescon,
+      dse_igv: 0,
+
+    },
+    {
+      // dse_id:,
+      dse_nombre: "Almacen-DAntici",
+      dse_precio: fdoc_dsAlmacen,
+      dse_igv: 0,
+
+    },
+    {
+      // dse_id:,
+      dse_nombre: "TransporteInterno",
+      dse_precio: fdoc_dsTransInt,
+      dse_igv: 0,
+
+    },
+    {
+      // dse_id:,
+      dse_nombre: "OtrosNE",
+      dse_precio: fdoc_dsOtros,
+      dse_igv: 0,
     }
   ]
+
+  const daduanas = [
+    {
+      // dad_id:,
+      dad_nombre: "Valor FOB",
+      dad_precio: fdoc_daValorFOB,
+    },
+    {
+      // dad_id:,
+      dad_nombre: "Valor Flete",
+      dad_precio: fdoc_daValorFlete,
+    },
+    {
+      // dad_id:,
+      dad_nombre: "Seguro",
+      dad_precio: fdoc_daSeguro,
+    },
+    {
+      // dad_id:,
+      dad_nombre: "Valor CIF",
+      dad_precio: fdoc_daValorCIF,
+    },
+    {
+      // dad_id:,
+      dad_nombre: "AdValorem",
+      dad_precio: fdoc_daAdValorem,
+    },
+    {
+      // dad_id:,
+      dad_nombre: "ISC",
+      dad_precio: fdoc_daISC,
+    },
+    {
+      // dad_id:,
+      dad_nombre: "IPM",
+      dad_precio: fdoc_daIPM,
+    },
+    {
+      // dad_id:,
+      dad_nombre: "IGV",
+      dad_precio: fdoc_daIGV,
+    },
+    {
+      // dad_id:,
+      dad_nombre: "Percepcion",
+      dad_precio: fdoc_daPercepcion,
+    },
+  ]
+
+
+
 
   const dato = {
     servicios: servicios
   }
   console.log(dato)
+
+  const date = {
+    daduanas: daduanas
+  }
+  console.log(date)
 
   //Api post para el documento
 
@@ -192,15 +333,27 @@ agregarDocumentoButton.addEventListener('click', () => {
       doc_id: docId
     }));
 
+    const daduanasData = daduanas.map(daduana => ({
+      ...daduana,
+      doc_id: docId
+    }));
+
 
     //Api post detalle servicio
-    console.log("de nuevo estoy imprimiendo dato")
-    console.log(dato)
-
-    conexApi.post(`detalle_servicio`,  serviciosData )
+    conexApi.post(`detalle_servicio`, serviciosData)
       .then((res) => {
         console.log(res);
         console.log('Se agregaron correctamente los datos de los servicios');
+      })
+      .catch((error) => {
+        console.error('Hubo un error al agregar los servicios:', error);
+      });
+
+    //Aqui post detalle aduanas
+    conexApi.post(`derechos_aduanas`, daduanasData)
+      .then((res) => {
+        console.log(res);
+        console.log('Se agregaron correctamente los datos de los derechos');
       })
       .catch((error) => {
         console.error('Hubo un error al agregar los servicios:', error);
