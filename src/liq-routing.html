@@ -414,31 +414,37 @@
                 <div class="col-md-4 my-4">
                   <h3>Detalle de los Gastos</h3>
                   <label class="form-label">Total Ingresos</label>
-                  <input type="text" class="form-control" id="validationCustom05"  required disabled>
+                  <input type="text" class="form-control" id="ftotalIngresos"  required disabled>
                   <label class="form-label">Total Gastos</label>
-                  <input type="text" class="form-control" id="validationCustom05"  required disabled>
+                  <input type="text" class="form-control" id="ftotalGastos"  required disabled>
                   <label class="form-label">Utilidad</label>
-                  <input type="text" class="form-control" id="validationCustom05"  required disabled>
+                  <input type="text" class="form-control" id="futilidad"  required disabled>
                   <label class="form-label">Vendedor</label>
-                  <input type="text" class="form-control" id="validationCustom05"  required disabled>
+                  <input type="text" class="form-control" id="fvendedor"  required disabled>
                   <label class="form-label">Porcentaje</label>
-                  <input type="text" class="form-control" id="validationCustom05"  required disabled>
+                  <input type="text" class="form-control" id="fporcentaje"  required disabled>
                   <label class="form-label">Comisión</label>
-                  <input type="text" class="form-control" id="validationCustom05"  required disabled>
+                  <input type="text" class="form-control" id="fcomision"  required disabled>
+                  
+                  <button type="submit" class="btn btn-info float-right px-5" id="btnCalcular">Calcular</button>
+               
+                  <label class="form-label"></label>
                   <label class="form-label">R.H.E.</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="frhe" required>
                   <label class="form-label">Fecha</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="ffecha" required>
                   <label class="form-label">Banco</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="fbanco" required>
                   <label class="form-label">Operación</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="foperacion" required>
                   <label class="form-label">Estado</label>
-                  <select class="custom-select rounded-0" id="exampleSelectRounded0">
+                  <select class="custom-select rounded-0" id="festadof">
                     <option>Value 1</option>
                     <option>Value 2</option>
                     <option>Value 3</option>
                   </select>
+
+
                 </div>
               </div>
               <!-- FORM-->
@@ -447,7 +453,7 @@
             <!-- /.card-body -->
             <div class="card-footer mt-4">
               <div class="row float-right">
-              <button type="submit" class="btn btn-info float-right px-5 m-3">Actualizar Liquidación</button>
+              <button type="submit" class="btn btn-info float-right px-5 m-3" id="btnActualizarLiquidacion">Actualizar Liquidación</button>
               </div>
               
               <!-- <div class="card-tools">
