@@ -1,15 +1,6 @@
 
 const userInfo =  JSON.parse(sessionStorage.getItem('userInfo'));
-console.log(userInfo);
 
+const nombreSesion = document.getElementById('nombreSesion');
+nombreSesion.textContent = userInfo.cna_user.usu_nombre;
 
-async function cargarSesion(){
-    alert(userInfo.cna_user.usu_id)
-}
-
-
-window.addEventListener('load', function () {
-    if (window.location.href.includes('nuevo-usuario.html')) {
-        cargarSesion();
-    }
-});
