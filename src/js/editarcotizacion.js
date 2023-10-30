@@ -8,8 +8,6 @@ let url = new URL(window.location.href);
 
 // Usar URLSearchParams para obtener el valor de 'miVariable'
 let id = url.searchParams.get("id");
-
-
 async function cargarEditarCotizacion() {
 
   conexApi.get(`documento/?filter[doc_id]=${id}&fields=*.*.*`).then((res) => {
@@ -381,7 +379,7 @@ actualizarDocumentoButton.addEventListener('click', () => {
 
 
     age_id: null,
-    ship_id: null,
+    shipp_id: null,
     esr_id: null,
     doc_routing_id: null,
     doc_total_venta: null,

@@ -187,6 +187,7 @@ actualizarClienteButton.addEventListener('click', () => {
 const actualizarUsuarioButton = document.getElementById('btnActualizarUsuario')
 actualizarUsuarioButton.addEventListener('click', () => {
   const idCliente = document.getElementById('fidCliente').value
+  const fusu_dni = document.getElementById('fusu_dni').value
   const fusu_nombre = document.getElementById('fusu_nombre').value;
   const fusu_apellido = document.getElementById('fusu_apellido').value;
   const fusu_email = document.getElementById('fusu_email').value;
@@ -198,6 +199,7 @@ actualizarUsuarioButton.addEventListener('click', () => {
 
   const data = {
     usu_nombre: fusu_nombre,
+    usu_dni:fusu_dni,
     usu_apellido: fusu_apellido,
     usu_email: fusu_email,
     usu_contrasena: fusu_contrasena,
@@ -223,7 +225,10 @@ async function cargarEditarUsuario() {
     console.log(res)
     const usuario = res.data.data[0]
     console.log(usuario)
+    
+
     document.getElementById('fidCliente').value = usuario.usu_id
+    document.getElementById('fusu_dni').value = usuario.usu_dni
     document.getElementById('fusu_nombre').value = usuario.usu_nombre
     document.getElementById('fusu_apellido').value = usuario.usu_apellido
     document.getElementById('fusu_email').value = usuario.usu_email

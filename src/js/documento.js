@@ -4,7 +4,7 @@ const conexApi = axios.create({
   baseURL: 'https://cna-cms.onrender.com/items/'
 });
 
-const userInfo =  JSON.parse(sessionStorage.getItem('userInfo'));
+const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
 const nombreSesion = document.getElementById('nombreSesion');
 nombreSesion.textContent = userInfo.cna_user.usu_nombre;
@@ -86,7 +86,7 @@ agregarDocumentoButton.addEventListener('click', () => {
   const data = {
     doc_fecha: "2023-10-26",
     cliente_id: fcliente_id,
-    vendedor_id: userInfo.cna_user.usu_id ,
+    vendedor_id: userInfo.cna_user.usu_id,
     top_id: ftop_id,
     mtx_id: fmtx_id,
     doc_incoterm: fdoc_incoterm,
@@ -113,14 +113,12 @@ agregarDocumentoButton.addEventListener('click', () => {
     est_id: fest_id,
 
 
-    age_id: null,
-    ship_id: null,
-    esr_id: null,
+    age_id: 1,
+    shipp_id: 2,
+    esr_id: 1,
     doc_routing_id: null,
     doc_total_venta: null,
     doc_total_costo: null
-
-
 
   }
   console.log(data)
@@ -161,16 +159,57 @@ agregarDocumentoButton.addEventListener('click', () => {
   const fdoc_dsOtros = document.getElementById('fdoc_dsOtros').value;
 
 
-//para el derecho aduanas
-const fdoc_daValorFOB = document.getElementById('fdoc_daValorFOB').value;
-const fdoc_daValorFlete = document.getElementById('fdoc_daValorFlete').value;
-const fdoc_daSeguro = document.getElementById('fdoc_daSeguro').value;
-const fdoc_daValorCIF = document.getElementById('fdoc_daValorCIF').value;
-const fdoc_daAdValorem = document.getElementById('fdoc_daAdValorem').value;
-const fdoc_daISC = document.getElementById('fdoc_daISC').value;
-const fdoc_daIPM = document.getElementById('fdoc_daIPM').value;
-const fdoc_daIGV = document.getElementById('fdoc_daIGV').value;
-const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
+  //para el derecho aduanas
+  const fdoc_daValorFOB = document.getElementById('fdoc_daValorFOB').value;
+  const fdoc_daValorFlete = document.getElementById('fdoc_daValorFlete').value;
+  const fdoc_daSeguro = document.getElementById('fdoc_daSeguro').value;
+  const fdoc_daValorCIF = document.getElementById('fdoc_daValorCIF').value;
+  const fdoc_daAdValorem = document.getElementById('fdoc_daAdValorem').value;
+  const fdoc_daISC = document.getElementById('fdoc_daISC').value;
+  const fdoc_daIPM = document.getElementById('fdoc_daIPM').value;
+  const fdoc_daIGV = document.getElementById('fdoc_daIGV').value;
+  const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
+
+
+  // //para detalle operacion
+  // const frou_doETD = document.getElementById('frou_doETD').value
+  // const frou_doETA = document.getElementById('frou_doETA').value
+  // const frou_doBooking = document.getElementById('frou_doBooking').value
+  // const frou_doContenedor = document.getElementById('frou_doContenedor').value
+  // const frou_doBL = document.getElementById('frou_doBL').value
+  // const frou_doNave = document.getElementById('frou_doNave').value
+  // const frou_doTracking = document.getElementById('frou_doTracking').value
+  // const frou_doGDrive = document.getElementById('frou_doGDrive').value
+
+  //para detalle operacion
+  const frou_doETD = 0
+  const frou_doETA = 0
+  const frou_doBooking = 0
+  const frou_doContenedor = 0
+  const frou_doBL = 0
+  const frou_doNave = 0
+  const frou_doTracking = 0
+  const frou_doGDrive = 0
+
+
+
+  //para detalle pagado
+  const fdpa_dpFlete = 0
+  const fdpa_dpGasExt = 0
+  const fdpa_dpBLAWB = 0
+  const fdpa_dpHandling = 0
+  const fdpa_dpSeguro = 0
+  const fdpa_dpAgAduanas = 0
+  const fdpa_dpGasOpe = 0
+  const fdpa_dpVistoBueno = 0
+  const fdpa_dpGateIn = 0
+  const fdpa_dpDescon = 0
+  const fdpa_dpAlmacen = 0
+  const fdpa_dpTransInt = 0
+  const fdpa_dpOtros = 0
+
+
+
 
   const servicios = [
     {
@@ -312,7 +351,116 @@ const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
     },
   ]
 
+  const operaciones = [
+    {
+      // dop_id:,
+      dop_nombre: "ETD",
+      dop_valor: frou_doETD,
+    },
+    {
+      // dop_id:,
+      dop_nombre: "ETA",
+      dop_valor: frou_doETA,
+    },
+    {
+      // dop_id:,
+      dop_nombre: "Booking",
+      dop_valor: frou_doBooking,
+    },
+    {
+      // dop_id:,
+      dop_nombre: "Contenedor",
+      dop_valor: frou_doContenedor,
+    },
+    {
+      // dop_id:,
+      dop_nombre: "BL/AWB/CP",
+      dop_valor: frou_doBL,
+    },
+    {
+      // dop_id:,
+      dop_nombre: "Nave/Vuelo",
+      dop_valor: frou_doNave,
+    },
+    {
+      // dop_id:,
+      dop_nombre: "Tracking",
+      dop_valor: frou_doTracking,
+    },
+    {
+      // dop_id:,
+      dop_nombre: "GDrive",
+      dop_valor: frou_doGDrive,
+    },
+  ]
 
+  const pagos = [
+    {
+      // dpa_id:,
+      dpa_nombre: "Flete",
+      dpa_pago: fdpa_dpFlete,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "GastosExtranjero",
+      dpa_pago: fdpa_dpGasExt,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "BL-AWB-CPORTE",
+      dpa_pago: fdpa_dpBLAWB,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "Handling",
+      dpa_pago: fdpa_dpHandling,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "Seguro",
+      dpa_pago: fdpa_dpSeguro,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "AdAduanas",
+      dpa_pago: fdpa_dpAgAduanas,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "GastosOperativos",
+      dpa_pago: fdpa_dpGasOpe,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "VistoBueno",
+      dpa_pago: fdpa_dpVistoBueno,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "GateIN",
+      dpa_pago: fdpa_dpGateIn,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "Desconsolidacion",
+      dpa_pago: fdpa_dpDescon,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "Almacen-DAntici",
+      dpa_pago: fdpa_dpAlmacen,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "TransporteInterno",
+      dpa_pago: fdpa_dpTransInt,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "OtrosNE",
+      dpa_pago: fdpa_dpOtros,
+    }
+  ]
 
 
   const dato = {
@@ -325,6 +473,16 @@ const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
   }
   console.log(date)
 
+  const dati = {
+    operaciones: operaciones
+  }
+  console.log(dati)
+
+  const datu = {
+    pagos: pagos
+  }
+  console.log(datu)
+
   //Api post para el documento
 
   conexApi.post(`documento`, data).then((res) => {
@@ -332,6 +490,9 @@ const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
     document.getElementById('fdoc_id').value = res.data.data.doc_id
     console.log('Se agrego correctamente los datos')
     const docId = res.data.data.doc_id
+
+   
+
     //Manejo de la respuesta para los servicios
     const serviciosData = servicios.map(servicio => ({
       ...servicio,
@@ -343,8 +504,16 @@ const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
       doc_id: docId
     }));
 
+    const operacionesData = operaciones.map(operacion => ({
+      ...operacion,
+      doc_id: docId
+    }));
+    const pagosData = pagos.map(pago => ({
+      ...pago,
+      doc_id: docId
+    }));
 
-    //Api post detalle servicio
+    //Api post detalle_servicio
     conexApi.post(`detalle_servicio`, serviciosData)
       .then((res) => {
         console.log(res);
@@ -354,48 +523,45 @@ const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
         console.error('Hubo un error al agregar los servicios:', error);
       });
 
-    //Aqui post detalle aduanas
+    //Aqui post derechos_aduanas
     conexApi.post(`derechos_aduanas`, daduanasData)
       .then((res) => {
         console.log(res);
         console.log('Se agregaron correctamente los datos de los derechos');
       })
       .catch((error) => {
-        console.error('Hubo un error al agregar los servicios:', error);
+        console.error('Hubo un error al agregar los derechos:', error);
       });
+
+
+    //Aqui post detalle_operacion
+    conexApi.post(`detalle_operacion`, operacionesData)
+      .then((res) => {
+        console.log(res);
+        console.log('Se agregaron correctamente los datos de las operaciones');
+      })
+      .catch((error) => {
+        console.error('Hubo un error al agregar las operaciones:', error);
+      });
+
+    //Aqui post detalle_pagos
+    conexApi.post(`detalle_pagado`, pagosData)
+      .then((res) => {
+        console.log(res);
+        console.log('Se agregaron correctamente los datos de los pagos');
+      })
+      .catch((error) => {
+        console.error('Hubo un error al agregar los pagos:', error);
+      });
+
+  
+
+
   })
     .catch((error) => {
       console.error('Hubo un error:', error);
     });
 
-
-
-
-  //esta bien esteeee
-  // conexApi.post(`documento`, data).then((res) => {
-  //   console.log(res)
-  //   document.getElementById('fdoc_id').value = res.data.data.doc_id
-  //   console.log('Se agrego correctamente los datos')
-  //   const docId =document.getElementById('fdoc_id').value
-  // })
-  //   .catch((error) => {
-  //     console.error('Hubo un error:', error);
-  //   });
-
-
-
-  //fin click   
 });
 
 
-
-// //esta bien esteeee
-//   conexApi.post(`documento`, data).then((res) => {
-//     console.log(res)
-//     document.getElementById('fdoc_id').value = res.data.data.doc_id
-//     console.log('Se agrego correctamente los datos')
-//     const docId =document.getElementById('fdoc_id').value
-//   })
-//     .catch((error) => {
-//       console.error('Hubo un error:', error);
-//     });

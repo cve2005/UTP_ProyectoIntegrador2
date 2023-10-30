@@ -71,7 +71,7 @@ async function cargarUsuarios() {
               row.appendChild(createItem(element.usu_apellido));
              
                 //columna acciones
-            const url=""
+            const url="editar-usuario"
             const rol =element.usu_rol
             let nrol
             if(rol==1){
@@ -148,15 +148,16 @@ async function cargarOperacionesVendedor() {
             row.appendChild(createItem(element.doc_id));
             row.appendChild(createItem(element.doc_fecha));
             row.appendChild(createItem(element.cliente_id.emp_id.emp_razon_social));
-            row.appendChild(createItem(element.esr_id));
+            row.appendChild(createItem(element.esr_id.esr_nombre));
             row.appendChild(createItem("-"));
             row.appendChild(createItem("-"));
             row.appendChild(createItem("-"));
             //columena acciones
+            const url="routing"
             const acciones = document.createElement('td');
-            acciones.appendChild(createItemAcction(element.doc_id, VER));
-            acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR));
-            acciones.appendChild(createItemAcction(element.doc_id, EDITAR));
+            acciones.appendChild(createItemAcction(element.doc_id, VER,url));
+            acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR,url));
+            acciones.appendChild(createItemAcction(element.doc_id, EDITAR,url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
         });
@@ -226,6 +227,38 @@ async function cargarShippers() {
     });
 }
 
+async function cargarLiquidaciones(){
+    conexApi.get(`liquidacion?fields=*.*.*.*`).then((res) => {
+        const data = res.data.data;
+        console.log(data);
+
+        const tableBody = document.getElementById('listarLiquidaciones');
+        tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
+        data.forEach((element) => {
+
+            const row = document.createElement('tr');
+            row.appendChild(createItem(element.liq_id));
+            row.appendChild(createItem(element.doc_id.doc_id));
+            row.appendChild(createItem(element.doc_id.cliente_id.emp_id.emp_razon_social));
+            row.appendChild(createItem("-"));
+            row.appendChild(createItem(element.liq_rhe));
+            row.appendChild(createItem(element.liq_fecha));
+            //columena acciones
+            const url="liq-routing"
+            const acciones = document.createElement('td');
+            acciones.appendChild(createItemAcction(element.doc_id.doc_id, VER,url));
+            acciones.appendChild(createItemAcction(element.doc_id.doc_id, DESCARGAR,url));
+            acciones.appendChild(createItemAcction(element.doc_id.doc_id, EDITAR,url));
+            row.appendChild(acciones);
+            tableBody.appendChild(row);
+        
+        });
+        // .catch((error) => {
+        //   console.error('Hubo un error:', error);
+        });
+    
+}
+
 
 const createItem = (value) => {
     const td = document.createElement('td');
@@ -285,6 +318,9 @@ window.addEventListener('load', function () {
     }
     if (window.location.href.includes("listarshippers.html")) {
         cargarShippers();
+    }
+    if (window.location.href.includes("liquidaciones-ven.html")) {
+        cargarLiquidaciones();
     }
 });
 

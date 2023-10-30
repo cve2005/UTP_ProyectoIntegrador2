@@ -45,6 +45,7 @@
   <link rel="stylesheet" href="plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="plugins/dropzone/min/dropzone.min.css">
+  <script src="./js/routing.js" type="module"></script>
 
 </head>
 
@@ -116,7 +117,7 @@
             <img src="extra/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block" id="nombreSesion">Alexander Pierce</a>
           </div>
         </div>
 
@@ -350,70 +351,80 @@
               <div class="row g-2 mx-4">
                 <div class="col-md-4 my-4">
                   <h3>Agente de cargo en el extranjero</h3>
-                  <label class="form-label">Razón Social</label>
+                  <label class="form-label">Id Fiscal</label>
                   <div class="form-inline">
-                    <input class="form-control form-control-navbar col-md-8" type="search" placeholder="Razon Social"
-                      aria-label="Search">
+                    <input type="text" class="form-control" id="fage_id_fiscal">
+                    <input type="text" class="form-control" id="fage_id" hidden="true">
                     <div>
-                      <button class="btn btn-navbar" type="submit">
+                      <button class="btn btn-navbar" id="buscarAgente">
                         <i class="fas fa-search"></i>
                       </button>
                     </div>
                   </div>
+                  <label class="form-label">Razón Social</label>
+                  <input type="text" class="form-control" id="fage_razon_social" required>
                   <label class="form-label">Contacto</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="fage_nombre" required>
                   <label class="form-label">Correo</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="fage_correo" required>
                   <label class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="fage_telefono" required>
                 </div>
                 <div class="col-md-4 my-4">
                   <h3>Shipper / Cliente (Proveedor)</h3>
-                  <label class="form-label">Razón Social</label>
+                  <label class="form-label">Id Fiscal</label>
                   <div class="form-inline">
-                    <input class="form-control form-control-navbar col-md-8" type="search" placeholder="Razon Social"
-                      aria-label="Search">
+                    <input type="text" class="form-control" id="fship_id_fiscal">
+                    <input type="text" class="form-control" id="fship_id" hidden="true">
+
                     <div>
-                      <button class="btn btn-navbar" type="submit">
+                      <button class="btn btn-navbar" id="buscarAgente2">
                         <i class="fas fa-search"></i>
                       </button>
                     </div>
                   </div>
+                  <label class="form-label">Razón Social</label>
+                  <input type="text" class="form-control" id="fship_razon_social" required>
                   <label class="form-label">Contacto</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="fship_nombre" required>
                   <label class="form-label">Correo</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="fship_correo" required>
                   <label class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="fship_telefono" required>
                 </div>
                 <div class="col-md-4 my-4">
-                  <h3>Actualización de estado</h3>
-                  <label class="form-label">Detalle</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
-                  <label class="form-label">Fecha</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <h3>Estado</h3>
+                  <label class="form-label">Estado</label>
+                  <select class="custom-select rounded-0" id="fesr_id">
+                    <option value="1">CREADO</option>
+                    <option value="2">EN CURSO</option>
+                    <option value="3">FINALIZADO</option>
+                  </select>
+                  <!-- <label class="form-label">Fecha</label>
+                  <input type="text" class="form-control" id="validationCustom05" required> -->
                 </div>
                 <div class="col-md-4 my-4">
+      
                   <h3>Detalle de la Operación</h3>
                   <label class="form-label">ETD</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="frou_doETD" required>
                   <label class="form-label">ETA</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="frou_doETA" required>
                   <label class="form-label">Booking</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="frou_doBooking" required>
                   <label class="form-label">#Contenedor</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="frou_doContenedor" required>
                 </div>
                 <div class="col-md-4 my-4">
                   <h3>&nbsp;</h3>
                   <label class="form-label">#BL / AWB / CP</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="frou_doBL" required>
                   <label class="form-label">Nave / Vuelo</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="frou_doNave" required>
                   <label class="form-label">Url Tracking</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="frou_doTracking" required>
                   <label class="form-label">Link Drive</label>
-                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <input type="text" class="form-control" id="frou_doGDrive" required>
                 </div>
               </div>
               <!-- FORM-->
@@ -422,9 +433,9 @@
             <!-- /.card-body -->
             <div class="card-footer mt-2">
               <div class="row float-right">
-              <button type="submit" class="btn btn-info float-right px-5 m-3 ">Finalizar Operación</button>
-              <button type="submit" class="btn btn-info float-right px-5 m-3">Aviso de llegada</button>
-              <button type="submit" class="btn btn-info float-right px-5 m-3">Actualizar Routing</button>
+              <button type="submit" class="btn btn-info float-right px-5 m-3" id="btnGenerarLiquidacion">Generar Liquidación</button>
+               <!--<button type="submit" class="btn btn-info float-right px-5 m-3">Aviso de llegada</button> -->
+              <button type="submit" class="btn btn-info float-right px-5 m-3" id="btnActualizarRouting">Actualizar Routing</button>
               </div>
               
               <!-- <div class="card-tools">
@@ -565,61 +576,61 @@
 
     })
     // BS-Stepper Init
-    document.addEventListener('DOMContentLoaded', function () {
-      window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-    })
+    // document.addEventListener('DOMContentLoaded', function () {
+    //   window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+    // })
 
-    // DropzoneJS Demo Code Start
-    Dropzone.autoDiscover = false
+    // // DropzoneJS Demo Code Start
+    // Dropzone.autoDiscover = false
 
     // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-    var previewNode = document.querySelector("#template")
-    previewNode.id = ""
-    var previewTemplate = previewNode.parentNode.innerHTML
-    previewNode.parentNode.removeChild(previewNode)
+    // var previewNode = document.querySelector("#template")
+    // previewNode.id = ""
+    // var previewTemplate = previewNode.parentNode.innerHTML
+    // previewNode.parentNode.removeChild(previewNode)
 
-    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-      url: "/target-url", // Set the url
-      thumbnailWidth: 80,
-      thumbnailHeight: 80,
-      parallelUploads: 20,
-      previewTemplate: previewTemplate,
-      autoQueue: false, // Make sure the files aren't queued until manually added
-      previewsContainer: "#previews", // Define the container to display the previews
-      clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-    })
+    // var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+    //   url: "/target-url", // Set the url
+    //   thumbnailWidth: 80,
+    //   thumbnailHeight: 80,
+    //   parallelUploads: 20,
+    //   previewTemplate: previewTemplate,
+    //   autoQueue: false, // Make sure the files aren't queued until manually added
+    //   previewsContainer: "#previews", // Define the container to display the previews
+    //   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+    // })
 
-    myDropzone.on("addedfile", function (file) {
-      // Hookup the start button
-      file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
-    })
+    // myDropzone.on("addedfile", function (file) {
+    //   // Hookup the start button
+    //   file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
+    // })
 
-    // Update the total progress bar
-    myDropzone.on("totaluploadprogress", function (progress) {
-      document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-    })
+    // // Update the total progress bar
+    // myDropzone.on("totaluploadprogress", function (progress) {
+    //   document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+    // })
 
-    myDropzone.on("sending", function (file) {
-      // Show the total progress bar when upload starts
-      document.querySelector("#total-progress").style.opacity = "1"
-      // And disable the start button
-      file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-    })
+    // myDropzone.on("sending", function (file) {
+    //   // Show the total progress bar when upload starts
+    //   document.querySelector("#total-progress").style.opacity = "1"
+    //   // And disable the start button
+    //   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+    // })
 
-    // Hide the total progress bar when nothing's uploading anymore
-    myDropzone.on("queuecomplete", function (progress) {
-      document.querySelector("#total-progress").style.opacity = "0"
-    })
+    // // Hide the total progress bar when nothing's uploading anymore
+    // myDropzone.on("queuecomplete", function (progress) {
+    //   document.querySelector("#total-progress").style.opacity = "0"
+    // })
 
-    // Setup the buttons for all transfers
-    // The "add files" button doesn't need to be setup because the config
-    // `clickable` has already been specified.
-    document.querySelector("#actions .start").onclick = function () {
-      myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-    }
-    document.querySelector("#actions .cancel").onclick = function () {
-      myDropzone.removeAllFiles(true)
-    }
+    // // Setup the buttons for all transfers
+    // // The "add files" button doesn't need to be setup because the config
+    // // `clickable` has already been specified.
+    // document.querySelector("#actions .start").onclick = function () {
+    //   myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+    // }
+    // document.querySelector("#actions .cancel").onclick = function () {
+    //   myDropzone.removeAllFiles(true)
+    // }
     // DropzoneJS Demo Code End
   </script>
 </body>
