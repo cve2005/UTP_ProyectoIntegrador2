@@ -171,14 +171,6 @@ actualizarDocumentoButton.addEventListener('click', () => {
   }
 
 
-
- 
-
-
-
-
-
-
   //para el documento
   //const fdoc_fecha = document.getElementById('fdoc_fecha').value;
   const fcliente_id = document.getElementById('fcliente_id').value;
@@ -440,6 +432,7 @@ actualizarDocumentoButton.addEventListener('click', () => {
     .then((res) => {
       console.log(res);
       console.log('Se actualizaron correctamente los datos del documento');
+      alert("Se actualizó el documento con exito")
     })
     .catch((error) => {
       console.error('Hubo un error al actualizar el documento:', error);

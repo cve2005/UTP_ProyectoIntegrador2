@@ -370,9 +370,10 @@
 
                 <div class="col-md-6">
                   <label for="validationCustom02" class="form-label">RUC</label>
+                  <input type="text" class="form-control" id="fruc" required>
+
                   <div class="form-inline">
-                    <input class="form-control form-control-navbar col-md-8" type="search" placeholder="RUC"
-                      aria-label="Search" id="fruc">
+                   
                     <div>
                       <!-- <button class="btn btn-navbar" id="btnBuscarEmpresa">
                         <i class="fas fa-search"></i>
@@ -421,8 +422,7 @@
                 <div class="col-md-4">
                   <label> DNI</label>
                   <div class="form-inline">
-                    <input class="form-control form-control-navbar col-md-6" type="search" placeholder="DNI"
-                      aria-label="Search" id="fusu_dni">
+                    <input type="text" class="form-control" id="fusu_dni" required>
                     <!-- <button class="btn btn-navbar" id="btnBuscarCliente">
                       <i class="fas fa-search"></i>
                     </button>
@@ -443,7 +443,7 @@
 
                 <div class="col-md-4">
                   <label> Celular</label>
-                  <input type="text" class="form-control" id="fusu_telefono" required>
+                  <input type="text" class="form-control" id="fusu_celular" required>
                 </div>
                 <input type="text" class="form-control" id="fidcliente" hidden="true" required>
                 <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->
@@ -469,6 +469,9 @@
       <!-- /.content -->
     </div>
     <button type="button" id="btnActualizarUsuario" hidden="true">Actualizar Usuario</button>
+    <button type="button" id="btnBuscarEmpresa" hidden="true">Actualizar Usuario</button>
+    
+    <button type="button" id="btnAgregarEmpresa" hidden="true">Actualizar Usuario</button>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">

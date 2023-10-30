@@ -4,6 +4,11 @@ const conexApi = axios.create({
   baseURL: 'https://cna-cms.onrender.com/items/'
 });
 
+let url = new URL(window.location.href);
+
+// Usar URLSearchParams para obtener el valor de 'miVariable'
+let id = url.searchParams.get("id");
+
 //Agregar empresa
 const agregarButton = document.getElementById('btnAgregarEmpresa')
 agregarButton.addEventListener('click', () => {
@@ -58,38 +63,71 @@ buscarButton.addEventListener('click', () => {
 const agregarUsuarioButton = document.getElementById('btnRegistrarUsuario')
 agregarUsuarioButton.addEventListener('click', () => {
   const fusu_nombre = document.getElementById('fusu_nombre').value;
-  const fid_empresa = document.getElementById('fidEmpresa').value;
+  //const fid_empresa = document.getElementById('fidEmpresa').value;
   const fusu_apellido = document.getElementById('fusu_apellido').value;
   const fusu_dni = document.getElementById('fusu_dni').value;
   const fusu_email = document.getElementById('fusu_email').value;
-  const fusu_contrasena = document.getElementById('fusu_dni').value;
+  //const fusu_contrasena = document.getElementById('fusu_dni').value;
   //const fusu_contrasena = document.getElementById('fusu_contrasena').value;
   const fusu_telefono = document.getElementById('fusu_telefono').value;
   const fusu_direccion = document.getElementById('fusu_direccion').value;
-  const fusu_rol =5;
+  //const fusu_rol =5;
 
   //const fusu_comision =document.getElementById('fusu_comision').value;
-  const fusu_comision = 0;
+  //const fusu_comision = 0;
 
 
   const data = {
     usu_nombre: fusu_nombre,
-    emp_id: fid_empresa,
     usu_apellido: fusu_apellido,
     usu_dni: fusu_dni,
     usu_email: fusu_email,
-    usu_contrasena: fusu_contrasena,
+    //usu_contrasena: fusu_contrasena,
     usu_telefono: fusu_telefono,
     usu_direccion: fusu_direccion,
-    usu_rol: fusu_rol,
-    usu_comision: fusu_comision
+    //usu_rol: fusu_rol,
+    //usu_comision: fusu_comision
   }
   console.log(data)
 
-  conexApi.post(`usuario`, data).then((res) => {
+  conexApi.patch(`usuario/${id}`, data).then((res) => {
     console.log('Se agrego correctamente los datos')
   })
     .catch((error) => {
       console.error('Hubo un error:', error);
     });
 });
+
+async function cargarEditarUsuarios() {
+  conexApi.get(`usuario?filter[usu_id]=${id}&fields=*.*`).then((res) => {
+    const usuario = res.data.data[0]
+    console.log(usuario)
+    
+    document.getElementById('frazonSocial').value = usuario.emp_id.emp_razon_social
+    document.getElementById('fruc').value = usuario.emp_id.emp_ruc
+    document.getElementById('fusu_telefono').value = usuario.emp_id.emp_telefono
+    document.getElementById('fusu_direccion').value = usuario.emp_id.emp_direccion
+    document.getElementById('fidEmpresa').value = usuario.emp_id.emp_id.emp_id
+   // document.getElementById('fidCliente').value = usuario.usu_id
+    document.getElementById('fusu_dni').value = usuario.usu_dni
+    document.getElementById('fusu_nombre').value = usuario.usu_nombre
+    document.getElementById('fusu_apellido').value = usuario.usu_apellido
+    document.getElementById('fusu_email').value = usuario.usu_email
+    //document.getElementById('fusu_contrasena').value = usuario.usu_contrasena
+    document.getElementById('fusu_celular').value = usuario.usu_telefono
+    document.getElementById('fusu_direccion').value = usuario.usu_direccion
+   // document.getElementById('selectRolUsuario').value = usuario.usu_rol
+   // document.getElementById('fusu_comision').value = usuario.usu_comision
+
+  })
+    .catch((error) => {
+      console.error('Hubo un error:', error);
+    });
+}
+
+window.addEventListener('load', function () {
+  if (window.location.href.includes('editar-usuario.html')) {
+    cargarEditarUsuarios();
+  }
+});
+

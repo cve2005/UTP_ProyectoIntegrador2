@@ -548,7 +548,7 @@ agregarDocumentoButton.addEventListener('click', () => {
         console.error('Hubo un error al agregar los pagos:', error);
       });
 
-  
+      alert("Se registró el documento con éxito")
 
 
   })
