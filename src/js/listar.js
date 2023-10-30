@@ -19,13 +19,30 @@ async function cargarUsuariosAdmin() {
         data.forEach((element) => {
             const row = document.createElement('tr');
 
-         
               row.appendChild(createItem(element.usu_id));
               row.appendChild(createItem(element.usu_nombre));
               row.appendChild(createItem(element.usu_apellido));
-              row.appendChild(createItem(element.usu_rol));
+              const rol =element.usu_rol
+              let nrol
+              if(rol==1){
+                nrol="ADMINISTRADOR"
+              }
+              if(rol==2){
+                nrol="VENDEDOR"
+              }
+              if(rol==3){
+                nrol= "OPERATIVO"
+              }
+              if(rol==4){
+                nrol="CONTADOR"
+              }
+              if(rol==5){
+                nrol="CLIENTE"
+              }
+
+              row.appendChild(createItem(nrol));
                 //columna acciones
-            const url=""
+            const url="adm-editar-usuario"
 
                 const acciones = document.createElement('td');
                 acciones.appendChild(createItemAcction(element.usu_id, VER,url));
@@ -52,10 +69,27 @@ async function cargarUsuarios() {
             row.appendChild(createItem(element.usu_id));
               row.appendChild(createItem(element.usu_nombre));
               row.appendChild(createItem(element.usu_apellido));
-              row.appendChild(createItem(element.usu_rol));
+             
                 //columna acciones
             const url=""
-
+            const rol =element.usu_rol
+            let nrol
+            if(rol==1){
+              nrol="ADMINISTRADOR"
+            }
+            if(rol==2){
+              nrol="VENDEDOR"
+            }
+            if(rol==3){
+              nrol= "OPERATIVO"
+            }
+            if(rol==4){
+              nrol="CONTADOR"
+            }
+            if(rol==5){
+              nrol="CLIENTE"
+            }
+            row.appendChild(createItem(nrol));
             const acciones = document.createElement('td');
             acciones.appendChild(createItemAcction(element.usu_id, VER,url));
             acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
@@ -104,7 +138,7 @@ async function cargarCotizacionesVendedor() {
 
 //listar operaciones del vendedor
 async function cargarOperacionesVendedor() {
-    conexApi.get(`documento?filter[est_id]=2`).then((res) => {
+    conexApi.get(`documento?filter[est_id]=2&fields=*.*.*`).then((res) => {
         const data = res.data.data;
         const tableBody = document.getElementById('listarOperacionesVendedor');
         tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
@@ -113,11 +147,11 @@ async function cargarOperacionesVendedor() {
             const row = document.createElement('tr');
             row.appendChild(createItem(element.doc_id));
             row.appendChild(createItem(element.doc_fecha));
-            row.appendChild(createItem(element.cliente_id));
-            row.appendChild(createItem(element.cliente_id));
-            row.appendChild(createItem(element.cliente_id));
-            row.appendChild(createItem(element.cliente_id));
-            row.appendChild(createItem(element.est_id));
+            row.appendChild(createItem(element.cliente_id.emp_id.emp_razon_social));
+            row.appendChild(createItem(element.esr_id));
+            row.appendChild(createItem("-"));
+            row.appendChild(createItem("-"));
+            row.appendChild(createItem("-"));
             //columena acciones
             const acciones = document.createElement('td');
             acciones.appendChild(createItemAcction(element.doc_id, VER));

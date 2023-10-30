@@ -4,6 +4,11 @@ const conexApi = axios.create({
   baseURL: 'https://cna-cms.onrender.com/items/'
 });
 
+const userInfo =  JSON.parse(sessionStorage.getItem('userInfo'));
+
+const nombreSesion = document.getElementById('nombreSesion');
+nombreSesion.textContent = userInfo.cna_user.usu_nombre;
+
 
 //Buscar cliente y empresa
 const buscarClienteButton = document.getElementById('btnBuscarCliente')
@@ -81,7 +86,7 @@ agregarDocumentoButton.addEventListener('click', () => {
   const data = {
     doc_fecha: "2023-10-26",
     cliente_id: fcliente_id,
-    vendedor_id: 2,
+    vendedor_id: userInfo.cna_user.usu_id ,
     top_id: ftop_id,
     mtx_id: fmtx_id,
     doc_incoterm: fdoc_incoterm,
