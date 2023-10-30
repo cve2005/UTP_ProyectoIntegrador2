@@ -91,28 +91,22 @@ agregarDocumentoButton.addEventListener('click', () => {
     mtx_id: fmtx_id,
     doc_incoterm: fdoc_incoterm,
     doc_tcarga: fdoc_tcarga,
-
     pais_origen_id: fpais_origen_id,
     doc_puerto_ori: fdoc_puerto_ori,
     doc_recojo: fdoc_recojo,
-
     pais_destino_id: fpais_destino_id,
     doc_puerto_dest: fdoc_puerto_dest,
     doc_entrega: fdoc_entrega,
-
     doc_producto: fdoc_producto,
     doc_bultos: fdoc_bultos,
     doc_medidas: fdoc_medidas,
     doc_peso: fdoc_peso,
     doc_volumen: fdoc_volumen,
-
     doc_pago: fdoc_pago,
     doc_moneda: fdoc_moneda,
     doc_validez: fdoc_validez,
     doc_cotizacion_notas: fdoc_cotizacion_notas,
     est_id: fest_id,
-
-
     age_id: 1,
     shipp_id: 2,
     esr_id: 1,
