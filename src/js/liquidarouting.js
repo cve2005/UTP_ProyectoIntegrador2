@@ -8,6 +8,8 @@ let url = new URL(window.location.href);
 
 // Usar URLSearchParams para obtener el valor de 'miVariable'
 let id = url.searchParams.get("id");
+let pagosG
+
 async function cargarEditarLiquidacion() {
   conexApi.get(`detalle_servicio?filter[doc_id]=${id}`).then((res) => {
     const servicios = res.data.data
@@ -33,6 +35,7 @@ async function cargarEditarLiquidacion() {
 
   conexApi.get(`detalle_pagado?filter[doc_id]=${id}`).then((res) => {
     const pagos = res.data.data
+    pagosG = pagos
     console.log(pagos)
     // //para detalle pagado
     document.getElementById('fdpa_dpFlete').value = pagos[0].dpa_pago
@@ -58,11 +61,23 @@ async function cargarEditarLiquidacion() {
   conexApi.get(`documento?filter[doc_id]=${id}&fields=*.*.*`).then((res) => {
     const doc = res.data.data[0]
     console.log(doc)
-
-
     document.getElementById('fvendedor').value = doc.cliente_id.emp_id.emp_razon_social
     document.getElementById('fporcentaje').value = doc.cliente_id.usu_comision
+  })
+    .catch((error) => {
+      console.error('Hubo un error:', error);
+    });
 
+  //Traer liquidacion
+  conexApi.get(`liquidacion?filter[doc_id]=${id}`).then((res) => {
+    const liq = res.data.data[0]
+    console.log(liq)
+    document.getElementById('fdpa_id').value = liq.liq_id
+
+    document.getElementById('frhe').value = liq.liq_rhe
+    document.getElementById('ffecha').value = liq.liq_fecha
+    document.getElementById('fbanco').value = liq.liq_banco
+    document.getElementById('foperacion').value = liq.liq_operacion
   })
     .catch((error) => {
       console.error('Hubo un error:', error);
@@ -71,9 +86,9 @@ async function cargarEditarLiquidacion() {
 }
 
 
-//Actualizar cliente
-const actualizarClienteButton = document.getElementById('btnCalcular')
-actualizarClienteButton.addEventListener('click', () => {
+//Calcular
+const calcularButton = document.getElementById('btnCalcular')
+calcularButton.addEventListener('click', () => {
   //detalle servicios
   const fdoc_dsFlete = document.getElementById('fdoc_dsFlete').value
   const fdoc_dsGasExt = document.getElementById('fdoc_dsGasExt').value
@@ -148,6 +163,179 @@ actualizarClienteButton.addEventListener('click', () => {
   }
   calcular()
 })
+
+
+//Actualizar liquidacion
+const actualizarLiquidacionButton = document.getElementById('btnActualizarLiquidacion')
+actualizarLiquidacionButton.addEventListener('click', () => {
+
+  const fliq_rhe = document.getElementById('frhe').value
+  const fliq_fecha = document.getElementById('ffecha').value
+  const fliq_banco = document.getElementById('fbanco').value
+  const fliq_operacion = document.getElementById('foperacion').value
+
+  const data = {
+    liq_rhe: fliq_rhe,
+    liq_fecha: fliq_fecha,
+    liq_banco: fliq_banco,
+    liq_operacion: fliq_operacion
+  }
+
+  console.log(data)
+  // //Patch Liquidacion
+  const id_liq = document.getElementById('fdpa_id').value
+  //console.log(id_liq)
+  conexApi.patch(`liquidacion/${id_liq}`, data).then((res) => {
+    console.log(res)
+  })
+    .catch((error) => {
+      console.error('Hubo un error:', error);
+    });
+
+  //para el documento
+  // "doc_total_venta": null,
+  // "doc_total_costo": null,
+
+
+  const ftotalIngresos = document.getElementById('ftotalIngresos').value
+  const ftotalGastos = document.getElementById('ftotalGastos').value
+
+  const dato = {
+    doc_total_venta: ftotalIngresos,
+    doc_total_costo: ftotalGastos,
+  }
+
+
+  conexApi.patch(`documento/${id}`, dato).then((res) => {
+    console.log(res)
+    console.log
+  })
+    .catch((error) => {
+      console.error('Hubo un error:', error);
+    });
+
+
+
+
+  //eliminar detalle_pagos
+  for (var e = pagosG[0].dpa_id; e <= pagosG[12].dpa_id; e++) {
+    console.log(e)
+    conexApi.delete(`detalle_pagado/${e}`)
+      .then(response => {
+        console.log('Registro eliminado con éxito:' + e, response.data);
+      })
+      .catch(error => {
+        console.error('Error al elimnar el registro:', error);
+      });
+
+    //ternmina for
+  }
+
+  //para editar los pagos
+  const fdpa_dpFlete = document.getElementById('fdpa_dpFlete').value
+  const fdpa_dpGasExt = document.getElementById('fdpa_dpGasExt').value
+  const fdpa_dpBLAWB = document.getElementById('fdpa_dpBLAWB').value
+  const fdpa_dpHandling = document.getElementById('fdpa_dpHandling').value
+  const fdpa_dpSeguro = document.getElementById('fdpa_dpSeguro').value
+  const fdpa_dpAgAduanas = document.getElementById('fdpa_dpAgAduanas').value
+  const fdpa_dpGasOpe = document.getElementById('fdpa_dpGasOpe').value
+  const fdpa_dpVistoBueno = document.getElementById('fdpa_dpVistoBueno').value
+  const fdpa_dpGateIn = document.getElementById('fdpa_dpGateIn').value
+  const fdpa_dpDescon = document.getElementById('fdpa_dpDescon').value
+  const fdpa_dpAlmacen = document.getElementById('fdpa_dpAlmacen').value
+  const fdpa_dpTransInt = document.getElementById('fdpa_dpTransInt').value
+  const fdpa_dpOtros = document.getElementById('fdpa_dpOtros').value
+
+  const pagos = [
+    {
+      // dpa_id:,
+      dpa_nombre: "Flete",
+      dpa_pago: fdpa_dpFlete,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "GastosExtranjero",
+      dpa_pago: fdpa_dpGasExt,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "BL-AWB-CPORTE",
+      dpa_pago: fdpa_dpBLAWB,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "Handling",
+      dpa_pago: fdpa_dpHandling,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "Seguro",
+      dpa_pago: fdpa_dpSeguro,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "AdAduanas",
+      dpa_pago: fdpa_dpAgAduanas,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "GastosOperativos",
+      dpa_pago: fdpa_dpGasOpe,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "VistoBueno",
+      dpa_pago: fdpa_dpVistoBueno,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "GateIN",
+      dpa_pago: fdpa_dpGateIn,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "Desconsolidacion",
+      dpa_pago: fdpa_dpDescon,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "Almacen-DAntici",
+      dpa_pago: fdpa_dpAlmacen,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "TransporteInterno",
+      dpa_pago: fdpa_dpTransInt,
+    },
+    {
+      // dpa_id:,
+      dpa_nombre: "OtrosNE",
+      dpa_pago: fdpa_dpOtros,
+    }
+  ]
+
+  const datu = {
+    pagos: pagos
+  }
+  console.log(datu)
+  const pagosData = pagos.map(pago => ({
+    ...pago,
+    doc_id: id
+  }));
+
+  console.log(pagosData)
+
+  //Aqui post detalle_pagos
+  conexApi.post(`detalle_pagado`, pagosData)
+    .then((res) => {
+      console.log(res);
+      console.log('Se agregaron correctamente los datos de los pagos');
+    })
+    .catch((error) => {
+      console.error('Hubo un error al agregar los pagos:', error);
+    });
+})
+
 
 
 window.addEventListener('load', function () {
