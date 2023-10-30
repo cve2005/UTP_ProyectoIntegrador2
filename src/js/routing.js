@@ -252,6 +252,7 @@ generarLiquidacionButton.addEventListener('click', () => {
         .then((res) => {
             console.log(res);
             console.log('Se agregaron correctamente los datos de la liquidacion');
+            alert("Se generó la liquidación")
         })
         .catch((error) => {
             console.error('Hubo un error al agregar la liquidacion', error);

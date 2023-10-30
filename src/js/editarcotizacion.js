@@ -112,7 +112,27 @@ window.addEventListener('load', function () {
   }
 });
 
+ //Generar routing
+  
+ const generarRoutingButton = document.getElementById('btnGenerarRouting')
+ generarRoutingButton.addEventListener('click', () => { 
 
+  
+   const data={
+     est_id:2,
+   }
+   conexApi.patch(`documento/${id}`, data)
+   .then((res) => {
+     console.log(res);
+     alert("Se generó el routing")
+     console.log('Se actualizaron correctamente los datos del documento');
+   })
+   .catch((error) => {
+     console.error('Hubo un error al actualizar el documento:', error);
+   });
+   
+
+ })
 
 
 
@@ -149,6 +169,14 @@ actualizarDocumentoButton.addEventListener('click', () => {
 
     //ternmina for
   }
+
+
+
+ 
+
+
+
+
 
 
   //para el documento
