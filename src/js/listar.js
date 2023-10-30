@@ -45,8 +45,8 @@ async function cargarUsuariosAdmin() {
             const url="adm-editar-usuario"
 
                 const acciones = document.createElement('td');
-                acciones.appendChild(createItemAcction(element.usu_id, VER,url));
-                acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
+                // acciones.appendChild(createItemAcction(element.usu_id, VER,url));
+                // acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
                 acciones.appendChild(createItemAcction(element.usu_id, EDITAR,url));
                 row.appendChild(acciones);
          
@@ -91,8 +91,8 @@ async function cargarUsuarios() {
             }
             row.appendChild(createItem(nrol));
             const acciones = document.createElement('td');
-            acciones.appendChild(createItemAcction(element.usu_id, VER,url));
-            acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
+            // acciones.appendChild(createItemAcction(element.usu_id, VER,url));
+            // acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
             acciones.appendChild(createItemAcction(element.usu_id, EDITAR,url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
@@ -123,8 +123,8 @@ async function cargarCotizacionesVendedor() {
             const url="editar_cot"
 
             const acciones = document.createElement('td');
-            acciones.appendChild(createItemAcction(element.doc_id, VER,url));
-            acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR,url));
+            // acciones.appendChild(createItemAcction(element.doc_id, VER,url));
+            // acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR,url));
             acciones.appendChild(createItemAcction(element.doc_id, EDITAR,url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
@@ -155,8 +155,8 @@ async function cargarOperacionesVendedor() {
             //columena acciones
             const url="routing"
             const acciones = document.createElement('td');
-            acciones.appendChild(createItemAcction(element.doc_id, VER,url));
-            acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR,url));
+            // acciones.appendChild(createItemAcction(element.doc_id, VER,url));
+            // acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR,url));
             acciones.appendChild(createItemAcction(element.doc_id, EDITAR,url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
@@ -185,8 +185,8 @@ async function cargarAgentes() {
             //columena acciones
             const url="editar-agente"
             const acciones = document.createElement('td');
-            acciones.appendChild(createItemAcction(element.age_id, VER,url));
-            acciones.appendChild(createItemAcction(element.age_id, DESCARGAR,url));
+            // acciones.appendChild(createItemAcction(element.age_id, VER,url));
+            // acciones.appendChild(createItemAcction(element.age_id, DESCARGAR,url));
             acciones.appendChild(createItemAcction(element.age_id, EDITAR,url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
@@ -215,8 +215,8 @@ async function cargarShippers() {
             //columena acciones
             const url="editar-shipper"
             const acciones = document.createElement('td');
-            acciones.appendChild(createItemAcction(element.age_id, VER,url));
-            acciones.appendChild(createItemAcction(element.age_id, DESCARGAR,url));
+            // acciones.appendChild(createItemAcction(element.age_id, VER,url));
+            // acciones.appendChild(createItemAcction(element.age_id, DESCARGAR,url));
             acciones.appendChild(createItemAcction(element.age_id, EDITAR,url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
@@ -246,8 +246,8 @@ async function cargarLiquidaciones(){
             //columena acciones
             const url="liq-routing"
             const acciones = document.createElement('td');
-            acciones.appendChild(createItemAcction(element.doc_id.doc_id, VER,url));
-            acciones.appendChild(createItemAcction(element.doc_id.doc_id, DESCARGAR,url));
+            // acciones.appendChild(createItemAcction(element.doc_id.doc_id, VER,url));
+            // acciones.appendChild(createItemAcction(element.doc_id.doc_id, DESCARGAR,url));
             acciones.appendChild(createItemAcction(element.doc_id.doc_id, EDITAR,url));
             row.appendChild(acciones);
             tableBody.appendChild(row);

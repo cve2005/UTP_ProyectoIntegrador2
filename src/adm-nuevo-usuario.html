@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CNA | Dashboard</title>
+  <title>CNA | Nuevo Usuario</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -122,6 +122,8 @@
         </div>
         <div class="info">
           <a href="#" class="d-block" id="nombreSesion"></a>
+          <a href="#" class="d-block" id="estadoSesion"></a>
+
         </div>
       </div>
 
@@ -131,7 +133,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Inicio
@@ -273,7 +275,7 @@
               </li>
             </ul>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="#" class="nav-link active">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
                   Usuarios
@@ -313,12 +315,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Usuario</h1>
+              <h1 class="m-0">Nuevo Usuario</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                <li class="breadcrumb-item active">Usuario</li>
+                <li class="breadcrumb-item active">Nuevo Usuario</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -333,7 +335,7 @@
         <div class="container-fluid">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title" id="cabeceraCliente">Usuario</h3>
+              <h3 class="card-title" id="cabeceraCliente">Nuevo Usuario</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -432,9 +434,8 @@
               <div class="card-footer mt-4">
                 <button type="button" class="btn btn-info float-right px-5" id="btnRegistrarUsuario">Registrar Usuario</button>
               </div>
-              <div class="card-footer mt-4">
-                <button type="button" class="btn btn-info float-right px-5" id="btnActualizarUsuario" hidden="true">Actualizar Usuario</button>
-              </div>
+           
+             
                         <!-- <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -454,6 +455,8 @@
       </section>
       <!-- /.content -->
     </div>
+    <button type="button" id="btnActualizarUsuario" hidden="true">Actualizar Usuario</button>
+
     <!-- /.content-wrapper -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">
