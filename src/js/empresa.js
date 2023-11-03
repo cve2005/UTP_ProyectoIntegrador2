@@ -10,12 +10,8 @@ let url = new URL(window.location.href);
 
 // Usar URLSearchParams para obtener el valor de 'miVariable'
 let id = url.searchParams.get("id");
-
-
-
-
-  const nombreSesion = document.getElementById('nombreSesion');
-  nombreSesion.textContent = userInfo.cna_user.usu_nombre;
+const nombreSesion = document.getElementById('nombreSesion');
+nombreSesion.textContent = userInfo.cna_user.usu_nombre;
 
 
 
@@ -39,15 +35,6 @@ buscarButton.addEventListener('click', () => {
     });
 });
 
-
-
-
-
-//1 administrador
-//2 vendedor
-//3 Operativo
-//4 contador
-//5 cliente
 
 //Agregar usuario
 const agregarUsuarioButton = document.getElementById('btnRegistrarUsuario')
@@ -199,7 +186,7 @@ actualizarUsuarioButton.addEventListener('click', () => {
 
   const data = {
     usu_nombre: fusu_nombre,
-    usu_dni:fusu_dni,
+    usu_dni: fusu_dni,
     usu_apellido: fusu_apellido,
     usu_email: fusu_email,
     usu_contrasena: fusu_contrasena,
@@ -225,7 +212,7 @@ async function cargarEditarUsuario() {
     console.log(res)
     const usuario = res.data.data[0]
     console.log(usuario)
-    
+
 
     document.getElementById('fidCliente').value = usuario.usu_id
     document.getElementById('fusu_dni').value = usuario.usu_dni
@@ -252,10 +239,3 @@ window.addEventListener('load', function () {
     cargarEditarUsuario();
   }
 });
-
-
-
-
-
-
-

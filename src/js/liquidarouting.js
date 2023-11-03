@@ -82,9 +82,7 @@ async function cargarEditarLiquidacion() {
     .catch((error) => {
       console.error('Hubo un error:', error);
     });
-
 }
-
 
 //Calcular
 const calcularButton = document.getElementById('btnCalcular')
@@ -163,7 +161,6 @@ calcularButton.addEventListener('click', () => {
   }
   calcular()
 })
-
 
 //Actualizar liquidacion
 const actualizarLiquidacionButton = document.getElementById('btnActualizarLiquidacion')

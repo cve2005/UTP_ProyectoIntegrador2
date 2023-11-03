@@ -165,16 +165,6 @@ agregarDocumentoButton.addEventListener('click', () => {
   const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
 
 
-  // //para detalle operacion
-  // const frou_doETD = document.getElementById('frou_doETD').value
-  // const frou_doETA = document.getElementById('frou_doETA').value
-  // const frou_doBooking = document.getElementById('frou_doBooking').value
-  // const frou_doContenedor = document.getElementById('frou_doContenedor').value
-  // const frou_doBL = document.getElementById('frou_doBL').value
-  // const frou_doNave = document.getElementById('frou_doNave').value
-  // const frou_doTracking = document.getElementById('frou_doTracking').value
-  // const frou_doGDrive = document.getElementById('frou_doGDrive').value
-
   //para detalle operacion
   const frou_doETD = 0
   const frou_doETA = 0
@@ -485,7 +475,7 @@ agregarDocumentoButton.addEventListener('click', () => {
     console.log('Se agrego correctamente los datos')
     const docId = res.data.data.doc_id
 
-   
+
 
     //Manejo de la respuesta para los servicios
     const serviciosData = servicios.map(servicio => ({
@@ -548,7 +538,7 @@ agregarDocumentoButton.addEventListener('click', () => {
         console.error('Hubo un error al agregar los pagos:', error);
       });
 
-      alert("Se registró el documento con éxito")
+    alert("Se registró el documento con éxito")
 
 
   })
