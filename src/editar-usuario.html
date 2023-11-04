@@ -354,7 +354,7 @@
             <div class="card-body">
 
               <!-- FORM -->
-              <div class="row g-2 mx-3">
+              <div class="row g-2 mx-4">
                 <div class="col-md-12">
                   <br>
                   <h4> Datos de la empresa</h4>
@@ -366,111 +366,99 @@
                 </div>
                 <!--Formulario busqueda RUC -->
 
-
-
                 <div class="col-md-6">
                   <label for="validationCustom02" class="form-label">RUC</label>
-                  <input type="text" class="form-control" id="fruc" required>
-
                   <div class="form-inline">
-                   
+                    <input class="form-control form-control-navbar col-md-8" type="search" placeholder="RUC"
+                      aria-label="Search" id="fruc">
                     <div>
-                      <!-- <button class="btn btn-navbar" id="btnBuscarEmpresa">
+                      <button class="btn btn-navbar" id="btnBuscarEmpresa">
                         <i class="fas fa-search"></i>
                       </button>
-                      <button class="btn btn-navbar" id="btnBuscarUsuario" hidden="true">
-                        <i class="fas fa-search"></i>
-                      </button> -->
-
-                      <!-- <button class="btn btn-navbar" id="btnAgregarEmpresa">
+                      <button class="btn btn-navbar" id="btnAgregarEmpresa">
                         <i class="fas fa-solid fa-plus"></i>
-                      </button> -->
+                      </button>
                     </div>
                   </div>
                 </div>
+              
 
 
-                <div class="col-md-8">
-                  <label for="validationCustom03" class="form-label">Dirección</label>
-                  <input type="text" class="form-control" id="fusu_direccion" required>
-                </div>
-                <div class="col-md-4">
-                  <label for="validationCustom05" class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="fusu_telefono" required>
-
-                </div>
-                <input type="text" class="form-control" id="fidEmpresa" hidden="true" required>
+              <div class="col-md-6">
+                <label for="validationCustom03" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="fusu_direccion" required>
               </div>
+
+              <div class="col-md-4">
+                <label for="validationCustom05" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="fusu_telefono" required>
+              </div>
+              <input type="text" class="form-control" id="fidEmpresa" hidden="true" required>
+            </div>
+            <!-- FORM-->
+
+            <div class="row g-2 mx-4">
+              <div class="col-md-12">
+                <br>
+                <h4>Datos del contacto</h4>
+                <hr>
+              </div>
+              <div class="col-md-4">
+                <label> Nombres </label>
+                <input type="text" class="form-control" id="fusu_nombre" required>
+              </div>
+
+              <div class="col-md-4">
+                <label> Apellidos</label>
+                <input type="text" class="form-control" id="fusu_apellido" required>
+              </div>
+
+              <div class="col-md-4">
+                <label> DNI</label>
+                <div class="form-inline">
+                  <input type="text" class="form-control" id="fusu_dni" required>
+                  <div>
+
+                  </div>
+                  <!-- <input type="text" class="form-control" id="fusu_dni" required> -->
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label> E-mail</label>
+                <input type="text" class="form-control" id="fusu_email" required>
+              </div>
+
+              <div class="col-md-4">
+                <label> Celular</label>
+                <input type="text" class="form-control" id="fusu_celular" required>
+              </div>
+              <input type="text" class="form-control" id="fidcliente" hidden="true" required>
+              <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->
+
               <!-- FORM-->
 
-              <div class="row g-2 mx-4">
-                <div class="col-md-12">
-                  <br>
-                  <h4>Datos del contacto</h4>
-                  <hr>
-                </div>
-                <div class="col-md-4">
-                  <label> Nombres </label>
-                  <input type="text" class="form-control" id="fusu_nombre" required>
-                </div>
-
-                <div class="col-md-4">
-                  <label> Apellidos</label>
-                  <input type="text" class="form-control" id="fusu_apellido" required>
-                </div>
-
-                <div class="col-md-4">
-                  <label> DNI</label>
-                  <div class="form-inline">
-                    <input type="text" class="form-control" id="fusu_dni" required>
-                    <!-- <button class="btn btn-navbar" id="btnBuscarCliente">
-                      <i class="fas fa-search"></i>
-                    </button>
-                    <button class="btn btn-navbar" id="btnAgregarCliente">
-                      <i class="fas fa-solid fa-save"></i>
-                    </button> -->
-                    <div>
-
-                    </div>
-                    <!-- <input type="text" class="form-control" id="fusu_dni" required> -->
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <label> E-mail</label>
-                  <input type="text" class="form-control" id="fusu_email" required>
-                </div>
-
-                <div class="col-md-4">
-                  <label> Celular</label>
-                  <input type="text" class="form-control" id="fusu_celular" required>
-                </div>
-                <input type="text" class="form-control" id="fidcliente" hidden="true" required>
-                <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->
-
-                <!-- FORM-->
-
-                <!-- /.row -->
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer mt-4">
-                <button type="button" class="btn btn-info float-right px-5" id="btnRegistrarUsuario">Actualizar Cliente
-                </button>
-               
-              </div>
-              <!-- /.card -->
-              <!-- Main content -->
-
-
+              <!-- /.row -->
             </div>
+            <!-- /.card-body -->
+            <div class="card-footer mt-4">
+              <button type="button" class="btn btn-info float-right px-5" id="btnActualizarUsuario">Actualizar Cliente
+              </button>
+              <button type="button" id="btnRegistrarUsuario" hidden="true"></button>
+            </div>
+            <!-- /.card -->
+            <!-- Main content -->
+
+
           </div>
-          <!-- /.row -->
+        </div>
+        <!-- /.row -->
       </section>
       <!-- /.content -->
     </div>
     <button type="button" id="btnActualizarUsuario" hidden="true">Actualizar Usuario</button>
     <button type="button" id="btnBuscarEmpresa" hidden="true">Actualizar Usuario</button>
-    
+
     <button type="button" id="btnAgregarEmpresa" hidden="true">Actualizar Usuario</button>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
