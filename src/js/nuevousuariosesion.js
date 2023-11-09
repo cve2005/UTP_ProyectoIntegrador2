@@ -68,7 +68,12 @@ agregarUsuarioSButton.addEventListener('click', () => {
       console.error('Hubo un error:', error);
     });
   }else{
-    alert('las contraseñas no coinciden')
+    Swal.fire({
+      icon: "error",
+      title: "Las contraseñas no coinciden",
+      text: "Something went wrong!",
+    });
+    // alert('las contraseñas no coinciden')
   }
 
 
