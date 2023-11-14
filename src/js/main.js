@@ -98,7 +98,7 @@ if (menuContainer){
               title: 'Inicio',
               icon: 'fas fa-tachometer-alt',
               link: '#',
-              active: true
+             
             },
             {
               title: 'Cotizaciones',
@@ -129,15 +129,16 @@ if (menuContainer){
               title: 'Inicio',
               icon: 'fas fa-tachometer-alt',
               link: '#',
-              active: true
+             
             },
               {
                 title: 'Liquidaciones',
                 icon: 'fas fa-folder-open',
+                active: true,
                 link: '#',
                 subItems: [
-                  { title: 'Nueva cotización', link: 'liquidaciones-ven.html', icon: 'far fa-circle nav-icon' },
-                  { title: 'Listar Liquidaciones', link: 'cotizaciones-ven.html', icon: 'far fa-circle nav-icon' }
+                  { title: 'Listar Liquidaciones', link: 'liquidaciones-ven.html', icon: 'far fa-circle nav-icon' },
+                  // { title: 'Listar Liquidaciones', link: 'cotizaciones-ven.html', icon: 'far fa-circle nav-icon' }
                 ]
               },
               {
@@ -293,3 +294,33 @@ function createMenu(items) {
   
     return ul;
   }
+
+
+  //ver si esta activo
+  function highlightCurrentPage(menuItems) {
+    const currentPageUrl =window.location.href;
+    console.log(currentPageUrl)
+
+    // menuItems.forEach(item => {
+    //     // Verifica si la página actual está en los subelementos
+    //     const isCurrentPageInSubItems = item.subItems && item.subItems.some(subItem => currentPageUrl.includes(subItem.link));
+
+    //     // Si la página actual coincide con el enlace del elemento o está en los subelementos
+    //     if (currentPageUrl.includes(item.link) || isCurrentPageInSubItems) {
+    //         item.active = true; // Marcar como activo
+
+    //         // Si hay subelementos, también marca como activo al elemento padre
+    //         if (item.subItems) {
+    //             const parentItem = item.subItems.find(subItem => currentPageUrl.includes(subItem.link));
+    //             if (parentItem) {
+    //                 parentItem.active = true;
+    //             }
+    //         }
+    //     }
+    // });
+}
+
+highlightCurrentPage()
+
+// Llamada a la función para resaltar la página actual
+// highlightCurrentPage(menuRoles[tipoRol.textContent]);

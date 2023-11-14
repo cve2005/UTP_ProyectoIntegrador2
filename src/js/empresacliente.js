@@ -92,6 +92,10 @@ agregarUsuarioButton.addEventListener('click', () => {
 
   conexApi.post(`usuario`, data).then((res) => {
     console.log(res)
+    Swal.fire({
+      icon: "success",
+      title: "Cliente creado correctamente",
+    });
     console.log('Se agrego correctamente los datos')
   })
     .catch((error) => {
@@ -163,6 +167,10 @@ editarClienteButton.addEventListener('click', () => {
 
   conexApi.patch(`usuario/${id}`, data).then((res) => {
     console.log(res)
+    Swal.fire({
+      icon: "success",
+      title: "Actualizado correctamente",
+    });
     console.log('Se agrego correctamente los datos')
   })
     .catch((error) => {
