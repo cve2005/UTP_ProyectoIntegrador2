@@ -8,6 +8,13 @@ const conexApi = axios.create({
     baseURL: 'https://cna-cms.onrender.com/items/',
 });
 
+const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+
+
+const idSesion = userInfo.id
+const rolSesion=userInfo.role.name
+console.log(rolSesion)
+console.log(idSesion)
 
 //listar todos los usuarios
 async function cargarUsuariosAdmin() {
@@ -106,8 +113,10 @@ async function cargarUsuarios() {
 }
 
 //listar cotizaciones vendedor
-async function cargarCotizacionesVendedor() {
-    conexApi.get(`documento?fields=*.*.*`).then((res) => {
+async function cargarCotizacionesVendedor(id) {
+    console.log(id)
+    const url =id?`documento?filter[usu_dir]=${id}&fields=*.*.*`:`documento?fields=*.*.*`;
+    conexApi.get(url).then((res) => {
         const data = res.data.data;
         const tableBody = document.getElementById('listarCotizacionesVendedor');
         tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
@@ -116,8 +125,8 @@ async function cargarCotizacionesVendedor() {
             const row = document.createElement('tr');
             row.appendChild(createItem(element.doc_id));
             row.appendChild(createItem(element.doc_fecha));
-            row.appendChild(createItem(element.cliente_id.usu_nombre +" "+ element.cliente_id.usu_apellido));
-            row.appendChild(createItem(element.cliente_id.emp_id.emp_razon_social));
+            row.appendChild(createItem(element.usu_dir.first_name));
+            row.appendChild(createItem(element.usu_dir.emp_id.emp_razon_social));
             row.appendChild(createItem(element.est_id.est_nombre));
             //columena acciones
             const url="editar_cot"
@@ -302,7 +311,12 @@ const createItemAcction = (doc_id, type,url) => {
 
 window.addEventListener('load', function () {
     if (window.location.href.includes('cotizaciones-ven.html')) {
-        cargarCotizacionesVendedor();
+        if(rolSesion=="Cliente"){
+            cargarCotizacionesVendedor(idSesion);
+        }
+        if(rolSesion=="Administrator"){
+            cargarCotizacionesVendedor();
+        }
     }
      if (window.location.href.includes("operaciones-ven.html")) {
         cargarOperacionesVendedor();

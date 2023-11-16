@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+sessionStorage.removeItem('userInfo');
 async function loginUser(email, password) {
     const BASE_URL = 'https://cna-cms.onrender.com';
 
