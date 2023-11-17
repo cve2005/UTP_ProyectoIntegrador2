@@ -38,7 +38,7 @@ if (!sessionStorage.getItem('userInfo')) {
       window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
     }
   } else {
-   
+
     // Usuario sin el rol "Contador"
     // Puedes manejar este caso según tus necesidades.
   }
@@ -57,7 +57,7 @@ if (menuContainer) {
         active: true
       },
       {
-        
+
         title: 'Cotizaciones',
         icon: 'fas fa-folder-open',
         link: '#',
@@ -106,7 +106,7 @@ if (menuContainer) {
         icon: 'fas fa-folder-open',
         link: '#',
         subItems: [
-          { title: 'Listar Liquidaciones', link: 'cotizaciones-ven.html', icon: 'far fa-circle nav-icon' }
+          { title: 'Listar Liquidaciones', link: 'liquidaciones-ven.html', icon: 'far fa-circle nav-icon' }
         ]
       },
       {
@@ -157,37 +157,41 @@ if (menuContainer) {
       // ... otros elementos del menú ...
     ],
 
-    Operativo: [{
-      title: 'Operaciones',
-      icon: 'fas fa-folder-open',
-      link: '#',
-      subItems: [
-        { title: 'Listar Operaciones', link: 'operaciones-ven.html', icon: 'far fa-circle nav-icon' }
-      ]
-    },
-    {
-      title: 'Shipper',
-      icon: 'fas fa-folder-open',
-      link: '#',
-      subItems: [
-        { title: 'Nuevo Shipper', link: 'nuevo-shipper.html', icon: 'far fa-circle nav-icon' },
-        { title: 'Listar Shippers', link: 'listarshippers.html', icon: 'far fa-circle nav-icon' }
-      ]
-    },
-    {
-      title: 'Agente',
-      icon: 'fas fa-folder-open',
-      link: '#',
-      subItems: [
-        { title: 'Nuevo Agente', link: 'nuevo-agente.html', icon: 'far fa-circle nav-icon' },
-        { title: 'Listar Agente', link: 'listaragentes.html', icon: 'far fa-circle nav-icon' }
-      ]
-    },
-    {
-      title: 'Salir',
-      icon: 'fas fa-folder-open',
-      link: 'login.html',
-    }
+    Operativo: [
+      {
+        //todas
+        title: 'Operaciones',
+        icon: 'fas fa-folder-open',
+        link: '#',
+        subItems: [
+          { title: 'Listar Operaciones', link: 'operaciones-ven.html', icon: 'far fa-circle nav-icon' }
+        ]
+      },
+      {
+        //todos
+        title: 'Shipper',
+        icon: 'fas fa-folder-open',
+        link: '#',
+        subItems: [
+          { title: 'Nuevo Shipper', link: 'nuevo-shipper.html', icon: 'far fa-circle nav-icon' },
+          { title: 'Listar Shippers', link: 'listarshippers.html', icon: 'far fa-circle nav-icon' }
+        ]
+      },
+      {
+        //todos
+        title: 'Agente',
+        icon: 'fas fa-folder-open',
+        link: '#',
+        subItems: [
+          { title: 'Nuevo Agente', link: 'nuevo-agente.html', icon: 'far fa-circle nav-icon' },
+          { title: 'Listar Agente', link: 'listaragentes.html', icon: 'far fa-circle nav-icon' }
+        ]
+      },
+      {
+        title: 'Salir',
+        icon: 'fas fa-folder-open',
+        link: 'login.html',
+      }
     ],
     Vendedor: [
       {
@@ -197,6 +201,7 @@ if (menuContainer) {
         active: true
       },
       {
+        //listar solo sus cotizaciones de vendedor
         title: 'Cotizaciones',
         icon: 'fas fa-folder-open',
         link: '#',
@@ -215,6 +220,7 @@ if (menuContainer) {
         ]
       },
       {
+        //solo las de el
         title: 'Operaciones',
         icon: 'fas fa-folder-open',
         link: '#',
@@ -223,12 +229,13 @@ if (menuContainer) {
         ]
       },
       {
+        //solo las de el
         title: 'Liquidaciones',
         icon: 'fas fa-folder-open',
         link: '#',
         subItems: [
           // { title: 'Nueva liquidación', link: 'liquidaciones-ven.html', icon: 'far fa-circle nav-icon' },
-          { title: 'Listar Liquidaciones', link: 'cotizaciones-ven.html', icon: 'far fa-circle nav-icon' }
+          { title: 'Listar Liquidaciones', link: 'liquidaciones-ven.html', icon: 'far fa-circle nav-icon' }
         ]
       },
       {
@@ -246,13 +253,13 @@ if (menuContainer) {
 
       },
       {
+        //todas
         title: 'Liquidaciones',
         icon: 'fas fa-folder-open',
         active: true,
         link: '#',
         subItems: [
           { title: 'Listar Liquidaciones', link: 'liquidaciones-ven.html', icon: 'far fa-circle nav-icon' },
-          // { title: 'Listar Liquidaciones', link: 'cotizaciones-ven.html', icon: 'far fa-circle nav-icon' }
         ]
       },
       {
@@ -268,19 +275,6 @@ if (menuContainer) {
   const menu = createMenu(menuRoles[tipoRol.textContent]);
   menuContainer.appendChild(menu);
 }
-
-
-function Salir(){
-  sessionStorage.removeItem('userInfo');
-  alert("Ha cerrado sesión con éxito")
-}
-
-const hola = document.querySelector('[data-title="Salir"]');
-
-hola.addEventListener('click', function() {
-  e.preventDefault()
-  alert("hola")
-})
 
 function createMenu(items) {
   const ul = document.createElement('ul');

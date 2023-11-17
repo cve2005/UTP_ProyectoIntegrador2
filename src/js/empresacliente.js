@@ -100,6 +100,11 @@ agregarUsuarioButton.addEventListener('click', () => {
   })
     .catch((error) => {
       console.error('Hubo un error:', error);
+      Swal.fire({
+        icon: "error",
+        title: "Hubo un error",
+        text: error,
+      });
     });
 });
 

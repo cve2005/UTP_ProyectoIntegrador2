@@ -12,7 +12,7 @@ const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
 
 const idSesion = userInfo.id
-const rolSesion=userInfo.role.name
+const rolSesion = userInfo.role.name
 console.log(rolSesion)
 console.log(idSesion)
 
@@ -26,37 +26,37 @@ async function cargarUsuariosAdmin() {
         data.forEach((element) => {
             const row = document.createElement('tr');
 
-              row.appendChild(createItem(element.usu_id));
-              row.appendChild(createItem(element.usu_nombre));
-              row.appendChild(createItem(element.usu_apellido));
-              const rol =element.usu_rol
-              let nrol
-              if(rol==1){
-                nrol="ADMINISTRADOR"
-              }
-              if(rol==2){
-                nrol="VENDEDOR"
-              }
-              if(rol==3){
-                nrol= "OPERATIVO"
-              }
-              if(rol==4){
-                nrol="CONTADOR"
-              }
-              if(rol==5){
-                nrol="CLIENTE"
-              }
+            row.appendChild(createItem(element.usu_id));
+            row.appendChild(createItem(element.usu_nombre));
+            row.appendChild(createItem(element.usu_apellido));
+            const rol = element.usu_rol
+            let nrol
+            if (rol == 1) {
+                nrol = "ADMINISTRADOR"
+            }
+            if (rol == 2) {
+                nrol = "VENDEDOR"
+            }
+            if (rol == 3) {
+                nrol = "OPERATIVO"
+            }
+            if (rol == 4) {
+                nrol = "CONTADOR"
+            }
+            if (rol == 5) {
+                nrol = "CLIENTE"
+            }
 
-              row.appendChild(createItem(nrol));
-                //columna acciones
-            const url="adm-editar-usuario"
+            row.appendChild(createItem(nrol));
+            //columna acciones
+            const url = "adm-editar-usuario"
 
-                const acciones = document.createElement('td');
-                // acciones.appendChild(createItemAcction(element.usu_id, VER,url));
-                // acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
-                acciones.appendChild(createItemAcction(element.usu_id, EDITAR,url));
-                row.appendChild(acciones);
-         
+            const acciones = document.createElement('td');
+            // acciones.appendChild(createItemAcction(element.usu_id, VER,url));
+            // acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
+            acciones.appendChild(createItemAcction(element.usu_id, EDITAR, url));
+            row.appendChild(acciones);
+
             tableBody.appendChild(row);
         });
         // .catch((error) => {
@@ -74,37 +74,37 @@ async function cargarUsuarios() {
         data.forEach((element) => {
             const row = document.createElement('tr');
             row.appendChild(createItem(element.usu_id));
-              row.appendChild(createItem(element.usu_nombre));
-              row.appendChild(createItem(element.usu_apellido));
-             
-                //columna acciones
-            const url="editar-usuario"
-            const rol =element.usu_rol
+            row.appendChild(createItem(element.usu_nombre));
+            row.appendChild(createItem(element.usu_apellido));
+
+            //columna acciones
+            const url = "editar-usuario"
+            const rol = element.usu_rol
             let nrol
-            if(rol==1){
-              nrol="ADMINISTRADOR"
+            if (rol == 1) {
+                nrol = "ADMINISTRADOR"
             }
-            if(rol==2){
-              nrol="VENDEDOR"
+            if (rol == 2) {
+                nrol = "VENDEDOR"
             }
-            if(rol==3){
-              nrol= "OPERATIVO"
+            if (rol == 3) {
+                nrol = "OPERATIVO"
             }
-            if(rol==4){
-              nrol="CONTADOR"
+            if (rol == 4) {
+                nrol = "CONTADOR"
             }
-            if(rol==5){
-              nrol="CLIENTE"
+            if (rol == 5) {
+                nrol = "CLIENTE"
             }
             row.appendChild(createItem(nrol));
             const acciones = document.createElement('td');
             // acciones.appendChild(createItemAcction(element.usu_id, VER,url));
             // acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
-            acciones.appendChild(createItemAcction(element.usu_id, EDITAR,url));
+            acciones.appendChild(createItemAcction(element.usu_id, EDITAR, url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
         });
- 
+
 
         // .catch((error) => {
         //   console.error('Hubo un error:', error);
@@ -112,37 +112,6 @@ async function cargarUsuarios() {
     });
 }
 
-//listar cotizaciones vendedor
-async function cargarCotizacionesVendedor(id) {
-    console.log(id)
-    const url =id?`documento?filter[usu_dir]=${id}&fields=*.*.*`:`documento?fields=*.*.*`;
-    conexApi.get(url).then((res) => {
-        const data = res.data.data;
-        const tableBody = document.getElementById('listarCotizacionesVendedor');
-        tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
-        console.log(data);
-        data.forEach((element) => {
-            const row = document.createElement('tr');
-            row.appendChild(createItem(element.doc_id));
-            row.appendChild(createItem(element.doc_fecha));
-            row.appendChild(createItem(element.usu_dir.first_name));
-            row.appendChild(createItem(element.usu_dir.emp_id.emp_razon_social));
-            row.appendChild(createItem(element.est_id.est_nombre));
-            //columena acciones
-            const url="editar_cot"
-
-            const acciones = document.createElement('td');
-            // acciones.appendChild(createItemAcction(element.doc_id, VER,url));
-            // acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR,url));
-            acciones.appendChild(createItemAcction(element.doc_id, EDITAR,url));
-            row.appendChild(acciones);
-            tableBody.appendChild(row);
-        });
-        // .catch((error) => {
-        //   console.error('Hubo un error:', error);
-        // });
-    });
-}
 
 
 //listar operaciones del vendedor
@@ -162,11 +131,11 @@ async function cargarOperacionesVendedor() {
             row.appendChild(createItem("-"));
             row.appendChild(createItem("-"));
             //columena acciones
-            const url="routing"
+            const url = "routing"
             const acciones = document.createElement('td');
             // acciones.appendChild(createItemAcction(element.doc_id, VER,url));
             // acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR,url));
-            acciones.appendChild(createItemAcction(element.doc_id, EDITAR,url));
+            acciones.appendChild(createItemAcction(element.doc_id, EDITAR, url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
         });
@@ -192,11 +161,11 @@ async function cargarAgentes() {
             row.appendChild(createItem(element.age_nombre));
             row.appendChild(createItem(element.tag_id.tag_nombre));
             //columena acciones
-            const url="editar-agente"
+            const url = "editar-agente"
             const acciones = document.createElement('td');
             // acciones.appendChild(createItemAcction(element.age_id, VER,url));
             // acciones.appendChild(createItemAcction(element.age_id, DESCARGAR,url));
-            acciones.appendChild(createItemAcction(element.age_id, EDITAR,url));
+            acciones.appendChild(createItemAcction(element.age_id, EDITAR, url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
         });
@@ -222,11 +191,11 @@ async function cargarShippers() {
             row.appendChild(createItem(element.age_nombre));
             row.appendChild(createItem(element.tag_id.tag_nombre));
             //columena acciones
-            const url="editar-shipper"
+            const url = "editar-shipper"
             const acciones = document.createElement('td');
             // acciones.appendChild(createItemAcction(element.age_id, VER,url));
             // acciones.appendChild(createItemAcction(element.age_id, DESCARGAR,url));
-            acciones.appendChild(createItemAcction(element.age_id, EDITAR,url));
+            acciones.appendChild(createItemAcction(element.age_id, EDITAR, url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
         });
@@ -236,8 +205,53 @@ async function cargarShippers() {
     });
 }
 
-async function cargarLiquidaciones(){
-    conexApi.get(`liquidacion?fields=*.*.*.*`).then((res) => {
+
+
+
+//listar cotizaciones vendedor
+async function cargarCotizacionesVendedor(id, filtro) {
+    console.log(id)
+    // const url =id?`documento?filter[usu_dir]=${id}&fields=*.*.*`:`documento?fields=*.*.*`;
+    const url =
+        filtro === 'cliente'
+            ? `documento?filter[usu_dir]=${id}&fields=*.*.*`
+            : filtro === 'vendedor'
+                ? `documento?filter[vendedor_id_dir]=${id}&fields=*.*.*`
+                : 'documento?fields=*.*.*';
+    conexApi.get(url).then((res) => {
+        const data = res.data.data;
+        const tableBody = document.getElementById('listarCotizacionesVendedor');
+        tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
+        console.log(data);
+        data.forEach((element) => {
+            const row = document.createElement('tr');
+            row.appendChild(createItem(element.doc_id));
+            row.appendChild(createItem(element.doc_fecha));
+            row.appendChild(createItem(element.usu_dir.first_name));
+            row.appendChild(createItem(element.usu_dir.emp_id.emp_razon_social));
+            row.appendChild(createItem(element.est_id.est_nombre));
+            //columena acciones
+            const url = "editar_cot"
+
+            const acciones = document.createElement('td');
+            // acciones.appendChild(createItemAcction(element.doc_id, VER,url));
+            // acciones.appendChild(createItemAcction(element.doc_id, DESCARGAR,url));
+            acciones.appendChild(createItemAcction(element.doc_id, EDITAR, url));
+            row.appendChild(acciones);
+            tableBody.appendChild(row);
+        });
+        // .catch((error) => {
+        //   console.error('Hubo un error:', error);
+        // });
+    });
+}
+
+
+async function cargarLiquidaciones(id) {
+    // `liquidacion?fields=*.*.*.*`
+    const url =id?`liquidacion?filter[vendedor_id_dir]=${id}&fields=*.*.*.*`:`liquidacion?fields=*.*.*.*`;
+ 
+    conexApi.get(url).then((res) => {
         const data = res.data.data;
         console.log(data);
 
@@ -248,26 +262,26 @@ async function cargarLiquidaciones(){
             const row = document.createElement('tr');
             row.appendChild(createItem(element.liq_id));
             row.appendChild(createItem(element.doc_id.doc_id));
-            row.appendChild(createItem(element.doc_id.cliente_id.emp_id.emp_razon_social));
+            //aqui nuevo
+            row.appendChild(createItem(element.doc_id.usu_dir.emp_id.emp_razon_social));
             row.appendChild(createItem("-"));
             row.appendChild(createItem(element.liq_rhe));
             row.appendChild(createItem(element.liq_fecha));
             //columena acciones
-            const url="liq-routing"
+            const url = "liq-routing"
             const acciones = document.createElement('td');
             // acciones.appendChild(createItemAcction(element.doc_id.doc_id, VER,url));
             // acciones.appendChild(createItemAcction(element.doc_id.doc_id, DESCARGAR,url));
-            acciones.appendChild(createItemAcction(element.doc_id.doc_id, EDITAR,url));
+            acciones.appendChild(createItemAcction(element.doc_id.doc_id, EDITAR, url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
-        
+
         });
         // .catch((error) => {
         //   console.error('Hubo un error:', error);
-        });
-    
-}
+    });
 
+}
 
 const createItem = (value) => {
     const td = document.createElement('td');
@@ -275,20 +289,20 @@ const createItem = (value) => {
     return td;
 };
 
-const createItemAcction = (doc_id, type,url) => {
-    
+const createItemAcction = (doc_id, type, url) => {
+
     const icon = document.createElement('i');
     const button = document.createElement('button');
     if (type === EDITAR) {
         button.addEventListener('click', () => {
-          //alert('editar'  + doc_id);  
-          window.location.href = url+`.html?id=${doc_id}`;
+            //alert('editar'  + doc_id);  
+            window.location.href = url + `.html?id=${doc_id}`;
         });
         icon.classList.add('nav-icon', 'fas', 'fa-solid', 'fa-pen');
     }
     if (type === VER) {
         button.addEventListener('click', () => {
-          alert('ver'  + doc_id);
+            alert('ver' + doc_id);
             //window.location.href = `editar_cot.html?id=${doc_id}`;
         });
         icon.classList.add('nav-icon', 'fas', 'fa-solid', 'fa-file-invoice');
@@ -296,29 +310,39 @@ const createItemAcction = (doc_id, type,url) => {
     if (type === DESCARGAR) {
         button.addEventListener('click', () => {
 
-          alert('descargar'  + doc_id);
+            alert('descargar' + doc_id);
             //window.location.href = `editar_cot.html?id=${doc_id}`;
         });
         icon.classList.add('nav-icon', 'fas', 'fa-solid', 'fa-file-pdf');
     }
 
     button.appendChild(icon);
-  
+
     return button;
 };
 
 //total cotizado=suma de los servicios
 
 window.addEventListener('load', function () {
+    // if (window.location.href.includes('cotizaciones-ven.html')) {
+    //     if(rolSesion=="Cliente"){
+    //         cargarCotizacionesVendedor(idSesion);
+    //     }
+    //     if(rolSesion=="Administrator"){
+    //         cargarCotizacionesVendedor();
+    //     }
+    // }
     if (window.location.href.includes('cotizaciones-ven.html')) {
-        if(rolSesion=="Cliente"){
-            cargarCotizacionesVendedor(idSesion);
-        }
-        if(rolSesion=="Administrator"){
+        if (rolSesion === 'Administrator') {
             cargarCotizacionesVendedor();
+        } else if (rolSesion === 'Cliente') {
+            cargarCotizacionesVendedor(idSesion, 'cliente');
+        } else if (rolSesion === 'Vendedor') {
+            cargarCotizacionesVendedor(idSesion, 'vendedor');
         }
     }
-     if (window.location.href.includes("operaciones-ven.html")) {
+
+    if (window.location.href.includes("operaciones-ven.html")) {
         cargarOperacionesVendedor();
     }
     if (window.location.href.includes('listarusuariosadm.html')) {
@@ -334,7 +358,11 @@ window.addEventListener('load', function () {
         cargarShippers();
     }
     if (window.location.href.includes("liquidaciones-ven.html")) {
-        cargarLiquidaciones();
+        if (rolSesion === 'Administrator' || rolSesion === 'Contador'  ) {
+            cargarLiquidaciones();
+        } else if (rolSesion === 'Vendedor') {
+            cargarLiquidaciones(idSesion);
+        } 
     }
 });
 
