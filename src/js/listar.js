@@ -115,11 +115,21 @@ async function cargarUsuarios() {
 
 
 //listar operaciones del vendedor
-async function cargarOperacionesVendedor() {
-    conexApi.get(`documento?filter[est_id]=2&fields=*.*.*`).then((res) => {
+async function cargarOperacionesVendedor(id,filtro) {
+
+    // `documento?filter[est_id]=2&fields=*.*.*`
+    const consulta =
+    filtro === 'cliente'
+        ? `https://cna-cms.onrender.com/items/documento?filter[est_id][_eq]=2&filter[usu_dir][_eq]=${id}&fields=*.*.*`
+        : filtro === 'vendedor'
+            ? `https://cna-cms.onrender.com/items/documento?filter[est_id][_eq]=2&filter[vendedor_id_dir][_eq]=${id}&fields=*.*.*`
+            : `documento?filter[est_id]=2&fields=*.*.*`;
+
+    conexApi.get(consulta).then((res) => {
         const data = res.data.data;
         const tableBody = document.getElementById('listarOperacionesVendedor');
         tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
+        console.log("Esto se imprime")
         console.log(data);
         data.forEach((element) => {
             const row = document.createElement('tr');
@@ -212,13 +222,13 @@ async function cargarShippers() {
 async function cargarCotizacionesVendedor(id, filtro) {
     console.log(id)
     // const url =id?`documento?filter[usu_dir]=${id}&fields=*.*.*`:`documento?fields=*.*.*`;
-    const url =
+    const consulta =
         filtro === 'cliente'
             ? `documento?filter[usu_dir]=${id}&fields=*.*.*`
             : filtro === 'vendedor'
                 ? `documento?filter[vendedor_id_dir]=${id}&fields=*.*.*`
                 : 'documento?fields=*.*.*';
-    conexApi.get(url).then((res) => {
+    conexApi.get(consulta).then((res) => {
         const data = res.data.data;
         const tableBody = document.getElementById('listarCotizacionesVendedor');
         tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
@@ -249,9 +259,9 @@ async function cargarCotizacionesVendedor(id, filtro) {
 
 async function cargarLiquidaciones(id) {
     // `liquidacion?fields=*.*.*.*`
-    const url =id?`liquidacion?filter[vendedor_id_dir]=${id}&fields=*.*.*.*`:`liquidacion?fields=*.*.*.*`;
+    const consulta =id?`liquidacion?filter[vendedor_id_dir]=${id}&fields=*.*.*.*`:`liquidacion?fields=*.*.*.*`;
  
-    conexApi.get(url).then((res) => {
+    conexApi.get(consulta).then((res) => {
         const data = res.data.data;
         console.log(data);
 
@@ -343,7 +353,13 @@ window.addEventListener('load', function () {
     }
 
     if (window.location.href.includes("operaciones-ven.html")) {
-        cargarOperacionesVendedor();
+        if (rolSesion === 'Administrator'|| rolSesion === 'Operativo') {
+            cargarOperacionesVendedor();
+        } else if (rolSesion === 'Cliente') {
+            cargarOperacionesVendedor(idSesion,'cliente');
+        } else if (rolSesion === 'Vendedor') {
+            cargarOperacionesVendedor(idSesion,'vendedor');
+        }
     }
     if (window.location.href.includes('listarusuariosadm.html')) {
         cargarUsuariosAdmin();
