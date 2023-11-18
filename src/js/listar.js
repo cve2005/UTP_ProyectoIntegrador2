@@ -220,7 +220,7 @@ async function cargarShippers() {
 
 //listar cotizaciones vendedor
 async function cargarCotizacionesVendedor(id, filtro) {
-    console.log(id)
+   
     // const url =id?`documento?filter[usu_dir]=${id}&fields=*.*.*`:`documento?fields=*.*.*`;
     const consulta =
         filtro === 'cliente'
