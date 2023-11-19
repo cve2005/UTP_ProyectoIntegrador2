@@ -33,11 +33,94 @@ if (!sessionStorage.getItem('userInfo')) {
 
     // Bloquear el acceso a la página "nuevo-usuario.html"
     const currentPage = window.location.pathname;
-    if (currentPage.includes("nuevo-usuario.html") || currentPage.includes("nuevo-shipper.html")) {
+    if (currentPage.includes("adm-editar-usuario.html")
+      || currentPage.includes("adm-nuevo-usuario.html")
+      || currentPage.includes("cotizacion.html")
+      || currentPage.includes("cotizaciones-ven.html")
+      || currentPage.includes("editar_cot.html")
+      || currentPage.includes("editar_agente.html")
+      || currentPage.includes("editar_shipper.html")
+      || currentPage.includes("editar_usuario.html")
+      || currentPage.includes("listaragentes.html")
+      || currentPage.includes("listarshippers.html")
+      || currentPage.includes("listarusuarios.html")
+      || currentPage.includes("listarusuariosadm.html")
+      || currentPage.includes("nuevo-agente.html")
+      || currentPage.includes("nuevo-shipper.html")
+      || currentPage.includes("nuevo-usuario.html")
+      || currentPage.includes("operaciones-ven.html")
+      || currentPage.includes("operaciones.html")
+      || currentPage.includes("routing.html")
+    ) {
       alert("Acceso no permitido para usuarios con el rol 'Contador'.");
       window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
     }
-  } else {
+    //Restricciones Cliente
+  }else if(userInfo?.role?.name === "Cliente"){
+    const currentPage = window.location.pathname;
+    if (currentPage.includes("adm-editar-usuario.html")
+    || currentPage.includes("adm-nuevo-usuario.html")
+    || currentPage.includes("editar_agente.html")
+    || currentPage.includes("editar_shipper.html")
+    || currentPage.includes("editar_usuario.html")
+    || currentPage.includes("listaragentes.html")
+    || currentPage.includes("listarshippers.html")
+    || currentPage.includes("listarusuarios.html")
+    || currentPage.includes("listarusuariosadm.html")
+    || currentPage.includes("nuevo-agente.html")
+    || currentPage.includes("nuevo-shipper.html")
+    || currentPage.includes("nuevo-usuario.html")
+
+    || currentPage.includes("routing.html")
+    || currentPage.includes("liq-routing.html")
+    || currentPage.includes("liquidaciones-ven.html")
+
+  ){
+    alert("Acceso no permitido para usuarios con el rol 'Cliente'.");
+    window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
+  }
+  }
+  //Restricciones Operativo
+  else if(userInfo?.role?.name === "Operativo"){
+    const currentPage = window.location.pathname;
+    if (currentPage.includes("adm-editar-usuario.html")
+    || currentPage.includes("adm-nuevo-usuario.html")
+    || currentPage.includes("cotizacion.html")
+    || currentPage.includes("cotizaciones-ven.html")
+    || currentPage.includes("editar_cot.html")
+  
+    || currentPage.includes("nuevo-usuario.html")
+    || currentPage.includes("editar_usuario.html")
+    || currentPage.includes("listarusuarios.html")
+    || currentPage.includes("listarusuariosadm.html")
+
+    || currentPage.includes("routing.html")
+    || currentPage.includes("liq-routing.html")
+    || currentPage.includes("liquidaciones-ven.html")
+  ){
+    alert("Acceso no permitido para usuarios con el rol 'Cliente'.");
+    window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
+  }
+  }//Restricciones Vendedor
+  else if(userInfo?.role?.name === "Vendedor"){
+    const currentPage = window.location.pathname;
+    if (
+      currentPage.includes("nuevo-ususesion.html")
+    || currentPage.includes("listarusuariosadm.html")
+    || currentPage.includes("routing.html")
+    || currentPage.includes("liquidaciones.html")
+    || currentPage.includes("nuevo-agente.html")
+    || currentPage.includes("nuevo-shipper.html")
+    || currentPage.includes("listaragentes.html")
+    || currentPage.includes("listarshippers.html")
+    || currentPage.includes("editar_agente.html")
+    || currentPage.includes("editar_shipper.html")
+  ){
+    alert("Acceso no permitido para usuarios con el rol 'Vendedor'.");
+    window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
+  }
+  }
+  else {
 
     // Usuario sin el rol "Contador"
     // Puedes manejar este caso según tus necesidades.
@@ -68,16 +151,16 @@ if (menuContainer) {
       },
       {
         title: 'Clientes',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-people-arrows',
         link: '#',
         subItems: [
           { title: 'Nuevo Cliente', link: 'nuevo-usuario.html', icon: 'far fa-circle nav-icon' },
-          { title: 'Listar Clientes', link: 'listarusuarios.html.html', icon: 'far fa-circle nav-icon' }
+          { title: 'Listar Clientes', link: 'listarusuarios.html', icon: 'far fa-circle nav-icon' }
         ]
       },
       {
         title: 'Operaciones',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-file-contract',
         link: '#',
         subItems: [
           { title: 'Listar Operaciones', link: 'operaciones-ven.html', icon: 'far fa-circle nav-icon' }
@@ -85,7 +168,7 @@ if (menuContainer) {
       },
       {
         title: 'Shipper',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-ship',
         link: '#',
         subItems: [
           { title: 'Nuevo Shipper', link: 'nuevo-shipper.html', icon: 'far fa-circle nav-icon' },
@@ -94,7 +177,7 @@ if (menuContainer) {
       },
       {
         title: 'Agente',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-truck',
         link: '#',
         subItems: [
           { title: 'Nuevo Agente', link: 'nuevo-agente.html', icon: 'far fa-circle nav-icon' },
@@ -103,7 +186,7 @@ if (menuContainer) {
       },
       {
         title: 'Liquidaciones',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-coins',
         link: '#',
         subItems: [
           { title: 'Listar Liquidaciones', link: 'liquidaciones-ven.html', icon: 'far fa-circle nav-icon' }
@@ -111,7 +194,7 @@ if (menuContainer) {
       },
       {
         title: 'Usuarios',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-users',
         link: '#',
         subItems: [
           { title: 'Nuevo Usuario', link: 'nuevo-ususesion.html', icon: 'far fa-circle nav-icon' },
@@ -120,7 +203,7 @@ if (menuContainer) {
       },
       {
         title: 'Salir',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-share',
         link: 'login.html',
       }
       // ... otros elementos del menú ...
@@ -143,7 +226,7 @@ if (menuContainer) {
       {
         //solo de el
         title: 'Operaciones',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-file-contract',
         link: '#',
         subItems: [
           { title: 'Listar Operaciones', link: 'operaciones-ven.html', icon: 'far fa-circle nav-icon' }
@@ -151,7 +234,7 @@ if (menuContainer) {
       },
       {
         title: 'Salir',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-share',
         link: 'login.html',
       }
       // ... otros elementos del menú ...
@@ -159,9 +242,14 @@ if (menuContainer) {
 
     Operativo: [
       {
+        title: 'Inicio',
+        icon: 'fas fa-tachometer-alt',
+        link: '#',
+      },
+      {
         //todas
         title: 'Operaciones',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-file-contract',
         link: '#',
         subItems: [
           { title: 'Listar Operaciones', link: 'operaciones-ven.html', icon: 'far fa-circle nav-icon' }
@@ -170,7 +258,7 @@ if (menuContainer) {
       {
         //todos
         title: 'Shipper',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-ship',
         link: '#',
         subItems: [
           { title: 'Nuevo Shipper', link: 'nuevo-shipper.html', icon: 'far fa-circle nav-icon' },
@@ -180,7 +268,7 @@ if (menuContainer) {
       {
         //todos
         title: 'Agente',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-truck',
         link: '#',
         subItems: [
           { title: 'Nuevo Agente', link: 'nuevo-agente.html', icon: 'far fa-circle nav-icon' },
@@ -189,7 +277,7 @@ if (menuContainer) {
       },
       {
         title: 'Salir',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-share',
         link: 'login.html',
       }
     ],
@@ -212,17 +300,17 @@ if (menuContainer) {
       },
       {
         title: 'Clientes',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-people-arrows',
         link: '#',
         subItems: [
           { title: 'Nuevo Cliente', link: 'nuevo-usuario.html', icon: 'far fa-circle nav-icon' },
-          { title: 'Listar Clientes', link: 'listarusuarios.html.html', icon: 'far fa-circle nav-icon' }
+          { title: 'Listar Clientes', link: 'listarusuarios.html', icon: 'far fa-circle nav-icon' }
         ]
       },
       {
         //solo las de el
         title: 'Operaciones',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-file-contract',
         link: '#',
         subItems: [
           { title: 'Listar Operaciones', link: 'operaciones-ven.html', icon: 'far fa-circle nav-icon' }
@@ -231,7 +319,7 @@ if (menuContainer) {
       {
         //solo las de el
         title: 'Liquidaciones',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-coins',
         link: '#',
         subItems: [
           // { title: 'Nueva liquidación', link: 'liquidaciones-ven.html', icon: 'far fa-circle nav-icon' },
@@ -240,7 +328,7 @@ if (menuContainer) {
       },
       {
         title: 'Salir',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-share',
         link: 'login.html',
       }
       // ... otros elementos del menú ...
@@ -255,7 +343,7 @@ if (menuContainer) {
       {
         //todas
         title: 'Liquidaciones',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-coins',
         active: true,
         link: '#',
         subItems: [
@@ -264,7 +352,7 @@ if (menuContainer) {
       },
       {
         title: 'Salir',
-        icon: 'fas fa-folder-open',
+        icon: 'fas fa-share',
         link: 'login.html',
       }
       // ... otros elementos del menú ...

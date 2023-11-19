@@ -1,6 +1,6 @@
 import axios from "axios";
 
-async function cargarPaises(){
+export const cargarPaises =  async () => {
     axios.get(" https://cna-cms.onrender.com/items/paises?limit=250").then((res) => {
         const select_pais_ori = document.getElementById("fpais_origen_id");
         const select_pais_des = document.getElementById("fpais_destino_id");
@@ -22,7 +22,7 @@ async function cargarPaises(){
     });
 }
 
-async function cargarPaisesEdit(){
+export const cargarPaisesEdit =  async ()=>{
     axios.get(" https://cna-cms.onrender.com/items/paises?limit=250").then((res) => {
         const select_pais_ori = document.getElementById("fpais_origen_id");
         const select_pais_des = document.getElementById("fpais_destino_id");
@@ -34,7 +34,6 @@ async function cargarPaisesEdit(){
                 const option2 = document.createElement("option");
                 option2.text = element.pais_nombre;
                 option2.value = element.pais_id;
-
                 select_pais_ori.add(option);
                 select_pais_des.add(option2);
         } );
@@ -42,8 +41,7 @@ async function cargarPaisesEdit(){
 }
 
 
-
-window.addEventListener('load', function () {
+$(document).ready(function () {
     if (window.location.href.includes("cotizacion.html")) {
         cargarPaises();
     }
@@ -51,3 +49,11 @@ window.addEventListener('load', function () {
         cargarPaisesEdit();
     }
   });
+/*window.addEventListener('load', function () {
+    if (window.location.href.includes("cotizacion.html")) {
+        cargarPaises();
+    }
+    if (window.location.href.includes("editar_cot.html")) {
+        cargarPaisesEdit();
+    }
+  });*/

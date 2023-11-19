@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { cargarPaises } from "./paises";
 const conexApi = axios.create({
   baseURL: 'https://cna-cms.onrender.com/items/'
 });
@@ -31,13 +31,16 @@ async function cargarEditarCotizacion() {
     document.getElementById('fdoc_incoterm').value = documento.doc_incoterm
     document.getElementById('fdoc_tcarga').value = documento.doc_tcarga
 
-    document.getElementById('fpais_origen_id').value = documento.pais_origen_id.pais_id
+    // document.getElementById('fpais_origen_id').value = documento.pais_origen_id.pais_id
+    $('#fpais_origen_id').val(documento.pais_origen_id.pais_id).trigger('change');
     document.getElementById('fdoc_puerto_ori').value = documento.doc_puerto_ori
     document.getElementById('fdoc_recojo').value = documento.doc_recojo
 
-    document.getElementById('fpais_destino_id').value = documento.pais_destino_id.pais_id
+   // document.getElementById('fpais_destino_id').value = documento.pais_destino_id.pais_id
     document.getElementById('fdoc_puerto_dest').value = documento.doc_puerto_dest
     document.getElementById('fdoc_entrega').value = documento.doc_entrega
+
+    $('#fpais_destino_id').val(documento.pais_destino_id.pais_id).trigger('change');
 
     document.getElementById('fdoc_producto').value = documento.doc_producto
     document.getElementById('fdoc_bultos').value = documento.doc_bultos
@@ -106,11 +109,16 @@ async function cargarEditarCotizacion() {
 
 }
 
-window.addEventListener('load', function () {
+$(document).ready(function () {
   if (window.location.href.includes(`editar_cot.html`)) {
-    cargarEditarCotizacion();
+   inicializar();
   }
 });
+
+const inicializar = async () => {
+  await cargarPaises();
+  await cargarEditarCotizacion();
+}
 
  //Generar routing
   

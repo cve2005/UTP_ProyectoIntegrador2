@@ -59,6 +59,7 @@ async function cargarEditarOperacion() {
     //Aqui get detalle_operacion
     conexApi.get(`detalle_operacion?filter[doc_id]=${id}`)
         .then((res) => {
+            console.log("Aqui operaciones")
             console.log(res.data.data);
             const operaciones = res.data.data
             operacionesG = operaciones

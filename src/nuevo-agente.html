@@ -45,10 +45,15 @@
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/dropzone/min/dropzone.min.css">
+  <!-- sweet alert -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
   <script type="module" src="./js/agente.js"></script>
   <script type="module" src="./js/main.js"></script>
   <script type="script" src="./js/navigation.js"></script>
+
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -291,6 +296,44 @@
 
   <!-- Page specific script -->
   <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Expresiones regulares para validar
+        var letrasNumerosRegex = /^[a-zA-Z0-9]+$/;
+        var telefonoRegex = /^[0-9+\-]+$/;
+
+        // Función para validar el campo de ID Fiscal
+        function validarIdFiscal() {
+          var idFiscal = document.getElementById('fage_id_fiscal').value;
+          if (!letrasNumerosRegex.test(idFiscal)) {
+            Swal.fire({
+              icon: "error",
+              title: "Error de validación",
+              text: "El ID Fiscal solo debe contener letras y números"
+            });
+            document.getElementById('fage_id_fiscal').value = '';
+          }
+        }
+
+        // Función para validar el campo de Teléfono
+        function validarTelefono() {
+          var telefono = document.getElementById('fage_telefono').value;
+          if (!telefonoRegex.test(telefono)) {
+            Swal.fire({
+              icon: "error",
+              title: "Error de validación",
+              text: "El número de teléfono solo puede contener números, '+' y '-'"
+            });
+            document.getElementById('fage_telefono').value = '';
+          }
+        }
+
+        // Asignamos las funciones de validación a los eventos correspondientes
+        document.getElementById('fage_id_fiscal').addEventListener('input', validarIdFiscal);
+        document.getElementById('fage_telefono').addEventListener('input', validarTelefono);
+        
+      });
+
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()

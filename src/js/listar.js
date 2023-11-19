@@ -5,7 +5,7 @@ const VER = 'ver';
 const DESCARGAR = 'descargar';
 
 const conexApi = axios.create({
-    baseURL: 'https://cna-cms.onrender.com/items/',
+    baseURL: 'https://cna-cms.onrender.com/',
 });
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -15,60 +15,84 @@ const idSesion = userInfo.id
 const rolSesion = userInfo.role.name
 console.log(rolSesion)
 console.log(idSesion)
+// "id": "9682d972-c050-482b-bf1e-5b3db6653f12",
+// "name": "Administrator",
+
+// "id": "140de75d-8d7c-47e3-8ba9-f7e60cdb3ba4",
+// "name": "Vendedor",
+
+// "id": "55f783e6-5f39-4966-bec6-8b71d3631075",
+// "name": "Operativo",
+
+// "id": "afdc94bb-c280-400c-b3b7-85a6158a0201",
+// "name": "Contador",
+
+// "id": "dbb74e25-bea2-4a87-a337-1c971307c3bf",
+// "name": "Cliente",
+const roles = {["9682d972-c050-482b-bf1e-5b3db6653f12"]: 'Administrador', ["140de75d-8d7c-47e3-8ba9-f7e60cdb3ba4"]: 'Vendedor', ["55f783e6-5f39-4966-bec6-8b71d3631075"]: 'Operativo', ["afdc94bb-c280-400c-b3b7-85a6158a0201"]: 'Contador', ["dbb74e25-bea2-4a87-a337-1c971307c3bf"]: 'Cliente'};
 
 //listar todos los usuarios
-async function cargarUsuariosAdmin() {
-    conexApi.get(`usuario`).then((res) => {
+async function cargarUsuariosAdmin(table) {
+    conexApi.get(`users`).then((res) => {
         const data = res.data.data;
-        const tableBody = document.getElementById('listarUsuariosAdmin');
-        tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
         console.log(data);
+
+        const dataTable = [];
         data.forEach((element) => {
-            const row = document.createElement('tr');
+            const row = [];
+            row.push(element.id);
+            row.push(element.dni)
+            row.push(element.first_name+ ' '+element.last_name );
+            row.push(element.email);
+            row.push(element.tel_usu_dir);
+            row.push(roles[element.role]);
+            row.push('element.usu_correo');
 
-            row.appendChild(createItem(element.usu_id));
-            row.appendChild(createItem(element.usu_nombre));
-            row.appendChild(createItem(element.usu_apellido));
-            const rol = element.usu_rol
-            let nrol
-            if (rol == 1) {
-                nrol = "ADMINISTRADOR"
-            }
-            if (rol == 2) {
-                nrol = "VENDEDOR"
-            }
-            if (rol == 3) {
-                nrol = "OPERATIVO"
-            }
-            if (rol == 4) {
-                nrol = "CONTADOR"
-            }
-            if (rol == 5) {
-                nrol = "CLIENTE"
-            }
-
-            row.appendChild(createItem(nrol));
+            dataTable.push(row);
             //columna acciones
-            const url = "adm-editar-usuario"
-
+            /*const url = "adm-editar-usuario"
             const acciones = document.createElement('td');
             // acciones.appendChild(createItemAcction(element.usu_id, VER,url));
             // acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
             acciones.appendChild(createItemAcction(element.usu_id, EDITAR, url));
             row.appendChild(acciones);
 
-            tableBody.appendChild(row);
+            tableBody.appendChild(row);*/
         });
+        // $('#tblClientes').DataTable().rows.add(dataTable).draw();
+        table.rows.add(dataTable).draw();
+
+
         // .catch((error) => {
         //   console.error('Hubo un error:', error);
         // });
     });
 }
 //listar usuarios clientes = 5
-async function cargarUsuarios() {
-    conexApi.get(`usuario?filter[usu_rol]=5`).then((res) => {
+async function cargarUsuarios(table) {
+    conexApi.get(`items/usuario?filter[usu_rol]=5`).then((res) => {
         const data = res.data.data;
-        const tableBody = document.getElementById('listarUsuariosAdmin');
+        const dataTable = [];
+        data.forEach((element) => {
+            const row = [];
+            row.push(element.usu_id);
+            row.push(element.usu_nombre);
+            row.push(element.usu_apellido);
+            row.push(roles[element.usu_rol]);
+            row.push('element.usu_correo');
+            dataTable.push(row);
+            //columna acciones
+            /*const url = "adm-editar-usuario"
+            const acciones = document.createElement('td');
+            // acciones.appendChild(createItemAcction(element.usu_id, VER,url));
+            // acciones.appendChild(createItemAcction(element.usu_id, DESCARGAR,url));
+            acciones.appendChild(createItemAcction(element.usu_id, EDITAR, url));
+            row.appendChild(acciones);
+
+            tableBody.appendChild(row);*/
+        });
+        table.rows.add(dataTable).draw();
+       /* const tableBody = document.getElementById('listarUsuariosAdmin');
         tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
         console.log(data);
         data.forEach((element) => {
@@ -103,7 +127,7 @@ async function cargarUsuarios() {
             acciones.appendChild(createItemAcction(element.usu_id, EDITAR, url));
             row.appendChild(acciones);
             tableBody.appendChild(row);
-        });
+        });*/
 
 
         // .catch((error) => {
@@ -120,9 +144,9 @@ async function cargarOperacionesVendedor(id,filtro) {
     // `documento?filter[est_id]=2&fields=*.*.*`
     const consulta =
     filtro === 'cliente'
-        ? `https://cna-cms.onrender.com/items/documento?filter[est_id][_eq]=2&filter[usu_dir][_eq]=${id}&fields=*.*.*`
+        ? `items/documento?filter[est_id][_eq]=2&filter[usu_dir][_eq]=${id}&fields=*.*.*`
         : filtro === 'vendedor'
-            ? `https://cna-cms.onrender.com/items/documento?filter[est_id][_eq]=2&filter[vendedor_id_dir][_eq]=${id}&fields=*.*.*`
+            ? `items/documento?filter[est_id][_eq]=2&filter[vendedor_id_dir][_eq]=${id}&fields=*.*.*`
             : `documento?filter[est_id]=2&fields=*.*.*`;
 
     conexApi.get(consulta).then((res) => {
@@ -157,7 +181,7 @@ async function cargarOperacionesVendedor(id,filtro) {
 
 //listar agentes tag_id=1
 async function cargarAgentes() {
-    conexApi.get(`agente?filter[tag_id]=1&fields=*.*`).then((res) => {
+    conexApi.get(`items/agente?filter[tag_id]=1&fields=*.*`).then((res) => {
         const data = res.data.data;
         const tableBody = document.getElementById('listarAgentes');
         tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
@@ -187,7 +211,7 @@ async function cargarAgentes() {
 
 //listar shippers tag_id=1
 async function cargarShippers() {
-    conexApi.get(`agente?filter[tag_id]=2&fields=*.*`).then((res) => {
+    conexApi.get(`items/agente?filter[tag_id]=2&fields=*.*`).then((res) => {
         const data = res.data.data;
         const tableBody = document.getElementById('listarShippers');
         tableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar contenido
@@ -220,14 +244,13 @@ async function cargarShippers() {
 
 //listar cotizaciones vendedor
 async function cargarCotizacionesVendedor(id, filtro) {
-   
     // const url =id?`documento?filter[usu_dir]=${id}&fields=*.*.*`:`documento?fields=*.*.*`;
     const consulta =
         filtro === 'cliente'
-            ? `documento?filter[usu_dir]=${id}&fields=*.*.*`
+            ? `items/documento?filter[usu_dir]=${id}&fields=*.*.*`
             : filtro === 'vendedor'
-                ? `documento?filter[vendedor_id_dir]=${id}&fields=*.*.*`
-                : 'documento?fields=*.*.*';
+                ? `items/documento?filter[vendedor_id_dir]=${id}&fields=*.*.*`
+                : 'items/documento?fields=*.*.*';
     conexApi.get(consulta).then((res) => {
         const data = res.data.data;
         const tableBody = document.getElementById('listarCotizacionesVendedor');
@@ -259,7 +282,7 @@ async function cargarCotizacionesVendedor(id, filtro) {
 
 async function cargarLiquidaciones(id) {
     // `liquidacion?fields=*.*.*.*`
-    const consulta =id?`liquidacion?filter[vendedor_id_dir]=${id}&fields=*.*.*.*`:`liquidacion?fields=*.*.*.*`;
+    const consulta =id?`items/liquidacion?filter[vendedor_id_dir]=${id}&fields=*.*.*.*`:`items/liquidacion?fields=*.*.*.*`;
  
     conexApi.get(consulta).then((res) => {
         const data = res.data.data;
@@ -332,16 +355,7 @@ const createItemAcction = (doc_id, type, url) => {
 };
 
 //total cotizado=suma de los servicios
-
-window.addEventListener('load', function () {
-    // if (window.location.href.includes('cotizaciones-ven.html')) {
-    //     if(rolSesion=="Cliente"){
-    //         cargarCotizacionesVendedor(idSesion);
-    //     }
-    //     if(rolSesion=="Administrator"){
-    //         cargarCotizacionesVendedor();
-    //     }
-    // }
+$(document).ready(function () {
     if (window.location.href.includes('cotizaciones-ven.html')) {
         if (rolSesion === 'Administrator') {
             cargarCotizacionesVendedor();
@@ -362,10 +376,72 @@ window.addEventListener('load', function () {
         }
     }
     if (window.location.href.includes('listarusuariosadm.html')) {
-        cargarUsuariosAdmin();
+        
+        var table = $("#tablaUsuariosAdm").DataTable({
+            "data": [],
+            "columns": [
+             { "title": "Código", visible: false},
+              { "title": "Dni" },
+              { "title": "Nombre" },
+              { "title": "Correo" },
+              { "title": "Teléfono" },
+              { "title": "Rol" },
+              { "title": "Acciones" }
+            ],
+            "columnDefs": [
+                {
+                    "targets": -1, // Esto significa la última columna de la tabla
+                    "data": null,
+                    "defaultContent": "<button class='edit-btn'><i class='nav-icon fas fa-solid fa-pen'/></button>"
+                }
+            ],
+            "responsive": true, 
+            "lengthChange": false, 
+            "autoWidth": false,
+            "dom": 'Bfrtip',
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+          });
+  
+
+          $('#tablaUsuariosAdm tbody').on('click', '.edit-btn', function () {
+            var data = table.row($(this).parents('tr')).data();
+            window.location.href = 'adm-editar-usuario' + `.html?id=${data[0]}`;
+            console.log(data);
+        });
+
+        cargarUsuariosAdmin(table);
     }
     if (window.location.href.includes("listarusuarios.html")) {
-        cargarUsuarios();
+        var table = $("#tblClientes").DataTable({
+            "data": [],
+            "columns": [
+              { "title": "Código" },
+              { "title": "Nombre" },
+              { "title": "Apellido" },
+              { "title": "Rol" },
+              { "title": "Acciones" }
+            ],
+            "columnDefs": [
+                {
+                    "targets": -1, // Esto significa la última columna de la tabla
+                    "data": null,
+                    "defaultContent": "<button class='edit-btn'><i class='nav-icon fas fa-solid fa-pen'/></button>"
+                }
+            ],
+            "responsive": true, 
+            "lengthChange": false, 
+            "autoWidth": false,
+            "dom": 'Bfrtip',
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+          });
+
+          $('#tblClientes tbody').on('click', '.edit-btn', function () {
+            var data = table.row($(this).parents('tr')).data();
+            window.location.href = 'editar-usuario' + `.html?id=${data[0]}`;
+            console.log(data);
+        });
+
+        cargarUsuarios(table);
     }
     if (window.location.href.includes("listaragentes.html")) {
         cargarAgentes();
@@ -380,6 +456,17 @@ window.addEventListener('load', function () {
             cargarLiquidaciones(idSesion);
         } 
     }
+});
+window.addEventListener('load', function () {
+    // if (window.location.href.includes('cotizaciones-ven.html')) {
+    //     if(rolSesion=="Cliente"){
+    //         cargarCotizacionesVendedor(idSesion);
+    //     }
+    //     if(rolSesion=="Administrator"){
+    //         cargarCotizacionesVendedor();
+    //     }
+    // }
+   
 });
 
 

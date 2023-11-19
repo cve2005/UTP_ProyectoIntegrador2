@@ -45,8 +45,14 @@
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/dropzone/min/dropzone.min.css">
+  <!-- sweet alert -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
   <script src="./js/routing.js" type="module"></script>
   <script src="./js/main.js" type="module"></script>
+
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -190,13 +196,13 @@
                     </div>
                   </div>
                   <label class="form-label">Razón Social</label>
-                  <input type="text" class="form-control" id="fage_razon_social" required>
+                  <input type="text" class="form-control" id="fage_razon_social" readonly>
                   <label class="form-label">Contacto</label>
-                  <input type="text" class="form-control" id="fage_nombre" required>
+                  <input type="text" class="form-control" id="fage_nombre" readonly>
                   <label class="form-label">Correo</label>
-                  <input type="text" class="form-control" id="fage_correo" required>
+                  <input type="text" class="form-control" id="fage_correo" readonly>
                   <label class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="fage_telefono" required>
+                  <input type="text" class="form-control" id="fage_telefono" readonly>
                 </div>
                 <div class="col-md-4 my-4">
                   <h3>Shipper / Cliente (Proveedor)</h3>
@@ -212,13 +218,13 @@
                     </div>
                   </div>
                   <label class="form-label">Razón Social</label>
-                  <input type="text" class="form-control" id="fship_razon_social" required>
+                  <input type="text" class="form-control" id="fship_razon_social" readonly>
                   <label class="form-label">Contacto</label>
-                  <input type="text" class="form-control" id="fship_nombre" required>
+                  <input type="text" class="form-control" id="fship_nombre" readonly>
                   <label class="form-label">Correo</label>
-                  <input type="text" class="form-control" id="fship_correo" required>
+                  <input type="text" class="form-control" id="fship_correo" readonly>
                   <label class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="fship_telefono" required>
+                  <input type="text" class="form-control" id="fship_telefono" readonly>
                 </div>
                 <div class="col-md-4 my-4">
                   <h3>Estado</h3>
@@ -235,24 +241,26 @@
       
                   <h3>Detalle de la Operación</h3>
                   <label class="form-label">ETD</label>
-                  <input type="text" class="form-control" id="frou_doETD" required>
+                  <input type="text" class="form-control" id="frou_doETD" value="" required>
+
                   <label class="form-label">ETA</label>
-                  <input type="text" class="form-control" id="frou_doETA" required>
+                  <input type="text" class="form-control" id="frou_doETA" value="" required>
+
                   <label class="form-label">Booking</label>
-                  <input type="text" class="form-control" id="frou_doBooking" required>
+                  <input type="text" class="form-control" id="frou_doBooking" value="" required>
                   <label class="form-label">#Contenedor</label>
-                  <input type="text" class="form-control" id="frou_doContenedor" required>
+                  <input type="text" class="form-control" id="frou_doContenedor" value="" required>
                 </div>
                 <div class="col-md-4 my-4">
                   <h3>&nbsp;</h3>
                   <label class="form-label">#BL / AWB / CP</label>
-                  <input type="text" class="form-control" id="frou_doBL" required>
+                  <input type="text" class="form-control" id="frou_doBL" value="" required>
                   <label class="form-label">Nave / Vuelo</label>
-                  <input type="text" class="form-control" id="frou_doNave" required>
+                  <input type="text" class="form-control" id="frou_doNave" value="" required>
                   <label class="form-label">Url Tracking</label>
-                  <input type="text" class="form-control" id="frou_doTracking" required>
+                  <input type="url" class="form-control" id="frou_doTracking" value="https://cna.com" required>
                   <label class="form-label">Link Drive</label>
-                  <input type="text" class="form-control" id="frou_doGDrive" required>
+                  <input type="url" class="form-control" id="frou_doGDrive" value="https://cna.com" required>
                 </div>
               </div>
               <!-- FORM-->
@@ -328,6 +336,44 @@
    
   <!-- Page specific script -->
   <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Expresiones regulares para validar
+        var alfanumericosRegex = /^[a-zA-Z0-9-]+$/;
+        var numericosFechaRegex = /^[0-9/]+$/;
+
+        // Función para validar los campos
+        function validarCampo(e, regex, mensaje) {
+            var valor = e.target.value;
+            if (!regex.test(valor)) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error de validación",
+                    text: mensaje
+                });
+                e.target.value = '';
+            }
+        }
+
+        // Función para validar los campos alfanuméricos con '-' permitido
+        function validarAlfanumericosConGuion(e) {
+            validarCampo(e, alfanumericosRegex, "Este campo solo debe contener letras, números o el símbolo '-'");
+        }
+
+        // Función para validar los campos numéricos y fecha con '/'
+        function validarNumericosFecha(e) {
+            validarCampo(e, numericosFechaRegex, "Este campo solo debe contener números o el símbolo '/'");
+        }
+
+        // Asignamos las funciones de validación a los eventos correspondientes
+        document.getElementById('frou_doBooking').addEventListener('input', validarAlfanumericosConGuion);
+        document.getElementById('frou_doContenedor').addEventListener('input', validarAlfanumericosConGuion);
+        document.getElementById('frou_doBL').addEventListener('input', validarAlfanumericosConGuion);
+        document.getElementById('frou_doNave').addEventListener('input', validarAlfanumericosConGuion);
+        document.getElementById('frou_doETD').addEventListener('input', validarNumericosFecha);
+        document.getElementById('frou_doETA').addEventListener('input', validarNumericosFecha);
+    });
+
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()

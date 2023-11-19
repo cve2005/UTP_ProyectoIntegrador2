@@ -21,6 +21,18 @@ const conexApi = axios.create({
 // "id": "dbb74e25-bea2-4a87-a337-1c971307c3bf",
 // "name": "Cliente",
 
+function LimpiarFormUsuario() {
+  document.getElementById('fusu_nombre').value = "";
+  document.getElementById('fusu_apellido').value = "";
+  document.getElementById('fusu_email').value = "";
+  document.getElementById('fusu_telefono').value = "";
+  document.getElementById('fusu_dni').value = "";
+  document.getElementById('fusu_contrasena').value = "";
+  document.getElementById('fusu_contrasena2').value = "";
+  document.getElementById('fusu_comision').value = 0.00;
+}
+
+
 
 //Actualizar cliente
 const agregarUsuarioSButton = document.getElementById('btnRegistrarUsuarioSesion')
@@ -29,51 +41,130 @@ agregarUsuarioSButton.addEventListener('click', () => {
   const fusu_apellido = document.getElementById('fusu_apellido').value;
   const fusu_email = document.getElementById('fusu_email').value;
   const fusu_telefono = document.getElementById('fusu_telefono').value;
+  const fusu_comision = document.getElementById('fusu_comision').value;
+  const fusu_dni = document.getElementById('fusu_dni').value;
+
   const fusu_rol = document.getElementById('selectRolUsuario').value;
-  const fusu_dni =document.getElementById('fusu_dni').value;
-  const fusu_contrasena =document.getElementById('fusu_contrasena').value;
-  const fusu_contrasena2 =document.getElementById('fusu_contrasena2').value;
-  const fusu_comision =document.getElementById('fusu_comision').value;
-  
+  const fusu_contrasena = document.getElementById('fusu_contrasena').value;
+  const fusu_contrasena2 = document.getElementById('fusu_contrasena2').value;
+
 
   const data = {
     first_name: fusu_nombre,
     last_name: fusu_apellido,
     email: fusu_email,
-    password:fusu_contrasena,
+    password: fusu_contrasena,
     usu_telefono: fusu_telefono,
     status: "active",
-    role:fusu_rol,
-    dni:fusu_dni,
-    comision:fusu_comision
-   
+    role: fusu_rol,
+    dni: fusu_dni,
+    comision: fusu_comision
 
-    
-// "first_name": "Yarango",
-// "last_name": null,
-// "email": "correo@prueba.com",
-// "password": "**********",
-// "status": "active",
-// "role": "140de75d-8d7c-47e3-8ba9-f7e60cdb3ba4",
-// "dni": null
-// comision:fusu_comision
+
+
+    // "first_name": "Yarango",
+    // "last_name": null,
+    // "email": "correo@prueba.com",
+    // "password": "**********",
+    // "status": "active",
+    // "role": "140de75d-8d7c-47e3-8ba9-f7e60cdb3ba4",
+    // "dni": null
+    // comision:fusu_comision
   }
 
-  if(fusu_contrasena==fusu_contrasena2){
-    console.log(data)
-  conexApi.post(`users`, data).then((res) => {
-    console.log(res)
-  })
-    .catch((error) => {
-      console.error('Hubo un error:', error);
-    });
-  }else{
+
+
+
+
+  // if(fusu_contrasena==fusu_contrasena2){
+  //   validarFormulario()
+  //   console.log(data)
+  // // conexApi.post(`users`, data).then((res) => {
+  // //   console.log(res)
+  //   Swal.fire({
+  //     icon: "success",
+  //     title: "Usuario creado",
+  //     text: "Se creó el usuario correctamente!",
+  //   });
+  // LimpiarFormUsuario()
+
+  // // })
+  // //   .catch((error) => {
+  // //     console.error('Hubo un error:', error);
+  // //   });
+  // }else{
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Las contraseñas no coinciden",
+  //     text: "Verifica la contraseña!",
+  //   });
+  //   // alert('las contraseñas no coinciden')
+  // }
+
+
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!fusu_nombre.trim()) {
     Swal.fire({
       icon: "error",
-      title: "Las contraseñas no coinciden",
+      title: "El nombre es obligatorio",
       text: "Something went wrong!",
     });
-    // alert('las contraseñas no coinciden')
+  } else if (!fusu_apellido.trim()) {
+    Swal.fire({
+      icon: "error",
+      title: "El apellido es obligatorio",
+      text: "Something went wrong!",
+    });
+  } else if (fusu_dni.length === 8) {
+    if (emailRegex.test(fusu_email)) {
+      if (fusu_contrasena === fusu_contrasena2) {
+        // conexApi.get(`users`).then((res) => {
+        // })
+        //   .catch((error) => {
+        //     console.error('Hubo un error:', error);
+        //   });
+        // Lógica para el caso de éxito
+        conexApi.post(`users`, data).then((res) => {
+          console.log(res)
+          Swal.fire({
+            icon: "success",
+            title: "Usuario creado",
+            text: "Se creó el usuario correctamente!",
+          });
+          LimpiarFormUsuario();
+        })
+          .catch((error) => {
+            Swal.fire({
+              icon: "error",
+              title: "Error el correo o DNI ya existe!",
+            });
+            console.error('Hubo un error:', error);
+          });
+      
+
+        // Limpieza del formulario
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Las contraseñas no coinciden",
+          text: "Something went wrong!",
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "El formato del correo electrónico no es válido",
+        text: "Something went wrong!",
+      });
+    }
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "El DNI debe tener 8 caracteres",
+      text: "Something went wrong!",
+    });
   }
 
 
