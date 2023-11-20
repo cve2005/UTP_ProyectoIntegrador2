@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CNA | Listado Clientes</title>
+  <title>CNA | Listar Agentes</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -76,26 +76,26 @@
       <span class="brand-text font-weight-light">CNA</span>
     </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="extra/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="extra/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block" id="nombreSesion"></a>
+            <a href="#" class="d-block" id="estadoSesion"></a>
+          </div>
         </div>
-        <div class="info">
-          <a href="#" class="d-block" id="nombreSesion"></a>
-          <a href="#" class="d-block" id="estadoSesion"></a>
-        </div>
+  
+        <!-- Sidebar Menu -->
+        <nav class="mt-2" id="sidebar-menu">
+          
+        </nav>
+        <!-- /.sidebar-menu -->
       </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2" id="sidebar-menu">
-        
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
+      <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
@@ -105,12 +105,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Listado Clientes</h1>
+            <h1>Listar Agentes</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-              <li class="breadcrumb-item active">Listado Clientes</li>
+              <li class="breadcrumb-item active">Listar Agentes</li>
             </ol>
           </div>
         </div>
@@ -125,22 +125,25 @@
             <!-- card-->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Listado Clientes</h3>
+                <h3 class="card-title">Listar Agentes</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="tblClientes" class="table table-bordered table-striped">
-                  <!--  <thead>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
                   <tr>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Rol</th>
+                    <th>Número</th>
+                    <th>Agente</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Contacto</th>
+                    <th>Tipo</th>
                     <th>Acciones</th>
                   </tr>
                   </thead>
-                  <tbody id="listarUsuariosAdmin">
-                   <tr>
+
+                  <tbody id="listarAgentes">
+                    <!-- <tr>
                       <td>Trident</td>
                       <td>Internet
                         Explorer 4.0
@@ -148,17 +151,21 @@
                       <td>Win 95+</td>
                       <td> 4</td>
                       <td>X</td>
-                    </tr> 
+                      <td>X</td>
+                      <td>X</td>
+                    </tr> -->
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Rol</th>
+                    <th>Número</th>
+                    <th>Agente</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Contacto</th>
+                    <th>Tipo</th>
                     <th>Acciones</th>
                   </tr>
-                  </tfoot>-->
+                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -212,6 +219,22 @@
 <!-- AdminLTE for demo purposes -->
  
 <!-- Page specific script -->
-
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
 </body>
 </html>

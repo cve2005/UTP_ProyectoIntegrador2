@@ -11,6 +11,7 @@ const agregarShipperButton = document.getElementById('btnRegistrarShipper')
 agregarShipperButton.addEventListener('click', () => {
     //Capturar datos para agente
     //const fage_id = document.getElementById('fage_id').value
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const fage_nombre = document.getElementById('fage_nombre').value
     const fage_direccion = document.getElementById('fage_direccion').value
     const fage_telefono = document.getElementById('fage_telefono').value
@@ -31,13 +32,28 @@ agregarShipperButton.addEventListener('click', () => {
         age_razon_social: fage_razon_social
     }
     console.log(data)
-
-    conexApi.post(`agente`, data).then((res) => {
-        console.log(res)
-    })
-        .catch((error) => {
-            console.error('Hubo un error:', error);
+    if (emailRegex.test(fage_correo)) {
+        conexApi.post(`agente`, data).then((res) => {
+            Swal.fire({
+                icon: "success",
+                title: "Shipper creado",
+                text: "Se creó el usuario correctamente!",
+            });
+            console.log(res)
+        })
+            .catch((error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error el correo o el ID Fiscal ya existe!",
+                });
+                console.error('Hubo un error:', error);
+            });
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "El formato del correo electrónico no es válido",
         });
+    }
 });
 
 
@@ -66,10 +82,26 @@ agregarAgenteButton.addEventListener('click', () => {
     }
     console.log(data)
 
-    conexApi.post(`agente`, data).then((res) => {
-        console.log(res)
-    })
-        .catch((error) => {
-            console.error('Hubo un error:', error);
+    if (emailRegex.test(fage_correo)) {
+        conexApi.post(`agente`, data).then((res) => {
+            Swal.fire({
+                icon: "success",
+                title: "Shipper creado",
+                text: "Se creó el usuario correctamente!",
+            });
+            console.log(res)
+        })
+            .catch((error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error el correo o el ID Fiscal ya existe!",
+                });
+                console.error('Hubo un error:', error);
+            });
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "El formato del correo electrónico no es válido",
         });
+    }
 });

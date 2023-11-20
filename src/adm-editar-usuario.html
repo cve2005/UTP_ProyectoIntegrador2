@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CNA | Nuevo Shipper</title>
+  <title>CNA | Editar Usuario</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
   <!-- iCheck -->
@@ -45,16 +46,14 @@
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/dropzone/min/dropzone.min.css">
-  <!-- sweet alert -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  <!-- SweetAlert2 JS -->
+   <!-- sweet alert -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+     <!-- SweetAlert2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
-  <script type="module" src="./js/agente.js"></script>
+
+  <script type="module" src="./js/empresa.js"></script>
   <script type="module" src="./js/main.js"></script>
   <script type="script" src="./js/navigation.js"></script>
-
-
 
 </head>
 
@@ -112,32 +111,32 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="index.html" class="brand-link">
         <img src="extra/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
         <span class="brand-text font-weight-light">CNA</span>
       </a>
 
-     <!-- Sidebar -->
-     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="extra/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="extra/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block" id="nombreSesion"></a>
+            <a href="#" class="d-block" id="estadoSesion"></a>
+          </div>
         </div>
-        <div class="info">
-          <a href="#" class="d-block" id="nombreSesion"></a>
-          <a href="#" class="d-block" id="estadoSesion"></a>
-        </div>
+  
+        <!-- Sidebar Menu -->
+        <nav class="mt-2" id="sidebar-menu">
+          
+        </nav>
+        <!-- /.sidebar-menu -->
       </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2" id="sidebar-menu">
-        
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
+      <!-- /.sidebar -->
     </aside>
 
     <!-- PRIMERO -->
@@ -150,12 +149,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Nuevo Shipper</h1>
+              <h1 class="m-0">Editar Usuario</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                <li class="breadcrumb-item active">Nuevo Shipper</li>
+                <li class="breadcrumb-item active">Editar Usuario</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -168,9 +167,9 @@
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <div class="card card-primary">
+          <div class="card card-warning">
             <div class="card-header">
-              <h3 class="card-title" id="cabeceraCliente">Nuevo Shipper</h3>
+              <h3 class="card-title" id="cabeceraCliente">Editar Usuario</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -184,57 +183,102 @@
             <!-- /.card-header -->
             <div class="card-body">
 
-              <!-- FORM -->
-              <div class="row g-2 mx-3">
-                <div class="col-md-12">
-                  <br>
-                  <h4> Datos del Shipper</h4>
-                  <hr>
-                </div>
-                <div class="col-md-8">
-                  <label class="form-label">Razon Social</label>
-                  <input type="text" class="form-control" id="fage_razon_social" required>
-                </div>
-                <!--Formulario busqueda RUC -->
 
-
-
-                <div class="col-md-4">
-                  <label for="validationCustom02" class="form-label">ID Fiscal</label>
-                  <input type="text" class="form-control" id="fage_id_fiscal" required>
-
-                </div>
-
-
-                <div class="col-md-12">
-                  <label for="validationCustom03" class="form-label">Dirección</label>
-                  <input type="text" class="form-control" id="fage_direccion" required>
-                </div>
-                <div class="col-md-4">
-                  <label for="validationCustom05" class="form-label">Nombre de Contacto</label>
-                  <input type="text" class="form-control" id="fage_nombre" required>
-                </div>
-                <div class="col-md-4">
-                  <label for="validationCustom05" class="form-label">Correo</label>
-                  <input type="text" class="form-control" id="fage_correo" required>
-                </div>
-                <div class="col-md-4">
-                  <label for="validationCustom05" class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="fage_telefono" required>
-                </div>
-               
-              </div>
               <!-- FORM-->
 
-      
-              <!-- /.card-body -->
-              <div class="card-footer mt-4">
-                <button type="button" class="btn btn-info float-right px-5" id="btnRegistrarShipper">Registrar
-                  Shipper</button>
+              <div class="row g-2 mx-4">
+                <div class="col-md-12">
+                  <br>
+                  <h4>Datos del usuario</h4>
+                  <hr>
+                </div>
+                <div class="col-md-4">
+                  <label> Nombres </label>
+                  <input type="text" class="form-control" id="fusu_nombre" required>
+                </div>
+
+                <div class="col-md-4">
+                  <label> Apellidos</label>
+                  <input type="text" class="form-control" id="fusu_apellido" required>
+                </div>
+
+                <div class="col-md-4">
+                  <label> DNI</label>
+
+                  <input type="text" class="form-control" id="fusu_dni" required>
+
+                  <button class="btn btn-navbar" id="btnBuscarCliente" hidden="true">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <button class="btn btn-navbar" id="btnBuscarUsuario" hidden="true">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <button class="btn btn-navbar" id="btnBuscarEmpresa" hidden="true">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <button class="btn btn-navbar" id="btnAgregarEmpresa" hidden="true">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <button class="btn btn-navbar" id="btnAgregarCliente" hidden="true">
+                    <i class="fas fa-search"></i>
+                  </button>
+                  <!-- <input type="text" class="form-control" id="fusu_dni" required> -->
+
+                </div>
+
+                <div class="col-md-4">
+                  <label> E-mail</label>
+                  <input type="text" class="form-control" id="fusu_email" required>
+                </div>
+                <div class="col-md-4">
+                  <label> Contraseña</label>
+                  <input type="password" class="form-control" id="fusu_contrasena" required>
+                </div>
+
+                <div class="col-md-4">
+                  <label> Celular</label>
+                  <input type="text" class="form-control" id="fusu_telefono" required>
+                </div>
+
+                <div class="col-md-6">
+                  <label> Dirección</label>
+                  <input type="text" class="form-control" id="fusu_direccion" required>
+                </div>
+                <div class="col-md-3">
+                  <label> Rol</label>
+                  <select class="custom-select rounded-0" id="selectRolUsuario">
+                    <option value="9682d972-c050-482b-bf1e-5b3db6653f12">Administrador</option>
+                    <option value="140de75d-8d7c-47e3-8ba9-f7e60cdb3ba4">Vendedor</option>
+                    <option value="55f783e6-5f39-4966-bec6-8b71d3631075">Operativo</option>
+                    <option value="afdc94bb-c280-400c-b3b7-85a6158a0201">Contador</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label> Comisión %</label>
+                  <input type="text" class="form-control" id="fusu_comision" value="0" required>
+                </div>
+                <input type="text" class="form-control" id="fidEmpresa" value="2" hidden="true" required>
+                <input type="text" class="form-control" id="fidCliente" value="2" hidden="true" required>
+                <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->
+
+                <!-- FORM-->
+
+                <!-- /.row -->
               </div>
-             
-          
-           
+              <!-- /.card-body -->
+              
+              <div class="card-footer mt-4">
+                <button type="button" class="btn btn-info float-right px-5" id="btnActualizarUsuario">Actualizar
+                  Usuario</button>
+              </div>
+              <!-- <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div> -->
             </div>
             <!-- /.card -->
             <!-- Main content -->
@@ -246,9 +290,10 @@
       </section>
       <!-- /.content -->
     </div>
-    
-    <button type="button"  id="btnRegistrarAgente" hidden="true">Registrar
-      Agente</button>
+
+      <button type="button" id="btnRegistrarUsuario"
+        hidden="true">Registrar Usuario</button>
+
     <!-- /.content-wrapper -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">
@@ -295,44 +340,6 @@
 
   <!-- Page specific script -->
   <script>
-
-      document.addEventListener('DOMContentLoaded', function () {
-        // Expresiones regulares para validar
-        var letrasNumerosRegex = /^[a-zA-Z0-9]+$/;
-        var telefonoRegex = /^[0-9+\-]+$/;
-
-        // Función para validar el campo de ID Fiscal
-        function validarIdFiscal() {
-          var idFiscal = document.getElementById('fage_id_fiscal').value;
-          if (!letrasNumerosRegex.test(idFiscal)) {
-            Swal.fire({
-              icon: "error",
-              title: "Error de validación",
-              text: "El ID Fiscal solo debe contener letras y números"
-            });
-            document.getElementById('fage_id_fiscal').value = '';
-          }
-        }
-
-        // Función para validar el campo de Teléfono
-        function validarTelefono() {
-          var telefono = document.getElementById('fage_telefono').value;
-          if (!telefonoRegex.test(telefono)) {
-            Swal.fire({
-              icon: "error",
-              title: "Error de validación",
-              text: "El número de teléfono solo puede contener números, '+' y '-'"
-            });
-            document.getElementById('fage_telefono').value = '';
-          }
-        }
-
-        // Asignamos las funciones de validación a los eventos correspondientes
-        document.getElementById('fage_id_fiscal').addEventListener('input', validarIdFiscal);
-        document.getElementById('fage_telefono').addEventListener('input', validarTelefono);
-        
-      });
-
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()

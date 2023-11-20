@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CNA | Nuevo Shipper</title>
+  <title>CNA | Editar Agente</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -45,16 +45,14 @@
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/dropzone/min/dropzone.min.css">
-  <!-- sweet alert -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  <!-- SweetAlert2 JS -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
-  <script type="module" src="./js/agente.js"></script>
-  <script type="module" src="./js/main.js"></script>
+    <!-- sweet alert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script type="module" src="./js/editaragente.js"></script>
   <script type="script" src="./js/navigation.js"></script>
-
-
+  <script type="module" src="./js/main.js"></script>
 
 </head>
 
@@ -118,8 +116,8 @@
         <span class="brand-text font-weight-light">CNA</span>
       </a>
 
-     <!-- Sidebar -->
-     <div class="sidebar">
+        <!-- Sidebar -->
+    <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
@@ -150,12 +148,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Nuevo Shipper</h1>
+              <h1 class="m-0">Editar Agente</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                <li class="breadcrumb-item active">Nuevo Shipper</li>
+                <li class="breadcrumb-item active">Editar Agente</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -168,9 +166,9 @@
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <div class="card card-primary">
+          <div class="card card-warning">
             <div class="card-header">
-              <h3 class="card-title" id="cabeceraCliente">Nuevo Shipper</h3>
+              <h3 class="card-title" id="cabeceraCliente">Editar Agente</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -188,12 +186,13 @@
               <div class="row g-2 mx-3">
                 <div class="col-md-12">
                   <br>
-                  <h4> Datos del Shipper</h4>
+                  <h4> Datos del Agente</h4>
                   <hr>
                 </div>
                 <div class="col-md-8">
                   <label class="form-label">Razon Social</label>
                   <input type="text" class="form-control" id="fage_razon_social" required>
+                  <input type="text" class="form-control" id="fage_id" hidden="true">
                 </div>
                 <!--Formulario busqueda RUC -->
 
@@ -222,6 +221,7 @@
                   <label for="validationCustom05" class="form-label">Teléfono</label>
                   <input type="text" class="form-control" id="fage_telefono" required>
                 </div>
+             
                
               </div>
               <!-- FORM-->
@@ -229,12 +229,10 @@
       
               <!-- /.card-body -->
               <div class="card-footer mt-4">
-                <button type="button" class="btn btn-info float-right px-5" id="btnRegistrarShipper">Registrar
-                  Shipper</button>
+                <button type="button" class="btn btn-info float-right px-5" id="btnActualizarAgente">Actualizar
+                  Agente</button>
               </div>
-             
-          
-           
+              
             </div>
             <!-- /.card -->
             <!-- Main content -->
@@ -246,9 +244,8 @@
       </section>
       <!-- /.content -->
     </div>
-    
-    <button type="button"  id="btnRegistrarAgente" hidden="true">Registrar
-      Agente</button>
+    <button type="button"  id="btnActualizarShipper" hidden="true">Registrar
+      Shipper</button>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">
@@ -295,44 +292,6 @@
 
   <!-- Page specific script -->
   <script>
-
-      document.addEventListener('DOMContentLoaded', function () {
-        // Expresiones regulares para validar
-        var letrasNumerosRegex = /^[a-zA-Z0-9]+$/;
-        var telefonoRegex = /^[0-9+\-]+$/;
-
-        // Función para validar el campo de ID Fiscal
-        function validarIdFiscal() {
-          var idFiscal = document.getElementById('fage_id_fiscal').value;
-          if (!letrasNumerosRegex.test(idFiscal)) {
-            Swal.fire({
-              icon: "error",
-              title: "Error de validación",
-              text: "El ID Fiscal solo debe contener letras y números"
-            });
-            document.getElementById('fage_id_fiscal').value = '';
-          }
-        }
-
-        // Función para validar el campo de Teléfono
-        function validarTelefono() {
-          var telefono = document.getElementById('fage_telefono').value;
-          if (!telefonoRegex.test(telefono)) {
-            Swal.fire({
-              icon: "error",
-              title: "Error de validación",
-              text: "El número de teléfono solo puede contener números, '+' y '-'"
-            });
-            document.getElementById('fage_telefono').value = '';
-          }
-        }
-
-        // Asignamos las funciones de validación a los eventos correspondientes
-        document.getElementById('fage_id_fiscal').addEventListener('input', validarIdFiscal);
-        document.getElementById('fage_telefono').addEventListener('input', validarTelefono);
-        
-      });
-
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()

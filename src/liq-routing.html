@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CNA | Routing</title>
+  <title>CNA | Liquidar Routing</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -47,10 +47,10 @@
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/dropzone/min/dropzone.min.css">
   <!-- sweet alert -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  <!-- SweetAlert2 JS -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <script src="./js/routing.js" type="module"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <script src="./js/liquidarouting.js" type="module"></script>
   <script src="./js/main.js" type="module"></script>
 
 
@@ -117,26 +117,26 @@
         <span class="brand-text font-weight-light">CNA</span>
       </a>
 
-      <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="extra/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+       <!-- Sidebar -->
+       <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="extra/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block" id="nombreSesion"></a>
+            <a href="#" class="d-block" id="estadoSesion"></a>
+          </div>
         </div>
-        <div class="info">
-          <a href="#" class="d-block" id="nombreSesion"></a>
-          <a href="#" class="d-block" id="estadoSesion"></a>
-        </div>
+  
+        <!-- Sidebar Menu -->
+        <nav class="mt-2" id="sidebar-menu">
+          
+        </nav>
+        <!-- /.sidebar-menu -->
       </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2" id="sidebar-menu">
-        
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
+      <!-- /.sidebar -->
     </aside>
 
     <!-- PRIMERO -->
@@ -149,12 +149,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Routing</h1>
+              <h1 class="m-0">Liquidar Routing</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                <li class="breadcrumb-item active">Routing</li>
+                <li class="breadcrumb-item active">Liquidar Routing</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -170,7 +170,7 @@
           <!-- SELECT2 EXAMPLE -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Routing</h3>
+              <h3 class="card-title">Liquidar Routing</h3>
 
               <!-- <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -183,97 +183,113 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+              <!-- FORM -->
+              <!-- FORM-->
+              <!-- FORM-->
+              <!-- FORM-->
               <div class="row g-2 mx-4">
                 <div class="col-md-4 my-4">
-                  <h3>Agente de cargo en el extranjero</h3>
-                  <label class="form-label">Id Fiscal</label>
-                  <div class="form-inline">
-                    <input type="text" class="form-control" id="fage_id_fiscal">
-                    <input type="text" class="form-control" id="fage_id" hidden="true">
-                    <div>
-                      <button class="btn btn-navbar" id="buscarAgente">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <label class="form-label">Razón Social</label>
-                  <input type="text" class="form-control" id="fage_razon_social" readonly>
-                  <label class="form-label">Contacto</label>
-                  <input type="text" class="form-control" id="fage_nombre" readonly>
-                  <label class="form-label">Correo</label>
-                  <input type="text" class="form-control" id="fage_correo" readonly>
-                  <label class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="fage_telefono" readonly>
+                  <h3>Detalle de los Servicios</h3>
+                  <label class="form-label">Flete</label>
+                  <input type="text" class="form-control" id="fdoc_dsFlete"  required disabled>
+                  <label class="form-label">Gastos Extranjero</label>
+                  <input type="text" class="form-control" id="fdoc_dsGasExt"  required disabled>
+                  <label class="form-label">BL / AWB / C.Porte</label>
+                  <input type="text" class="form-control" id="fdoc_dsBLAWB"  required disabled>
+                  <label class="form-label">Handing</label>
+                  <input type="text" class="form-control" id="fdoc_dsHandling"  required disabled>
+                  <label class="form-label">Seguro</label>
+                  <input type="text" class="form-control" id="fdoc_dsSeguro"  required disabled>
+                  <label class="form-label">Ag. Aduanas</label>
+                  <input type="text" class="form-control" id="fdoc_dsAgAduanas"  required disabled>
+                  <label class="form-label">Gastos Operativos</label>
+                  <input type="text" class="form-control" id="fdoc_dsGasOpe"  required disabled>
+                  <label class="form-label">Visto Bueno</label>
+                  <input type="text" class="form-control" id="fdoc_dsVistoBueno"  required disabled>
+                  <label class="form-label">Gate IN</label>
+                  <input type="text" class="form-control" id="fdoc_dsGateIn"  required disabled>
+                  <label class="form-label">Desconsolidación</label>
+                  <input type="text" class="form-control" id="fdoc_dsDescon"  required disabled>
+                  <label class="form-label">Almacén / D.Antic.</label>
+                  <input type="text" class="form-control" id="fdoc_dsAlmacen"  required disabled>
+                  <label class="form-label">Transporte interno</label>
+                  <input type="text" class="form-control" id="fdoc_dsTransInt"  required disabled>
+                  <label class="form-label">Otros N.E.</label>
+                  <input type="text" class="form-control" id="fdoc_dsOtros"  required disabled>
                 </div>
                 <div class="col-md-4 my-4">
-                  <h3>Shipper / Cliente (Proveedor)</h3>
-                  <label class="form-label">Id Fiscal</label>
-                  <div class="form-inline">
-                    <input type="text" class="form-control" id="fship_id_fiscal">
-                    <input type="text" class="form-control" id="fship_id" hidden="true">
+                  <h3>Detalle de los Gastos</h3>
+                  <input type="text" class="form-control" id="fdpa_id" hidden="true">
+                  <label class="form-label">Flete</label>
+                  <input type="text" class="form-control" id="fdpa_dpFlete" required>
+                  <label class="form-label">Gastos Extranjero</label>
+                  <input type="text" class="form-control" id="fdpa_dpGasExt" required>
+                  <label class="form-label">BL / AWB / C.Porte</label>
+                  <input type="text" class="form-control" id="fdpa_dpBLAWB" required>
+                  <label class="form-label">Handing</label>
+                  <input type="text" class="form-control" id="fdpa_dpHandling" required>
+                  <label class="form-label">Seguro</label>
+                  <input type="text" class="form-control" id="fdpa_dpSeguro" required>
+                  <label class="form-label">Ag. Aduanas</label>
+                  <input type="text" class="form-control" id="fdpa_dpAgAduanas" required>
+                  <label class="form-label">Gastos Operativos</label>
+                  <input type="text" class="form-control" id="fdpa_dpGasOpe" required>
+                  <label class="form-label">Visto Bueno</label>
+                  <input type="text" class="form-control" id="fdpa_dpVistoBueno" required>
+                  <label class="form-label">Gate IN</label>
+                  <input type="text" class="form-control" id="fdpa_dpGateIn" required>
+                  <label class="form-label">Desconsolidación</label>
+                  <input type="text" class="form-control" id="fdpa_dpDescon" required>
+                  <label class="form-label">Almacén / D.Antic.</label>
+                  <input type="text" class="form-control" id="fdpa_dpAlmacen" required>
+                  <label class="form-label">Transporte interno</label>
+                  <input type="text" class="form-control" id="fdpa_dpTransInt" required>
+                  <label class="form-label">Otros N.E.</label>
+                  <input type="text" class="form-control" id="fdpa_dpOtros" required>
+                </div>
+                <div class="col-md-4 my-4">
+                  <h3>Detalle de los Gastos</h3>
+                  <label class="form-label">Total Ingresos</label>
+                  <input type="text" class="form-control" id="ftotalIngresos"  required disabled>
+                  <label class="form-label">Total Gastos</label>
+                  <input type="text" class="form-control" id="ftotalGastos"  required disabled>
+                  <label class="form-label">Utilidad</label>
+                  <input type="text" class="form-control" id="futilidad"  required disabled>
+                  <label class="form-label">Vendedor</label>
+                  <input type="text" class="form-control" id="fvendedor"  required disabled>
+                  <label class="form-label">Porcentaje</label>
+                  <input type="text" class="form-control" id="fporcentaje"  required disabled>
+                  <label class="form-label">Comisión</label>
+                  <input type="text" class="form-control" id="fcomision"  required disabled>
+                  
+                  <button type="submit" class="btn btn-info float-right px-5" id="btnCalcular">Calcular</button>
+               
+                  <label class="form-label"></label>
+                  <label class="form-label">R.H.E.</label>
+                  <input type="text" class="form-control" id="frhe" required>
+                  <label class="form-label">Fecha</label>
+                  <input type="text" class="form-control" id="ffecha" required>
+                  <label class="form-label">Banco</label>
+                  <input type="text" class="form-control" id="fbanco" required>
+                  <label class="form-label">Operación</label>
+                  <input type="text" class="form-control" id="foperacion" required>
+                  <!-- <label class="form-label">Estado</label>
+                  <select class="custom-select rounded-0" id="festadof">
+                    <option>Value 1</option>
+                    <option>Value 2</option>
+                    <option>Value 3</option>
+                  </select> -->
 
-                    <div>
-                      <button class="btn btn-navbar" id="buscarAgente2">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <label class="form-label">Razón Social</label>
-                  <input type="text" class="form-control" id="fship_razon_social" readonly>
-                  <label class="form-label">Contacto</label>
-                  <input type="text" class="form-control" id="fship_nombre" readonly>
-                  <label class="form-label">Correo</label>
-                  <input type="text" class="form-control" id="fship_correo" readonly>
-                  <label class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="fship_telefono" readonly>
-                </div>
-                <div class="col-md-4 my-4">
-                  <h3>Estado</h3>
-                  <label class="form-label">Estado</label>
-                  <select class="custom-select rounded-0" id="fesr_id">
-                    
-                    <option value="1">CREADO</option>
-                    <option value="2">EN CURSO</option>
-                    <option value="3">FINALIZADO</option>
-                  </select>
-                  <!-- <label class="form-label">Fecha</label>
-                  <input type="text" class="form-control" id="validationCustom05" required> -->
-                </div>
-                <div class="col-md-4 my-4">
-      
-                  <h3>Detalle de la Operación</h3>
-                  <label class="form-label">ETD</label>
-                  <input type="text" class="form-control" id="frou_doETD" value="" required>
 
-                  <label class="form-label">ETA</label>
-                  <input type="text" class="form-control" id="frou_doETA" value="" required>
-
-                  <label class="form-label">Booking</label>
-                  <input type="text" class="form-control" id="frou_doBooking" value="" required>
-                  <label class="form-label">#Contenedor</label>
-                  <input type="text" class="form-control" id="frou_doContenedor" value="" required>
-                </div>
-                <div class="col-md-4 my-4">
-                  <h3>&nbsp;</h3>
-                  <label class="form-label">#BL / AWB / CP</label>
-                  <input type="text" class="form-control" id="frou_doBL" value="" required>
-                  <label class="form-label">Nave / Vuelo</label>
-                  <input type="text" class="form-control" id="frou_doNave" value="" required>
-                  <label class="form-label">Url Tracking</label>
-                  <input type="url" class="form-control" id="frou_doTracking" value="https://cna.com" required>
-                  <label class="form-label">Link Drive</label>
-                  <input type="url" class="form-control" id="frou_doGDrive" value="https://cna.com" required>
                 </div>
               </div>
               <!-- FORM-->
               <!-- /.row -->
             </div>
             <!-- /.card-body -->
-            <div class="card-footer mt-2">
+            <div class="card-footer mt-4">
               <div class="row float-right">
-              <button type="submit" class="btn btn-info float-right px-5 m-3" id="btnGenerarLiquidacion">Generar Liquidación</button>
-               <!--<button type="submit" class="btn btn-info float-right px-5 m-3">Aviso de llegada</button> -->
-              <button type="submit" class="btn btn-info float-right px-5 m-3" id="btnActualizarRouting">Actualizar Routing</button>
+              <button type="submit" class="btn btn-info float-right px-5 m-3" id="btnActualizarLiquidacion">Actualizar Liquidación</button>
               </div>
               
               <!-- <div class="card-tools">
@@ -298,7 +314,7 @@
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 1.0
-    </div> 
+    </div>  
     </footer>
 
     <!-- Control Sidebar -->
@@ -339,41 +355,135 @@
   <!-- Page specific script -->
   <script>
 
-    document.addEventListener('DOMContentLoaded', function () {
-        // Expresiones regulares para validar
-        var alfanumericosRegex = /^[a-zA-Z0-9-]+$/;
-        var numericosFechaRegex = /^[0-9/]+$/;
+document.addEventListener('DOMContentLoaded', function () {
+      // Expresiones regulares para validar
+      var numericosRegex = /^[0-9.]+$/;
+      var alfanumericosRegex = /^[a-zA-Z0-9-]+$/;
+      var fechaRegex = /^[0-9/-]+$/;
+      var letrasRegex = /^[a-zA-Z]+$/;
 
-        // Función para validar los campos
-        function validarCampo(e, regex, mensaje) {
-            var valor = e.target.value;
-            if (!regex.test(valor)) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error de validación",
-                    text: mensaje
-                });
-                e.target.value = '';
-            }
+      // Función para validar y formatear números
+      function validarNumero(e, mensaje) {
+        var valor = e.target.value;
+        if (!numericosRegex.test(valor)) {
+          Swal.fire({
+            icon: "error",
+            title: "Error de validación",
+            text: mensaje
+          });
+          e.target.value = '';
         }
+      }
 
-        // Función para validar los campos alfanuméricos con '-' permitido
-        function validarAlfanumericosConGuion(e) {
-            validarCampo(e, alfanumericosRegex, "Este campo solo debe contener letras, números o el símbolo '-'");
+      // Función para validar alfanuméricos
+      function validarAlfanumericos(e, mensaje) {
+        var valor = e.target.value;
+        if (!alfanumericosRegex.test(valor)) {
+          Swal.fire({
+            icon: "error",
+            title: "Error de validación",
+            text: mensaje
+          });
+          e.target.value = '';
         }
+      }
 
-        // Función para validar los campos numéricos y fecha con '/'
-        function validarNumericosFecha(e) {
-            validarCampo(e, numericosFechaRegex, "Este campo solo debe contener números o el símbolo '/'");
+      // Función para validar fechas
+      function validarFecha(e, mensaje) {
+        var valor = e.target.value;
+        if (!fechaRegex.test(valor)) {
+          Swal.fire({
+            icon: "error",
+            title: "Error de validación",
+            text: mensaje
+          });
+          e.target.value = '';
         }
+      }
 
-        // Asignamos las funciones de validación a los eventos correspondientes
-        document.getElementById('frou_doBooking').addEventListener('input', validarAlfanumericosConGuion);
-        document.getElementById('frou_doContenedor').addEventListener('input', validarAlfanumericosConGuion);
-        document.getElementById('frou_doBL').addEventListener('input', validarAlfanumericosConGuion);
-        document.getElementById('frou_doNave').addEventListener('input', validarAlfanumericosConGuion);
-        document.getElementById('frou_doETD').addEventListener('input', validarNumericosFecha);
-        document.getElementById('frou_doETA').addEventListener('input', validarNumericosFecha);
+      // Función para validar letras
+      function validarLetras(e, mensaje) {
+        var valor = e.target.value;
+        if (!letrasRegex.test(valor)) {
+          Swal.fire({
+            icon: "error",
+            title: "Error de validación",
+            text: mensaje
+          });
+          e.target.value = '';
+        }
+      }
+
+      // Asignamos las funciones de validación a los eventos correspondientes
+      document.getElementById('fdpa_dpFlete').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpGasExt').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpBLAWB').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpHandling').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpSeguro').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpAgAduanas').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpGasOpe').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpVistoBueno').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpGateIn').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpDescon').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpAlmacen').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpTransInt').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpOtros').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      // Agregar más campos y validaciones según sea necesario
+      document.getElementById('frhe').addEventListener('input', function (e) {
+        validarAlfanumericos(e, "Este campo solo debe contener números, letras o el símbolo '-'");
+      });
+
+      document.getElementById('ffecha').addEventListener('input', function (e) {
+        validarFecha(e, "Este campo solo debe contener números o los símbolos '-', '/'");
+      });
+
+      document.getElementById('fbanco').addEventListener('input', function (e) {
+        validarLetras(e, "Este campo solo debe contener letras");
+      });
+
+      document.getElementById('foperacion').addEventListener('input', function (e) {
+        validarAlfanumericos(e, "Este campo solo debe contener letras o números");
+      });
+
     });
 
     $(function () {
@@ -456,10 +566,10 @@
     //   window.stepper = new Stepper(document.querySelector('.bs-stepper'))
     // })
 
-    // // DropzoneJS Demo Code Start
+    // DropzoneJS Demo Code Start
     // Dropzone.autoDiscover = false
 
-    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+    // // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
     // var previewNode = document.querySelector("#template")
     // previewNode.id = ""
     // var previewTemplate = previewNode.parentNode.innerHTML
