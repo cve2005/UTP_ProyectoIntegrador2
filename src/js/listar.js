@@ -238,15 +238,14 @@ async function cargarLiquidaciones(id,table) {
         const dataTable = [];
         data.forEach((element) => {
             const row = [];
-            row.push(element.liq_id);
             row.push(element.doc_id.doc_id)
+            row.push(element.liq_id);
             row.push(element.doc_id.usu_dir.emp_id.emp_razon_social);
             row.push("-");
             row.push(element.liq_rhe);
             row.push(element.liq_fecha);
             row.push('element.usu_correo');
             dataTable.push(row);
-
         });
         table.rows.add(dataTable).draw();
 
@@ -356,11 +355,14 @@ $(document).ready(function () {
             "data": [],
             "columns": [
                 { "title": "Código", visible: false },
-                { "title": "DNI" },
-                { "title": "Nombre" },
-                { "title": "Apellido" },
-                { "title": "Rol" },
+                { "title": "Fecha" },
+                { "title": "Cliente" },
+                { "title": "Estado" },
+                { "title": "Detalle" },
+                { "title": "Booking" },
+                { "title": "Tracking" },
                 { "title": "Acciones" }
+                
             ],
             "columnDefs": [
                 {
@@ -473,11 +475,12 @@ $(document).ready(function () {
         var table = $("#tblLiquidaciones").DataTable({
             "data": [],
             "columns": [
-                { "title": "Código", visible: false },
-                { "title": "DNI" },
-                { "title": "Nombre" },
-                { "title": "Apellido" },
-                { "title": "Rol" },
+                { "title": "Nro Doc" },
+                { "title": "Nro Liquidacion" },
+                { "title": "Cliente" },
+                { "title": "Documentos Drive" },
+                { "title": "RHE" },
+                { "title": "Fecha de pago" },
                 { "title": "Acciones" }
             ],
             "columnDefs": [

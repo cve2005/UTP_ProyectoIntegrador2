@@ -146,7 +146,10 @@ generarRoutingButton.addEventListener('click', () => {
       Swal.fire({
         icon: "success",
         title: "Se generó el routing correctamente!",
-      });
+      }).then(() => {
+        // Redirige después de mostrar el alert
+        window.location.href = "cotizaciones-ven.html";
+    });
       console.log('Se agrego correctamente los datos')
     })
     .catch((error) => {
@@ -477,7 +480,10 @@ actualizarDocumentoButton.addEventListener('click', () => {
       Swal.fire({
         icon: "success",
         title: "Cotización actualizada correctamente!",
-      });
+      }).then(() => {
+        // Redirige después de mostrar el alert
+        window.location.href = "cotizaciones-ven.html";
+    });
       console.log('Se agrego correctamente los datos')
     })
     .catch((error) => {

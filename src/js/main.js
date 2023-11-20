@@ -1,6 +1,3 @@
-
-
-
 if (sessionStorage.getItem('userInfo') === null) {
   window.location = 'login.html';
 }
@@ -48,11 +45,10 @@ if (!sessionStorage.getItem('userInfo')) {
       || currentPage.includes("nuevo-agente.html")
       || currentPage.includes("nuevo-shipper.html")
       || currentPage.includes("nuevo-usuario.html")
-      || currentPage.includes("operaciones-ven.html")
       || currentPage.includes("operaciones.html")
-      || currentPage.includes("routing.html")
+
     ) {
-      alert("Acceso no permitido para usuarios con el rol 'Contador'.");
+      alert("Acceso no permitido para un Contador!");
       window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
     }
     //Restricciones Cliente
@@ -76,7 +72,10 @@ if (!sessionStorage.getItem('userInfo')) {
     || currentPage.includes("liquidaciones-ven.html")
 
   ){
-    alert("Acceso no permitido para usuarios con el rol 'Cliente'.");
+    Swal.fire({
+      icon: "error",
+      title: "Acceso no permitido para un cliente!",
+    });
     window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
   }
   }
@@ -96,7 +95,10 @@ if (!sessionStorage.getItem('userInfo')) {
     || currentPage.includes("liq-routing.html")
     || currentPage.includes("liquidaciones-ven.html")
   ){
-    alert("Acceso no permitido para usuarios con el rol 'Operativo'.");
+    Swal.fire({
+      icon: "error",
+      title: "Acceso no permitido para un operativo!",
+    });
     window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
   }
   }//Restricciones Vendedor
@@ -114,8 +116,8 @@ if (!sessionStorage.getItem('userInfo')) {
     || currentPage.includes("editar_agente.html")
     || currentPage.includes("editar_shipper.html")
   ){
-    alert("Acceso no permitido para usuarios con el rol 'Vendedor'.");
-    window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
+    alert("Acceso no permitido para un vendedor!")
+    window.location = 'index.html';
   }
   }
   else {
@@ -135,7 +137,6 @@ if (menuContainer) {
         title: 'Inicio',
         icon: 'fas fa-tachometer-alt',
         link: '#',
-        active: true
       },
       {
 
@@ -284,7 +285,6 @@ if (menuContainer) {
         title: 'Inicio',
         icon: 'fas fa-tachometer-alt',
         link: '#',
-        active: true
       },
       {
         //listar solo sus cotizaciones de vendedor
@@ -342,7 +342,6 @@ if (menuContainer) {
         //todas
         title: 'Liquidaciones',
         icon: 'fas fa-coins',
-        active: true,
         link: '#',
         subItems: [
           { title: 'Listar Liquidaciones', link: 'liquidaciones-ven.html', icon: 'far fa-circle nav-icon' },

@@ -12,6 +12,13 @@ let url = new URL(window.location.href);
 let id = url.searchParams.get("id");
 let operacionesG
 
+var fec = new Date(),
+  mes = fec.getMonth() + 1,
+  dia = fec.getDate(),
+  year = fec.getFullYear();
+
+  //para que capture global del vendedor
+ let Gvendedorid
 async function cargarEditarOperacion() {
 
     //Aqui del documento esr_id
@@ -33,6 +40,11 @@ async function cargarEditarOperacion() {
             const fship_nombre = doc[0].shipp_id.age_nombre
             const fship_correo = doc[0].shipp_id.age_correo
             const fship_telefono = doc[0].shipp_id.age_telefono
+
+            //capturo vendedor del documento
+            const fvendedor_id_dir = doc[0].vendedor_id_dir.id
+            Gvendedorid=fvendedor_id_dir
+            console.log(Gvendedorid)
 
             document.getElementById('fage_id').value = fage_id
             document.getElementById('fage_id_fiscal').value = fage_id_fiscal
@@ -79,20 +91,9 @@ async function cargarEditarOperacion() {
 
 //actualizar routing-------------------------------------
 const actualizarRoutingButton = document.getElementById('btnActualizarRouting')
-actualizarRoutingButton.addEventListener('click', () => {
+actualizarRoutingButton.addEventListener('click', (e) => {
+    e.preventDefault()
 
-    for (var i = operacionesG[0].dop_id; i <= operacionesG[7].dop_id; i++) {
-        console.log(i)
-        conexApi.delete(`detalle_operacion/${i}`)
-            .then(response => {
-                console.log('Registro detalle op borrado con éxito:' + i, response.data);
-            })
-            .catch(error => {
-                console.error('Error al elimnar el registro:', error);
-            });
-
-        //ternmina for
-    }
 
     const frou_doETD = document.getElementById('frou_doETD').value
     const frou_doETA = document.getElementById('frou_doETA').value
@@ -153,30 +154,57 @@ actualizarRoutingButton.addEventListener('click', () => {
         ...operacion,
         doc_id: id
     }));
-    //Aqui post detalle_operacion
-    conexApi.post(`detalle_operacion`, operacionesData)
-        .then((res) => {
-            console.log(res);
-            console.log('Se agregaron correctamente los datos de las operaciones');
-        })
-        .catch((error) => {
-            console.error('Hubo un error al agregar las operaciones:', error);
-        });
 
 
     //Aqui patch de documento esr_id, age_id, shipp_id
     const dataDocumento = {
-        esr_id: document.getElementById('fesr_id').value,
+        esr_id:2,
         age_id: document.getElementById('fage_id').value,
         shipp_id: document.getElementById('fship_id').value
     }
     console.log(dataDocumento)
     conexApi.patch(`documento/${id}`, dataDocumento)
         .then((res) => {
+            for (var i = operacionesG[0].dop_id; i <= operacionesG[7].dop_id; i++) {
+                console.log(i)
+                conexApi.delete(`detalle_operacion/${i}`)
+                    .then(response => {
+                        console.log('Registro detalle op borrado con éxito:' + i, response.data);
+                    })
+                    .catch(error => {
+                        console.error('Error al elimnar el registro:', error);
+                    });
+
+                //ternmina for
+            }
+            //Aqui post detalle_operacion
+            conexApi.post(`detalle_operacion`, operacionesData)
+                .then((res) => {
+                    console.log(res);
+                    console.log('Se agregaron correctamente los datos de las operaciones');
+                 
+                })
+                .catch((error) => {
+                  
+                    console.error('Hubo un error al agregar las operaciones:', error);
+                });
+
+
             console.log(res);
-            console.log('Se agregaron correctamente los datos de las operaciones');
+            Swal.fire({
+                icon: "success",
+                title: "Se actualizó el routing con éxito!",
+            }).then(() => {
+                // Redirige después de mostrar el alert
+                window.location.href = "operaciones-ven.html";
+            });
+            
         })
         .catch((error) => {
+            Swal.fire({
+                icon: "error",
+                title: "Hubo un error al actualizar el routing!",
+            });
             console.error('Hubo un error al agregar las operaciones:', error);
         });
 
@@ -236,25 +264,47 @@ generarLiquidacionButton.addEventListener('click', () => {
 
     //Aqui liquidacion
     const liquidacion = {
-        vendedor_id: userInfo.cna_user.usu_id,
+        //vemdedor 
+        vendedor_id_dir: Gvendedorid,
         liq_total_utilidad: 0,
         liq_rhe: 0,
-        liq_fecha: "2023-10-29",
+        liq_fecha: year+"-"+mes+"-"+dia,
         liq_banco: 0,
         liq_operacion: 0,
         liq_pago_vendedor: 0,
         doc_id: id
     }
+    const dataDoc={
+        esr_id: 3,
+        
+    }
 
+    
 
     //Aqui post liquidacion
     conexApi.post(`liquidacion`, liquidacion)
         .then((res) => {
+            conexApi.patch(`documento/${id}`, dataDoc)
+        .then((res) => {
+
+        }) .catch((error) => {
+            console.error('Hubo un error al agregar la liquidacion', error);
+        });
             console.log(res);
             console.log('Se agregaron correctamente los datos de la liquidacion');
-            alert("Se generó la liquidación")
+            Swal.fire({
+                icon: "success",
+                title: "Se generó la liquidación con éxito!",
+            }).then(() => {
+                // Redirige después de mostrar el alert
+                window.location.href = "operaciones-ven.html";
+            });
         })
         .catch((error) => {
+            Swal.fire({
+                icon: "error",
+                title: "Hubo un error al generar la liquidación!",
+            });
             console.error('Hubo un error al agregar la liquidacion', error);
         });
 

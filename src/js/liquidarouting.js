@@ -61,8 +61,8 @@ async function cargarEditarLiquidacion() {
   conexApi.get(`documento?filter[doc_id]=${id}&fields=*.*.*`).then((res) => {
     const doc = res.data.data[0]
     console.log(doc)
-    document.getElementById('fvendedor').value = doc.cliente_id.emp_id.emp_razon_social
-    document.getElementById('fporcentaje').value = doc.cliente_id.usu_comision
+    document.getElementById('fvendedor').value = doc.usu_dir.emp_id.emp_razon_social
+    document.getElementById('fporcentaje').value = doc.vendedor_id_dir.comision
   })
     .catch((error) => {
       console.error('Hubo un error:', error);
@@ -73,7 +73,6 @@ async function cargarEditarLiquidacion() {
     const liq = res.data.data[0]
     console.log(liq)
     document.getElementById('fdpa_id').value = liq.liq_id
-
     document.getElementById('frhe').value = liq.liq_rhe
     document.getElementById('ffecha').value = liq.liq_fecha
     document.getElementById('fbanco').value = liq.liq_banco
@@ -182,20 +181,7 @@ actualizarLiquidacionButton.addEventListener('click', () => {
   // //Patch Liquidacion
   const id_liq = document.getElementById('fdpa_id').value
   //console.log(id_liq)
-  conexApi.patch(`liquidacion/${id_liq}`, data).then((res) => {
-    console.log(res)
-    Swal.fire({
-      icon: "success",
-      title: "Se actualizó correctamente la liquidación",
-    });
-  })
-    .catch((error) => {
-      Swal.fire({
-        icon: "error",
-        title: "Hubo error en actualizar la liquidación",
-      });
-      console.error('Hubo un error:', error);
-    });
+
 
   //para el documento
   // "doc_total_venta": null,
@@ -211,37 +197,10 @@ actualizarLiquidacionButton.addEventListener('click', () => {
   }
 
 
-  conexApi.patch(`documento/${id}`, dato).then((res) => {
-    console.log(res)
-    Swal.fire({
-      icon: "success",
-      title: "Se completaron los datos en el documento!",
-    });
-  })
-    .catch((error) => {
-      Swal.fire({
-        icon: "error",
-        title: "Hubo error en completar los datos del documento",
-      });
-      console.error('Hubo un error:', error);
-    });
 
 
 
 
-  //eliminar detalle_pagos
-  for (var e = pagosG[0].dpa_id; e <= pagosG[12].dpa_id; e++) {
-    console.log(e)
-    conexApi.delete(`detalle_pagado/${e}`)
-      .then(response => {
-        console.log('Registro eliminado con éxito:' + e, response.data);
-      })
-      .catch(error => {
-        console.error('Error al elimnar el registro:', error);
-      });
-
-    //ternmina for
-  }
 
   //para editar los pagos
   const fdpa_dpFlete = document.getElementById('fdpa_dpFlete').value
@@ -336,23 +295,52 @@ actualizarLiquidacionButton.addEventListener('click', () => {
   }));
 
   console.log(pagosData)
+  conexApi.patch(`liquidacion/${id_liq}`, data).then((res) => {
+    console.log(res)
+    //eliminar detalle_pagos
+    for (var e = pagosG[0].dpa_id; e <= pagosG[12].dpa_id; e++) {
+      console.log(e)
+      conexApi.delete(`detalle_pagado/${e}`)
+        .then(response => {
+          console.log('Registro eliminado con éxito:' + e, response.data);
+        })
+        .catch(error => {
+          console.error('Error al elimnar el registro:', error);
+        });
 
-  //Aqui post detalle_pagos
-  conexApi.post(`detalle_pagado`, pagosData)
-    .then((res) => {
-      console.log(res);
-      Swal.fire({
-        icon: "success",
-        title: "Se agregaron los detalles de pago del documento",
-      });
+      //ternmina for
+    }
+    conexApi.patch(`documento/${id}`, dato).then((res) => {
+      console.log(res)
+
     })
       .catch((error) => {
-        Swal.fire({
-          icon: "error",
-          title: "Hubo error en completar los detalles de pago del documento",
-        });
-      console.error('Hubo un error al agregar los pagos:', error);
+
+        console.error('Hubo un error:', error);
+      });
+    //Aqui post detalle_pagos
+    conexApi.post(`detalle_pagado`, pagosData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error('Hubo un error al agregar los pagos:', error);
+      });
+
+    //////////////////////////////////////////// 
+    Swal.fire({
+      icon: "success",
+      title: "Se actualizó correctamente la liquidación",
+    }).then(() => {
+      // Redirige después de mostrar el alert
+      window.location.href = "liquidaciones-ven.html";
+  });
+  })
+    .catch((error) => {
+      console.error('Hubo un error:', error);
     });
+
+
 })
 
 

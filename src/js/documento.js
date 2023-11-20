@@ -542,7 +542,10 @@ agregarDocumentoButton.addEventListener('click', () => {
       Swal.fire({
         icon: "success",
         title: "Cotización creada correctamente!",
-      });
+      }).then(() => {
+        // Redirige después de mostrar el alert
+        window.location.href = "cotizaciones-ven.html";
+    });
       console.log('Se agrego correctamente los datos')
     })
       .catch((error) => {
