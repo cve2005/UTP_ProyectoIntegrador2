@@ -50,13 +50,16 @@
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/dropzone/min/dropzone.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  <!-- sweet alert -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script type="module" src="./js/empresacliente.js"></script>
   <script type="script" src="./js/navigation.js"></script>
   <script type="module" src="./js/main.js"></script>
 
+  
 
 </head>
 
@@ -275,7 +278,7 @@
 
                 <div class="col-md-4">
                   <label> Celular</label>
-                  <input type="text" class="form-control" id="fusu_telefono" required>
+                  <input type="text" class="form-control" id="fusu_celular" required>
                 </div>
                 <input type="text" class="form-control" id="fidcliente" hidden="true" required>
                 <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->
@@ -351,6 +354,118 @@
 
   <!-- Page specific script -->
   <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // ...
+
+      // Obtener referencias a los campos
+      var razonSocialInput = document.getElementById('frazonSocial');
+      var rucInput = document.getElementById('fruc');
+      var direccionInput = document.getElementById('fusu_direccion');
+      var telefonoInput = document.getElementById('fusu_telefono');
+      var nombresInput = document.getElementById('fusu_nombre');
+      var apellidosInput = document.getElementById('fusu_apellido');
+      var dniInput = document.getElementById('fusu_dni');
+      var emailInput = document.getElementById('fusu_email');
+      var celularInput = document.getElementById('fusu_celular');
+
+      // Función para verificar si al menos un campo requerido está vacío
+      function camposRequeridosVacios() {
+        return (
+          razonSocialInput.value.trim() === '' ||
+          rucInput.value.trim() === '' ||
+          direccionInput.value.trim() === '' ||
+          telefonoInput.value.trim() === ''
+        );
+      }
+
+      // Función para habilitar o deshabilitar campos según la condición
+      function habilitarCampos() {
+        var camposHabilitados = camposRequeridosVacios();
+
+        nombresInput.disabled = camposHabilitados;
+        apellidosInput.disabled = camposHabilitados;
+        dniInput.disabled = camposHabilitados;
+        emailInput.disabled = camposHabilitados;
+        celularInput.disabled = camposHabilitados;
+      }
+
+      // Asignar la función de habilitarCampos al evento input de los campos requeridos
+      razonSocialInput.addEventListener('input', habilitarCampos);
+      rucInput.addEventListener('input', habilitarCampos);
+      direccionInput.addEventListener('input', habilitarCampos);
+      telefonoInput.addEventListener('input', habilitarCampos);
+
+      // Ejecutar habilitarCampos al cargar la página
+      habilitarCampos();
+
+      // ...
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+    // Expresiones regulares para validar
+    var numericosRegex = /^[0-9.]+$/;
+    var rucRegex = /^(10|20)\d{9}$/;
+    var dniRegex = /^\d{8}$/;
+    var telefonoCelularRegex = /^[0-9+-]+$/;
+
+    // Función para validar y formatear números
+    function validarNumero(e, mensaje) {
+      var valor = e.target.value;
+      if (!numericosRegex.test(valor)) {
+        mostrarError(mensaje);
+        e.target.value = '';
+      }
+    }
+
+    // Función para validar RUC
+    function validarRUC(e) {
+      var valor = e.target.value;
+      if (!rucRegex.test(valor)) {
+        mostrarError("El RUC debe contener solo números, tener 11 dígitos y comenzar con '10' o '20'");
+        e.target.value = '';
+      }
+    }
+
+    // Función para validar DNI
+    function validarDNI(e) {
+      var valor = e.target.value;
+      if (!dniRegex.test(valor)) {
+        mostrarError("El DNI debe contener solo 8 dígitos numéricos");
+        e.target.value = '';
+      }
+    }
+
+
+    // Función para validar Teléfono y Celular
+    function validarTelefonoCelular(e) {
+      var valor = e.target.value;
+      if (!telefonoCelularRegex.test(valor)) {
+        mostrarError("El Teléfono y Celular solo deben contener números y los símbolos '-' y '+'");
+        e.target.value = '';
+      }
+    }
+
+    // Función para mostrar el mensaje de error con SweetAlert
+    function mostrarError(mensaje) {
+      Swal.fire({
+        icon: "error",
+        title: "Error de validación",
+        text: mensaje
+      });
+    }
+
+    // Asignamos las funciones de validación a los eventos correspondientes
+    document.getElementById('fruc').addEventListener('blur', validarRUC);
+    document.getElementById('fusu_dni').addEventListener('blur', validarDNI);
+    document.getElementById('fusu_telefono').addEventListener('input', validarTelefonoCelular);
+    document.getElementById('fusu_celular').addEventListener('input', validarTelefonoCelular);
+
+    // ... (otras asignaciones de eventos según sea necesario)
+
+    });
+
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()

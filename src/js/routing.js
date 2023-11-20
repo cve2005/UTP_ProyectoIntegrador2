@@ -6,8 +6,6 @@ const conexApi = axios.create({
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
-const nombreSesion = document.getElementById('nombreSesion');
-nombreSesion.textContent = userInfo.cna_user.usu_nombre;
 let url = new URL(window.location.href);
 
 // Usar URLSearchParams para obtener el valor de 'miVariable'
@@ -20,6 +18,7 @@ async function cargarEditarOperacion() {
     conexApi.get(`documento?filter[doc_id]=${id}&fields=*.*`)
         .then((res) => {
             const doc = res.data.data
+            console.log(doc)
             document.getElementById('fesr_id').value = doc[0].esr_id.esr_id
             const fage_id = doc[0].age_id.age_id
             const fage_id_fiscal = doc[0].age_id.age_id_fiscal

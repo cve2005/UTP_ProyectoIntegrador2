@@ -184,8 +184,16 @@ actualizarLiquidacionButton.addEventListener('click', () => {
   //console.log(id_liq)
   conexApi.patch(`liquidacion/${id_liq}`, data).then((res) => {
     console.log(res)
+    Swal.fire({
+      icon: "success",
+      title: "Se actualizó correctamente la liquidación",
+    });
   })
     .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Hubo error en actualizar la liquidación",
+      });
       console.error('Hubo un error:', error);
     });
 
@@ -205,9 +213,16 @@ actualizarLiquidacionButton.addEventListener('click', () => {
 
   conexApi.patch(`documento/${id}`, dato).then((res) => {
     console.log(res)
-    console.log
+    Swal.fire({
+      icon: "success",
+      title: "Se completaron los datos en el documento!",
+    });
   })
     .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Hubo error en completar los datos del documento",
+      });
       console.error('Hubo un error:', error);
     });
 
@@ -326,9 +341,16 @@ actualizarLiquidacionButton.addEventListener('click', () => {
   conexApi.post(`detalle_pagado`, pagosData)
     .then((res) => {
       console.log(res);
-      console.log('Se agregaron correctamente los datos de los pagos');
+      Swal.fire({
+        icon: "success",
+        title: "Se agregaron los detalles de pago del documento",
+      });
     })
-    .catch((error) => {
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Hubo error en completar los detalles de pago del documento",
+        });
       console.error('Hubo un error al agregar los pagos:', error);
     });
 })

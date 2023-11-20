@@ -50,6 +50,10 @@
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/dropzone/min/dropzone.min.css">
+     <!-- sweet alert -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+     <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script type="module" src="./js/empresacliente.js"></script>
   <script type="script" src="./js/navigation.js"></script>
@@ -217,7 +221,7 @@
 
               <div class="col-md-6">
                 <label for="validationCustom03" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="fusu_direccion" required>
+                <input type="text" class="form-control" id="fusu_direccionE" required>
               </div>
 
               <div class="col-md-4">
@@ -263,6 +267,10 @@
               <div class="col-md-4">
                 <label> Celular</label>
                 <input type="text" class="form-control" id="fusu_celular" required>
+              </div>
+              <div class="col-md-4">
+                <label> Dirección Cliente</label>
+                <input type="text" class="form-control" id="fusu_direccionC" required>
               </div>
               <input type="text" class="form-control" id="fidcliente" hidden="true" required>
               <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->

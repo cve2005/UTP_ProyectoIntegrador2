@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const conexApi = axios.create({
-  baseURL: 'https://cna-cms.onrender.com/items/'
+  baseURL: 'https://cna-cms.onrender.com/'
 });
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -15,32 +15,32 @@ nombreSesion.textContent = userInfo.cna_user.usu_nombre;
 
 
 
-//Buscar empresa por ruc
-const buscarButton = document.getElementById('btnBuscarEmpresa')
-buscarButton.addEventListener('click', () => {
-  const ruc = document.querySelector('#fruc').value;
-  //axios.get(`https://cna-cms.onrender.com/items/empresa?filter[emp_ruc]=${ruc}`).then((res) => {
-  conexApi.get(`empresa?filter[emp_ruc]=${ruc}`).then((res) => {
-    const empresa = res.data.data[0]
-    console.log(empresa.emp_ruc)
-    //console.log(emp_ruc)
-    document.getElementById('frazonSocial').value = empresa.emp_razon_social
-    document.getElementById('fruc').value = empresa.emp_ruc
-    document.getElementById('ftelefonoEmpresa').value = empresa.emp_telefono
-    document.getElementById('fusu_direccion').value = empresa.emp_direccion
-    document.getElementById('fidEmpresa').value = empresa.emp_id
-  })
-    .catch((error) => {
-      console.error('Hubo un error:', error);
-    });
-});
+// //Buscar empresa por ruc
+// const buscarButton = document.getElementById('btnBuscarEmpresa')
+// buscarButton.addEventListener('click', () => {
+//   const ruc = document.querySelector('#fruc').value;
+//   //axios.get(`https://cna-cms.onrender.com/items/empresa?filter[emp_ruc]=${ruc}`).then((res) => {
+//   conexApi.get(`items/empresa?filter[emp_ruc]=${ruc}`).then((res) => {
+//     const empresa = res.data.data[0]
+//     console.log(empresa.emp_ruc)
+//     //console.log(emp_ruc)
+//     document.getElementById('frazonSocial').value = empresa.emp_razon_social
+//     document.getElementById('fruc').value = empresa.emp_ruc
+//     document.getElementById('ftelefonoEmpresa').value = empresa.emp_telefono
+//     document.getElementById('fusu_direccion').value = empresa.emp_direccion
+//     document.getElementById('fidEmpresa').value = empresa.emp_id
+//   })
+//     .catch((error) => {
+//       console.error('Hubo un error:', error);
+//     });
+// });
 
 
 //Agregar usuario
 const agregarUsuarioButton = document.getElementById('btnRegistrarUsuario')
 agregarUsuarioButton.addEventListener('click', () => {
   const fusu_nombre = document.getElementById('fusu_nombre').value;
-  const fid_empresa = document.getElementById('fidEmpresa').value;
+  const fid_empresa = 2;
   const fusu_apellido = document.getElementById('fusu_apellido').value;
   const fusu_dni = document.getElementById('fusu_dni').value;
   const fusu_email = document.getElementById('fusu_email').value;
@@ -68,104 +68,113 @@ agregarUsuarioButton.addEventListener('click', () => {
   }
   console.log(data)
 
-  conexApi.post(`usuario`, data).then((res) => {
+  conexApi.post(`users`, data).then((res) => {
+    Swal.fire({
+      icon: "success",
+      title: "Usuario creado correctamente!",
+    });
     console.log('Se agrego correctamente los datos')
   })
     .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Hubo un error al crear el usuario, el DNI o correo ya existe!",
+        text: error,
+      });
       console.error('Hubo un error:', error);
     });
 });
 
 //Buscar usuario
 
-const buscarUsuarioButton = document.getElementById('btnBuscarUsuario')
-buscarUsuarioButton.addEventListener('click', () => {
-  const dni = document.getElementById('fusu_dni').value;
-  conexApi.get(`usuario?filter[usu_dni]=${dni}`).then((res) => {
-    const cliente = res.data.data[0]
-    document.getElementById('fusu_nombre').value = cliente.usu_nombre;
-    document.getElementById('fusu_apellido').value = cliente.usu_apellido;
-    document.getElementById('fusu_dni').value = cliente.usu_dni;
-    document.getElementById('fusu_email').value = cliente.usu_email;
-    document.getElementById('fusu_telefono').value = cliente.usu_telefono;
-    document.querySelector('#fusu_contrasena').value = cliente.usu_contrasena;
-    document.querySelector('#fusu_direccion').value = cliente.usu_direccion;
-    document.querySelector('#selectRolUsuario').value = cliente.usu_rol;
-    document.querySelector('#fusu_comision').value = cliente.usu_comision
-    document.getElementById('fidEmpresa').value = cliente.emp_id;
-    document.getElementById('fidCliente').value = cliente.usu_id
+// const buscarUsuarioButton = document.getElementById('btnBuscarUsuario')
+// buscarUsuarioButton.addEventListener('click', () => {
+//   const dni = document.getElementById('fusu_dni').value;
+//   conexApi.get(`users?filter[dni]=${dni}`).then((res) => {
+//     const cliente = res.data.data[0]
+//     document.getElementById('fusu_nombre').value = cliente.usu_nombre;
+//     document.getElementById('fusu_apellido').value = cliente.usu_apellido;
+//     document.getElementById('fusu_dni').value = cliente.usu_dni;
+//     document.getElementById('fusu_email').value = cliente.usu_email;
+//     document.getElementById('fusu_telefono').value = cliente.usu_telefono;
+//     document.querySelector('#fusu_contrasena').value = cliente.usu_contrasena;
+//     document.querySelector('#fusu_direccion').value = cliente.usu_direccion;
+//     document.querySelector('#selectRolUsuario').value = cliente.usu_rol;
+//     document.querySelector('#fusu_comision').value = cliente.usu_comision
+//     document.getElementById('fidEmpresa').value = cliente.emp_id;
+//     document.getElementById('fidCliente').value = cliente.usu_id
 
 
-  })
-    .catch((error) => {
-      console.error('Hubo un error:', error);
-    });
-});
+//   })
+//     .catch((error) => {
+//       console.error('Hubo un error:', error);
+//     });
+// });
 
 //Buscar cliente y empresa
-const buscarClienteButton = document.getElementById('btnBuscarCliente')
-buscarClienteButton.addEventListener('click', () => {
-  const dni = document.getElementById('fusu_dni').value;
-  conexApi.get(`usuario?filter[usu_dni]=${dni}`).then((res) => {
-    const cliente = res.data.data[0]
-    document.getElementById('fusu_nombre').value = cliente.usu_nombre;
-    document.getElementById('fusu_apellido').value = cliente.usu_apellido;
-    document.getElementById('fusu_dni').value = cliente.usu_dni;
-    document.getElementById('fusu_email').value = cliente.usu_email;
-    document.getElementById('fusu_telefono').value = cliente.usu_telefono;
-    document.getElementById('fidEmpresa').value = cliente.emp_id;
-    const idEmpresa = cliente.emp_id;
-    buscarEmpresaId(idEmpresa)
-    document.getElementById('fidcliente').value = cliente.usu_id
-    console.log(document.getElementById('fidcliente').value)
+// const buscarClienteButton = document.getElementById('btnBuscarCliente')
+// buscarClienteButton.addEventListener('click', () => {
+//   const dni = document.getElementById('fusu_dni').value;
+//   conexApi.get(`usuario?filter[usu_dni]=${dni}`).then((res) => {
+//     const cliente = res.data.data[0]
+//     document.getElementById('fusu_nombre').value = cliente.usu_nombre;
+//     document.getElementById('fusu_apellido').value = cliente.usu_apellido;
+//     document.getElementById('fusu_dni').value = cliente.usu_dni;
+//     document.getElementById('fusu_email').value = cliente.usu_email;
+//     document.getElementById('fusu_telefono').value = cliente.usu_telefono;
+//     document.getElementById('fidEmpresa').value = cliente.emp_id;
+//     const idEmpresa = cliente.emp_id;
+//     buscarEmpresaId(idEmpresa)
+//     document.getElementById('fidcliente').value = cliente.usu_id
+//     console.log(document.getElementById('fidcliente').value)
 
-  })
-    .catch((error) => {
-      console.error('Hubo un error:', error);
-    });
-});
+//   })
+//     .catch((error) => {
+//       console.error('Hubo un error:', error);
+//     });
+// });
 
-//buscar empresa por id
-function buscarEmpresaId(id) {
-  conexApi.get(`empresa?filter[emp_id]=${id}`).then((res) => {
-    const empresa = res.data.data[0]
-    console.log(empresa)
-    document.getElementById('frazonSocial').value = empresa.emp_razon_social
-    document.getElementById('fruc').value = empresa.emp_ruc
-    document.getElementById('fusu_telefono').value = empresa.emp_telefono
-    document.getElementById('fusu_direccion').value = empresa.emp_direccion
-    document.getElementById('fidEmpresa').value = empresa.emp_id
-  })
-    .catch((error) => {
-      console.error('Hubo un error en la empresa:', error);
-    });
-}
+// //buscar empresa por id
+// function buscarEmpresaId(id) {
+//   conexApi.get(`empresa?filter[emp_id]=${id}`).then((res) => {
+//     const empresa = res.data.data[0]
+//     console.log(empresa)
+//     document.getElementById('frazonSocial').value = empresa.emp_razon_social
+//     document.getElementById('fruc').value = empresa.emp_ruc
+//     document.getElementById('fusu_telefono').value = empresa.emp_telefono
+//     document.getElementById('fusu_direccion').value = empresa.emp_direccion
+//     document.getElementById('fidEmpresa').value = empresa.emp_id
+//   })
+//     .catch((error) => {
+//       console.error('Hubo un error en la empresa:', error);
+//     });
+// }
 
-//Actualizar cliente
-const actualizarClienteButton = document.getElementById('btnAgregarCliente')
-actualizarClienteButton.addEventListener('click', () => {
-  const idCliente = document.getElementById('fidcliente').value
-  const fusu_nombre = document.getElementById('fusu_nombre').value;
-  const fusu_apellido = document.getElementById('fusu_apellido').value;
-  const fusu_email = document.getElementById('fusu_email').value;
-  const fusu_telefono = document.getElementById('fusu_telefono').value;
+// //Actualizar cliente
+// const actualizarClienteButton = document.getElementById('btnAgregarCliente')
+// actualizarClienteButton.addEventListener('click', () => {
+//   const idCliente = document.getElementById('fidcliente').value
+//   const fusu_nombre = document.getElementById('fusu_nombre').value;
+//   const fusu_apellido = document.getElementById('fusu_apellido').value;
+//   const fusu_email = document.getElementById('fusu_email').value;
+//   const fusu_telefono = document.getElementById('fusu_telefono').value;
 
-  const data = {
-    usu_nombre: fusu_nombre,
-    usu_apellido: fusu_apellido,
-    usu_email: fusu_email,
-    usu_telefono: fusu_telefono,
-  }
+//   const data = {
+//     usu_nombre: fusu_nombre,
+//     usu_apellido: fusu_apellido,
+//     usu_email: fusu_email,
+//     usu_telefono: fusu_telefono,
+//   }
 
-  console.log(data)
+//   console.log(data)
 
-  conexApi.patch(`usuario/${idCliente}`, data).then((res) => {
-    console.log(res)
-  })
-    .catch((error) => {
-      console.error('Hubo un error:', error);
-    });
-});
+//   conexApi.patch(`usuario/${idCliente}`, data).then((res) => {
+//     console.log(res)
+//   })
+//     .catch((error) => {
+//       console.error('Hubo un error:', error);
+//     });
+// });
 
 
 
@@ -185,45 +194,54 @@ actualizarUsuarioButton.addEventListener('click', () => {
   const fusu_comision = document.getElementById('fusu_comision').value;
 
   const data = {
-    usu_nombre: fusu_nombre,
-    usu_dni: fusu_dni,
-    usu_apellido: fusu_apellido,
-    usu_email: fusu_email,
-    usu_contrasena: fusu_contrasena,
-    usu_telefono: fusu_telefono,
-    usu_direccion: fusu_direccion,
-    usu_rol: fusu_rol,
-    usu_comision: fusu_comision
+    comision: fusu_comision,
+    first_name: fusu_nombre,
+    last_name: fusu_apellido,
+    dni: fusu_dni,
+    email: fusu_email,
+    password: fusu_contrasena,
+    tel_usu_dir: fusu_telefono,
+    location: fusu_direccion,
+    role: fusu_rol,
   }
 
   console.log(data)
 
-  conexApi.patch(`usuario/${idCliente}`, data).then((res) => {
-    console.log(res)
+  conexApi.patch(`users/${idCliente}`, data).then((res) => {
+    Swal.fire({
+      icon: "success",
+      title: "Usuario actualizado correctamente!",
+    });
+    console.log('Se agrego correctamente los datos')
   })
     .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Hubo un error al actualizar el usuario, el DNI o correo ya existe!",
+        text: error,
+      });
       console.error('Hubo un error:', error);
     });
 });
 
 
 async function cargarEditarUsuario() {
-  conexApi.get(`usuario?filter[usu_id]=${id}`).then((res) => {
+  conexApi.get(`users?filter[id]=${id}`).then((res) => {
     console.log(res)
     const usuario = res.data.data[0]
     console.log(usuario)
 
 
-    document.getElementById('fidCliente').value = usuario.usu_id
-    document.getElementById('fusu_dni').value = usuario.usu_dni
-    document.getElementById('fusu_nombre').value = usuario.usu_nombre
-    document.getElementById('fusu_apellido').value = usuario.usu_apellido
-    document.getElementById('fusu_email').value = usuario.usu_email
-    document.getElementById('fusu_contrasena').value = usuario.usu_contrasena
-    document.getElementById('fusu_telefono').value = usuario.usu_telefono
-    document.getElementById('fusu_direccion').value = usuario.usu_direccion
-    document.getElementById('selectRolUsuario').value = usuario.usu_rol
-    document.getElementById('fusu_comision').value = usuario.usu_comision
+    document.getElementById('fidCliente').value = usuario.id
+    document.getElementById('fusu_dni').value = usuario.dni
+    document.getElementById('fusu_nombre').value = usuario.first_name
+    document.getElementById('fusu_apellido').value = usuario.last_name
+    document.getElementById('fusu_email').value = usuario.email
+    document.getElementById('fusu_contrasena').value = usuario.password
+    document.getElementById('fusu_telefono').value = usuario.tel_usu_dir
+    document.getElementById('fusu_direccion').value = usuario.location
+    document.getElementById('selectRolUsuario').value = usuario.role
+    document.getElementById('fusu_comision').value = usuario.comision
 
   })
     .catch((error) => {

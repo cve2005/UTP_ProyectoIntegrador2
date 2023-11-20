@@ -45,8 +45,15 @@
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/dropzone/min/dropzone.min.css">
+  <!-- sweet alert -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
   <script src="./js/liquidarouting.js" type="module"></script>
   <script src="./js/main.js" type="module"></script>
+
+
 
 </head>
 
@@ -347,6 +354,138 @@
    
   <!-- Page specific script -->
   <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+      // Expresiones regulares para validar
+      var numericosRegex = /^[0-9.]+$/;
+      var alfanumericosRegex = /^[a-zA-Z0-9-]+$/;
+      var fechaRegex = /^[0-9/-]+$/;
+      var letrasRegex = /^[a-zA-Z]+$/;
+
+      // Función para validar y formatear números
+      function validarNumero(e, mensaje) {
+        var valor = e.target.value;
+        if (!numericosRegex.test(valor)) {
+          Swal.fire({
+            icon: "error",
+            title: "Error de validación",
+            text: mensaje
+          });
+          e.target.value = '';
+        }
+      }
+
+      // Función para validar alfanuméricos
+      function validarAlfanumericos(e, mensaje) {
+        var valor = e.target.value;
+        if (!alfanumericosRegex.test(valor)) {
+          Swal.fire({
+            icon: "error",
+            title: "Error de validación",
+            text: mensaje
+          });
+          e.target.value = '';
+        }
+      }
+
+      // Función para validar fechas
+      function validarFecha(e, mensaje) {
+        var valor = e.target.value;
+        if (!fechaRegex.test(valor)) {
+          Swal.fire({
+            icon: "error",
+            title: "Error de validación",
+            text: mensaje
+          });
+          e.target.value = '';
+        }
+      }
+
+      // Función para validar letras
+      function validarLetras(e, mensaje) {
+        var valor = e.target.value;
+        if (!letrasRegex.test(valor)) {
+          Swal.fire({
+            icon: "error",
+            title: "Error de validación",
+            text: mensaje
+          });
+          e.target.value = '';
+        }
+      }
+
+      // Asignamos las funciones de validación a los eventos correspondientes
+      document.getElementById('fdpa_dpFlete').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpGasExt').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpBLAWB').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpHandling').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpSeguro').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpAgAduanas').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpGasOpe').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpVistoBueno').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpGateIn').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpDescon').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpAlmacen').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpTransInt').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      document.getElementById('fdpa_dpOtros').addEventListener('input', function (e) {
+        validarNumero(e, "Este campo solo debe contener números decimales");
+      });
+
+      // Agregar más campos y validaciones según sea necesario
+      document.getElementById('frhe').addEventListener('input', function (e) {
+        validarAlfanumericos(e, "Este campo solo debe contener números, letras o el símbolo '-'");
+      });
+
+      document.getElementById('ffecha').addEventListener('input', function (e) {
+        validarFecha(e, "Este campo solo debe contener números o los símbolos '-', '/'");
+      });
+
+      document.getElementById('fbanco').addEventListener('input', function (e) {
+        validarLetras(e, "Este campo solo debe contener letras");
+      });
+
+      document.getElementById('foperacion').addEventListener('input', function (e) {
+        validarAlfanumericos(e, "Este campo solo debe contener letras o números");
+      });
+
+    });
+
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()

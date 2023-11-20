@@ -1,29 +1,33 @@
 import axios from "axios";
 
 const conexApi = axios.create({
-  baseURL: 'https://cna-cms.onrender.com/items/'
+  baseURL: 'https://cna-cms.onrender.com/'
 });
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
-const nombreSesion = document.getElementById('nombreSesion');
-nombreSesion.textContent = userInfo.cna_user.usu_nombre;
 
-
+//capturar fecha de hoy
+var fec = new Date(),
+  mes = fec.getMonth() + 1,
+  dia = fec.getDate(),
+  year = fec.getFullYear();
 //Buscar cliente y empresa
 const buscarClienteButton = document.getElementById('btnBuscarCliente')
 buscarClienteButton.addEventListener('click', () => {
   const dni = document.getElementById('fusu_dni').value;
-  conexApi.get(`usuario?filter[usu_dni]=${dni}`).then((res) => {
+  conexApi.get(`users?filter[dni]=${dni}&fields=*.*.*`).then((res) => {
     const cliente = res.data.data[0]
-    document.getElementById('fcliente_id').value = cliente.usu_id;
-    document.getElementById('fusu_nombre_apellido').value = cliente.usu_nombre + " " + cliente.usu_apellido;
-    document.getElementById('fusu_dni').value = cliente.usu_dni;
-    document.getElementById('fusu_email').value = cliente.usu_email;
-    document.getElementById('fusu_telefono').value = cliente.usu_telefono;
-    document.getElementById('fidEmpresa').value = cliente.emp_id;
-    const idEmpresa = cliente.emp_id;
-    buscarEmpresaId(idEmpresa)
+    document.getElementById('fcliente_id').value = cliente.id;
+    document.getElementById('fusu_nombre_apellido').value = cliente.first_name + " " + cliente.last_name;
+    document.getElementById('fusu_dni').value = cliente.dni;
+    document.getElementById('fusu_email').value = cliente.email;
+    document.getElementById('fusu_telefono').value = cliente.tel_usu_dir;
+    document.getElementById('fidEmpresa').value = cliente.emp_id.emp_id;
+    document.getElementById('frazonSocial').value = cliente.emp_id.emp_razon_social
+    document.getElementById('fruc').value = cliente.emp_id.emp_ruc
+    // const idEmpresa = cliente.emp_id;
+    // buscarEmpresaId(idEmpresa)
 
   })
     .catch((error) => {
@@ -31,19 +35,18 @@ buscarClienteButton.addEventListener('click', () => {
     });
 });
 
-//buscar empresa por id
-function buscarEmpresaId(id) {
-  conexApi.get(`empresa?filter[emp_id]=${id}`).then((res) => {
-    const empresa = res.data.data[0]
-    console.log(empresa)
-    document.getElementById('frazonSocial').value = empresa.emp_razon_social
-    document.getElementById('fruc').value = empresa.emp_ruc
-    //document.getElementById('fidEmpresa').value = empresa.emp_id
-  })
-    .catch((error) => {
-      console.error('Hubo un error en la empresa:', error);
-    });
-}
+// //buscar empresa por id
+// function buscarEmpresaId(id) {
+//   conexApi.get(`items/empresa?filter[emp_id]=${id}`).then((res) => {
+//     const empresa = res.data.data[0]
+//     console.log(empresa)
+
+//     //document.getElementById('fidEmpresa').value = empresa.emp_id
+//   })
+//     .catch((error) => {
+//       console.error('Hubo un error en la empresa:', error);
+//     });
+// }
 
 
 //Agregar documento
@@ -58,13 +61,13 @@ agregarDocumentoButton.addEventListener('click', () => {
   const fdoc_incoterm = document.getElementById('fdoc_incoterm').value;
   const fdoc_tcarga = document.getElementById('fdoc_tcarga').value;
 
-  //const fpais_origen_id = document.getElementById('fpais_origen_id').value;
-  const fpais_origen_id = "4";
+  const fpais_origen_id = document.getElementById('fpais_origen_id').value;
+  //const fpais_origen_id = "4";
   const fdoc_puerto_ori = document.getElementById('fdoc_puerto_ori').value;
   const fdoc_recojo = document.getElementById('fdoc_recojo').value;
 
-  //const fpais_destino_id = document.getElementById('fpais_destino_id').value;
-  const fpais_destino_id = "7";
+  const fpais_destino_id = document.getElementById('fpais_destino_id').value;
+  // const fpais_destino_id = "7";
   const fdoc_puerto_dest = document.getElementById('fdoc_puerto_dest').value;
   const fdoc_entrega = document.getElementById('fdoc_entrega').value;
 
@@ -84,9 +87,9 @@ agregarDocumentoButton.addEventListener('click', () => {
 
   //data para documento
   const data = {
-    doc_fecha: "2023-10-26",
-    cliente_id: fcliente_id,
-    vendedor_id: userInfo.cna_user.usu_id,
+    doc_fecha: year + "-" + mes + "-" + dia,
+    usu_dir: fcliente_id,
+    vendedor_id_dir: userInfo.id,
     top_id: ftop_id,
     mtx_id: fmtx_id,
     doc_incoterm: fdoc_incoterm,
@@ -469,14 +472,12 @@ agregarDocumentoButton.addEventListener('click', () => {
 
   //Api post para el documento
 
-  conexApi.post(`documento`, data).then((res) => {
+  conexApi.post(`items/documento`, data).then((res) => {
     console.log(res)
     document.getElementById('fdoc_id').value = res.data.data.doc_id
     console.log('Se agrego correctamente los datos')
     const docId = res.data.data.doc_id
-
-
-
+    
     //Manejo de la respuesta para los servicios
     const serviciosData = servicios.map(servicio => ({
       ...servicio,
@@ -498,7 +499,7 @@ agregarDocumentoButton.addEventListener('click', () => {
     }));
 
     //Api post detalle_servicio
-    conexApi.post(`detalle_servicio`, serviciosData)
+    conexApi.post(`items/detalle_servicio`, serviciosData)
       .then((res) => {
         console.log(res);
         console.log('Se agregaron correctamente los datos de los servicios');
@@ -508,7 +509,7 @@ agregarDocumentoButton.addEventListener('click', () => {
       });
 
     //Aqui post derechos_aduanas
-    conexApi.post(`derechos_aduanas`, daduanasData)
+    conexApi.post(`items/derechos_aduanas`, daduanasData)
       .then((res) => {
         console.log(res);
         console.log('Se agregaron correctamente los datos de los derechos');
@@ -519,7 +520,7 @@ agregarDocumentoButton.addEventListener('click', () => {
 
 
     //Aqui post detalle_operacion
-    conexApi.post(`detalle_operacion`, operacionesData)
+    conexApi.post(`items/detalle_operacion`, operacionesData)
       .then((res) => {
         console.log(res);
         console.log('Se agregaron correctamente los datos de las operaciones');
@@ -529,7 +530,7 @@ agregarDocumentoButton.addEventListener('click', () => {
       });
 
     //Aqui post detalle_pagos
-    conexApi.post(`detalle_pagado`, pagosData)
+    conexApi.post(`items/detalle_pagado`, pagosData)
       .then((res) => {
         console.log(res);
         console.log('Se agregaron correctamente los datos de los pagos');
@@ -538,11 +539,18 @@ agregarDocumentoButton.addEventListener('click', () => {
         console.error('Hubo un error al agregar los pagos:', error);
       });
 
-    alert("Se registró el documento con éxito")
-
-
-  })
-    .catch((error) => {
+      Swal.fire({
+        icon: "success",
+        title: "Cotización creada correctamente!",
+      });
+      console.log('Se agrego correctamente los datos')
+    })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Hubo un error al crear la cotización!",
+          text: error,
+        });
       console.error('Hubo un error:', error);
     });
 

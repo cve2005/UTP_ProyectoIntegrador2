@@ -8,24 +8,46 @@ let url = new URL(window.location.href);
 
 // Usar URLSearchParams para obtener el valor de 'miVariable'
 let id = url.searchParams.get("id");
+
+
+//capturar fecha de hoy
+var fec = new Date(),
+  mes = fec.getMonth() + 1,
+  dia = fec.getDate(),
+  year = fec.getFullYear();
+
 async function cargarEditarCotizacion() {
 
   conexApi.get(`documento/?filter[doc_id]=${id}&fields=*.*.*`).then((res) => {
     const documento = res.data.data[0]
     console.log(documento)
     //primera parte razon social
-    document.getElementById('fusu_nombre_apellido').value = documento.cliente_id.usu_nombre + " " + documento.cliente_id.usu_apellido;
-    document.getElementById('fusu_dni').value = documento.cliente_id.usu_dni;
-    document.getElementById('fusu_email').value = documento.cliente_id.usu_email;
-    document.getElementById('fusu_telefono').value = documento.cliente_id.usu_telefono;
-    document.getElementById('frazonSocial').value = documento.cliente_id.emp_id.emp_razon_social
-    document.getElementById('fruc').value = documento.cliente_id.emp_id.emp_ruc
+    document.getElementById('fusu_nombre_apellido').value = documento.usu_dir.first_name + " " + documento.usu_dir.last_name;
+    document.getElementById('fusu_dni').value = documento.usu_dir.dni;
+    document.getElementById('fusu_email').value = documento.usu_dir.email;
+    document.getElementById('fusu_telefono').value = documento.usu_dir.tel_usu_dir;
+    document.getElementById('frazonSocial').value = documento.usu_dir.emp_id.emp_razon_social
+    document.getElementById('fruc').value = documento.usu_dir.emp_id.emp_ruc
+
+
+    const fusu_nombre_apellido = document.getElementById('fusu_nombre_apellido')
+    const fusu_dni = document.getElementById('fusu_dni')
+    const fusu_email = document.getElementById('fusu_email')
+    const fusu_telefono = document.getElementById('fusu_telefono')
+    const frazonSocial = document.getElementById('frazonSocial')
+    const fruc = document.getElementById('fruc')
+    fusu_nombre_apellido.disabled = true
+    fusu_dni.disabled = true
+    fusu_email.disabled = true
+    fusu_telefono.disabled = true
+    frazonSocial.disabled = true
+    fruc.disabled = true
 
     //resto
     document.getElementById('fdoc_fecha').value = documento.doc_fecha
-    document.getElementById('fcliente_id').value = documento.cliente_id.usu_id
+    document.getElementById('fcliente_id').value = documento.usu_dir.id
     // buscarUsuarioId(documento.cliente_id)
-    document.getElementById('fvendedor_id').value = documento.vendedor_id
+    // document.getElementById('fvendedor_id').value = documento.vendedor_id
     document.getElementById('ftop_id').value = documento.top_id.top_id
     document.getElementById('fmtx_id').value = documento.mtx_id.mtx_id
     document.getElementById('fdoc_incoterm').value = documento.doc_incoterm
@@ -36,7 +58,7 @@ async function cargarEditarCotizacion() {
     document.getElementById('fdoc_puerto_ori').value = documento.doc_puerto_ori
     document.getElementById('fdoc_recojo').value = documento.doc_recojo
 
-   // document.getElementById('fpais_destino_id').value = documento.pais_destino_id.pais_id
+    // document.getElementById('fpais_destino_id').value = documento.pais_destino_id.pais_id
     document.getElementById('fdoc_puerto_dest').value = documento.doc_puerto_dest
     document.getElementById('fdoc_entrega').value = documento.doc_entrega
 
@@ -109,38 +131,34 @@ async function cargarEditarCotizacion() {
 
 }
 
-$(document).ready(function () {
-  if (window.location.href.includes(`editar_cot.html`)) {
-   inicializar();
+
+//Generar routing
+
+const generarRoutingButton = document.getElementById('btnGenerarRouting')
+generarRoutingButton.addEventListener('click', () => {
+
+  const data = {
+    est_id: 2,
   }
-});
+  conexApi.patch(`documento/${id}`, data)
+    .then((res) => {
+      console.log(res);
+      Swal.fire({
+        icon: "success",
+        title: "Se generó el routing correctamente!",
+      });
+      console.log('Se agrego correctamente los datos')
+    })
+    .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Hubo un error al crear el routing!",
+        text: error,
+      });
+      console.error('Hubo un error al actualizar el documento:', error);
+    });
 
-const inicializar = async () => {
-  await cargarPaises();
-  await cargarEditarCotizacion();
-}
-
- //Generar routing
-  
- const generarRoutingButton = document.getElementById('btnGenerarRouting')
- generarRoutingButton.addEventListener('click', () => { 
-
-  
-   const data={
-     est_id:2,
-   }
-   conexApi.patch(`documento/${id}`, data)
-   .then((res) => {
-     console.log(res);
-     alert("Se generó el routing")
-     console.log('Se actualizaron correctamente los datos del documento');
-   })
-   .catch((error) => {
-     console.error('Hubo un error al actualizar el documento:', error);
-   });
-   
-
- })
+})
 
 
 
@@ -150,51 +168,24 @@ let serviciosG
 
 const actualizarDocumentoButton = document.getElementById('btnActualizarDocumento')
 actualizarDocumentoButton.addEventListener('click', () => {
-  //eliminar aduanas
-  for (var i = aduanasG[0].dad_id; i <= aduanasG[8].dad_id; i++) {
-    console.log(i)
-    conexApi.delete(`derechos_aduanas/${i}`)
-      .then(response => {
-        console.log('Registro aduana con éxito:'+i, response.data);
-      })
-      .catch(error => {
-        console.error('Error al elimnar el registro:', error);
-      });
-
-    //ternmina for
-  }
-
-  //eliminar servicios
-  for (var e = serviciosG[0].dse_id; e <= serviciosG[12].dse_id; e++) {
-    console.log(i)
-    conexApi.delete(`detalle_servicio/${e}`)
-      .then(response => {
-        console.log('Registro eliminado con éxito:'+e, response.data);
-      })
-      .catch(error => {
-        console.error('Error al elimnar el registro:', error);
-      });
-
-    //ternmina for
-  }
 
 
   //para el documento
   //const fdoc_fecha = document.getElementById('fdoc_fecha').value;
-  const fcliente_id = document.getElementById('fcliente_id').value;
+  // const fcliente_id = document.getElementById('fcliente_id').value;
   //const fvendedor_id = document.getElementById('fvendedor_id').value;
   const ftop_id = document.getElementById('ftop_id').value;
   const fmtx_id = document.getElementById('fmtx_id').value;
   const fdoc_incoterm = document.getElementById('fdoc_incoterm').value;
   const fdoc_tcarga = document.getElementById('fdoc_tcarga').value;
 
-  //const fpais_origen_id = document.getElementById('fpais_origen_id').value;
-  const fpais_origen_id = "4";
+  const fpais_origen_id = document.getElementById('fpais_origen_id').value;
+  //const fpais_origen_id = "4";
   const fdoc_puerto_ori = document.getElementById('fdoc_puerto_ori').value;
   const fdoc_recojo = document.getElementById('fdoc_recojo').value;
 
-  //const fpais_destino_id = document.getElementById('fpais_destino_id').value;
-  const fpais_destino_id = "7";
+  const fpais_destino_id = document.getElementById('fpais_destino_id').value;
+  //const fpais_destino_id = "7";
   const fdoc_puerto_dest = document.getElementById('fdoc_puerto_dest').value;
   const fdoc_entrega = document.getElementById('fdoc_entrega').value;
 
@@ -210,7 +201,7 @@ actualizarDocumentoButton.addEventListener('click', () => {
   const fdoc_cotizacion_notas = document.getElementById('fdoc_cotizacion_notas').value;
   //const fest_id = document.getElementById('fest_id').value;
   const fest_id = 1;
-  const fdoc_fesr_id= document.getElementById('fesr_id').value 
+  const fdoc_fesr_id = document.getElementById('fesr_id').value
 
 
 
@@ -240,7 +231,7 @@ actualizarDocumentoButton.addEventListener('click', () => {
   const fdoc_daIGV = document.getElementById('fdoc_daIGV').value;
   const fdoc_daPercepcion = document.getElementById('fdoc_daPercepcion').value;
 
- const daduanas = [
+  const daduanas = [
     {
       // dad_id:,
       dad_nombre: "Valor FOB",
@@ -382,9 +373,9 @@ actualizarDocumentoButton.addEventListener('click', () => {
 
   //data para documento
   const data = {
-    doc_fecha: "2023-10-26",
-    cliente_id: fcliente_id,
-    vendedor_id: 2,
+    doc_fecha: year + "-" + mes + "-" + dia,
+    // cliente_id: fcliente_id,
+    // vendedor_id: 2,
     top_id: ftop_id,
     mtx_id: fmtx_id,
     doc_incoterm: fdoc_incoterm,
@@ -406,7 +397,6 @@ actualizarDocumentoButton.addEventListener('click', () => {
     doc_cotizacion_notas: fdoc_cotizacion_notas,
     est_id: fest_id,
     esr_id: fdoc_fesr_id,
-    
   }
 
   //imprimiendo data de documento
@@ -438,35 +428,76 @@ actualizarDocumentoButton.addEventListener('click', () => {
   //Api patch documento
   conexApi.patch(`documento/${id}`, data)
     .then((res) => {
+        //eliminar aduanas
+  for (var i = aduanasG[0].dad_id; i <= aduanasG[8].dad_id; i++) {
+    console.log(i)
+    conexApi.delete(`derechos_aduanas/${i}`)
+      .then(response => {
+        console.log('Registro aduana con éxito:' + i, response.data);
+      })
+      .catch(error => {
+        console.error('Error al elimnar el registro:', error);
+      });
+
+    //ternmina for
+  }
+
+  //eliminar servicios
+  for (var e = serviciosG[0].dse_id; e <= serviciosG[12].dse_id; e++) {
+    console.log(i)
+    conexApi.delete(`detalle_servicio/${e}`)
+      .then(response => {
+        console.log('Registro eliminado con éxito:' + e, response.data);
+      })
+      .catch(error => {
+        console.error('Error al elimnar el registro:', error);
+      });
+    //ternmina for
+  }
+      //respuesta afirmativa del post
       console.log(res);
-      console.log('Se actualizaron correctamente los datos del documento');
-      alert("Se actualizó el documento con exito")
+      // //Api post detalle servicio
+      conexApi.post(`detalle_servicio`, serviciosData)
+        .then((res) => {
+          console.log(res);
+          console.log('Se agregaron correctamente los datos de los servicios');
+        })
+        .catch((error) => {
+          console.error('Hubo un error al agregar los servicios:', error);
+        });
+      // //Api post derecho aduanas
+      conexApi.post(`derechos_aduanas`, daduanasData)
+        .then((res) => {
+          console.log(res);
+          console.log('Se actualizaron correctamente los datos de los derechos');
+        })
+        .catch((error) => {
+          console.error('Hubo un error al editar los derechos de aduana:', error);
+        });
+      Swal.fire({
+        icon: "success",
+        title: "Cotización actualizada correctamente!",
+      });
+      console.log('Se agrego correctamente los datos')
     })
     .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Hubo un error al actualizar la cotización!",
+        text: error,
+      });
       console.error('Hubo un error al actualizar el documento:', error);
     });
-
-  // //Api post detalle servicio
-  conexApi.post(`detalle_servicio`, serviciosData)
-    .then((res) => {
-      console.log(res);
-      console.log('Se agregaron correctamente los datos de los servicios');
-    })
-    .catch((error) => {
-      console.error('Hubo un error al agregar los servicios:', error);
-    });
-
-
-  // //Api post derecho aduanas
-  conexApi.post(`derechos_aduanas`, daduanasData)
-    .then((res) => {
-      console.log(res);
-      console.log('Se actualizaron correctamente los datos de los derechos');
-    })
-    .catch((error) => {
-      console.error('Hubo un error al editar los derechos de aduana:', error);
-    });
-
 });
 
 
+$(document).ready(function () {
+  if (window.location.href.includes(`editar_cot.html`)) {
+    inicializar();
+  }
+});
+
+const inicializar = async () => {
+  await cargarPaises();
+  await cargarEditarCotizacion();
+}
