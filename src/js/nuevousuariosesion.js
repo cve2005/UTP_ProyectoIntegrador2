@@ -132,7 +132,10 @@ agregarUsuarioSButton.addEventListener('click', () => {
             icon: "success",
             title: "Usuario creado",
             text: "Se creó el usuario correctamente!",
-          });
+          }).then(() => {
+            // Redirige después de mostrar el alert
+            window.location.href = "listarusuariosadm.html";
+        });
           LimpiarFormUsuario();
         })
           .catch((error) => {

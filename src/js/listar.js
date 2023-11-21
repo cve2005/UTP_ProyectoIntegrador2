@@ -354,7 +354,7 @@ $(document).ready(function () {
         var table = $("#tblOperaciones").DataTable({
             "data": [],
             "columns": [
-                { "title": "Código", visible: false },
+                { "title": "Nro Doc" },
                 { "title": "Fecha" },
                 { "title": "Cliente" },
                 { "title": "Estado" },

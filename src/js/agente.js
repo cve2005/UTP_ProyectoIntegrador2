@@ -37,8 +37,11 @@ agregarShipperButton.addEventListener('click', () => {
             Swal.fire({
                 icon: "success",
                 title: "Shipper creado",
-                text: "Se creó el usuario correctamente!",
-            });
+                text: "Se creó el shipper correctamente!",
+            }).then(() => {
+                 //Redirige después de mostrar el alert
+                            window.location.href = "listarshippers.html";
+                        });
             console.log(res)
         })
             .catch((error) => {
@@ -86,8 +89,11 @@ agregarAgenteButton.addEventListener('click', () => {
         conexApi.post(`agente`, data).then((res) => {
             Swal.fire({
                 icon: "success",
-                title: "Shipper creado",
-                text: "Se creó el usuario correctamente!",
+                title: "Agente creado",
+                text: "Se creó el agente correctamente!",
+            }).then(() => {
+                // Redirige después de mostrar el alert
+                window.location.href = "listaragentes.html";
             });
             console.log(res)
         })

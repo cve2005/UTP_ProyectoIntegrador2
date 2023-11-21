@@ -228,7 +228,7 @@
 
                 <div class="col-md-8">
                   <label for="validationCustom03" class="form-label">Dirección</label>
-                  <input type="text" class="form-control" id="fusu_direccion" required>
+                  <input type="text" class="form-control" id="fusu_direccionE" required>
                 </div>
                 <div class="col-md-4">
                   <label for="validationCustom05" class="form-label">Teléfono</label>
@@ -247,19 +247,19 @@
                 </div>
                 <div class="col-md-4">
                   <label> Nombres </label>
-                  <input type="text" class="form-control" id="fusu_nombre" required>
+                  <input type="text" class="form-control" id="fusu_nombre" disabled required>
                 </div>
 
                 <div class="col-md-4">
                   <label> Apellidos</label>
-                  <input type="text" class="form-control" id="fusu_apellido" required>
+                  <input type="text" class="form-control" id="fusu_apellido" disabled required>
                 </div>
 
                 <div class="col-md-4">
                   <label> DNI</label>
                   <div class="form-inline">
                     <input class="form-control" type="text" placeholder="DNI"
-                      aria-label="Search" id="fusu_dni">
+                      aria-label="Search" id="fusu_dni" disabled>
                     <button class="btn btn-navbar" id="btnBuscarCliente" hidden="true">
                     </button>
                     <button class="btn btn-navbar" id="btnAgregarCliente" hidden="true">
@@ -273,12 +273,15 @@
 
                 <div class="col-md-4">
                   <label> E-mail</label>
-                  <input type="text" class="form-control" id="fusu_email" required>
+                  <input type="text" class="form-control" id="fusu_email" disabled required>
                 </div>
 
                 <div class="col-md-4">
-                  <label> Celular</label>
-                  <input type="text" class="form-control" id="fusu_celular" required>
+                  <label> Celular</label> 
+                  <input type="text" class="form-control" id="fusu_celular" disabled required>
+                </div><div class="col-md-4">
+                  <label> Dirección Cliente</label> 
+                  <input type="text" class="form-control" id="fusu_direccionC" disabled required>
                 </div>
                 <input type="text" class="form-control" id="fidcliente" hidden="true" required>
                 <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->
@@ -354,54 +357,6 @@
 
   <!-- Page specific script -->
   <script>
-
-    document.addEventListener('DOMContentLoaded', function () {
-      // ...
-
-      // Obtener referencias a los campos
-      var razonSocialInput = document.getElementById('frazonSocial');
-      var rucInput = document.getElementById('fruc');
-      var direccionInput = document.getElementById('fusu_direccion');
-      var telefonoInput = document.getElementById('fusu_telefono');
-      var nombresInput = document.getElementById('fusu_nombre');
-      var apellidosInput = document.getElementById('fusu_apellido');
-      var dniInput = document.getElementById('fusu_dni');
-      var emailInput = document.getElementById('fusu_email');
-      var celularInput = document.getElementById('fusu_celular');
-
-      // Función para verificar si al menos un campo requerido está vacío
-      function camposRequeridosVacios() {
-        return (
-          razonSocialInput.value.trim() === '' ||
-          rucInput.value.trim() === '' ||
-          direccionInput.value.trim() === '' ||
-          telefonoInput.value.trim() === ''
-        );
-      }
-
-      // Función para habilitar o deshabilitar campos según la condición
-      function habilitarCampos() {
-        var camposHabilitados = camposRequeridosVacios();
-
-        nombresInput.disabled = camposHabilitados;
-        apellidosInput.disabled = camposHabilitados;
-        dniInput.disabled = camposHabilitados;
-        emailInput.disabled = camposHabilitados;
-        celularInput.disabled = camposHabilitados;
-      }
-
-      // Asignar la función de habilitarCampos al evento input de los campos requeridos
-      razonSocialInput.addEventListener('input', habilitarCampos);
-      rucInput.addEventListener('input', habilitarCampos);
-      direccionInput.addEventListener('input', habilitarCampos);
-      telefonoInput.addEventListener('input', habilitarCampos);
-
-      // Ejecutar habilitarCampos al cargar la página
-      habilitarCampos();
-
-      // ...
-    });
-
 
     document.addEventListener('DOMContentLoaded', function () {
     // Expresiones regulares para validar
