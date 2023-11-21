@@ -25,7 +25,7 @@ actualizarUsuarioButton.addEventListener('click', () => {
   const fusu_email = document.getElementById('fusu_email').value;
   const fusu_contrasena = document.getElementById('fusu_contrasena').value;
   const fusu_telefono = document.getElementById('fusu_telefono').value;
-  const fusu_direccion = document.getElementById('fusu_direccion').value;
+  //const fusu_direccion = document.getElementById('fusu_direccion').value;
   const fusu_rol = document.getElementById('selectRolUsuario').value;
   const fusu_comision = document.getElementById('fusu_comision').value;
   var otherData = {
@@ -36,7 +36,7 @@ actualizarUsuarioButton.addEventListener('click', () => {
     email: fusu_email,
     // password: fusu_contrasena,
     tel_usu_dir: fusu_telefono,
-    location: fusu_direccion,
+    //location: fusu_direccion,
     role: fusu_rol,
   }
   // if(fusu_contrasena!= null){
@@ -85,9 +85,15 @@ async function cargarEditarUsuario() {
     document.getElementById('fusu_email').value = usuario.email
     document.getElementById('fusu_contrasena').value = ''
     document.getElementById('fusu_telefono').value = usuario.tel_usu_dir
-    document.getElementById('fusu_direccion').value = usuario.location
+   // document.getElementById('fusu_direccion').value = usuario.location
     document.getElementById('selectRolUsuario').value = usuario.role
-    document.getElementById('fusu_comision').value = usuario.comision
+    if(usuario.comision!= null || usuario.comision=== 0){
+      document.getElementById('fusu_comision').value = usuario.comision
+    }else{
+      document.getElementById('fusu_comision').value =''
+      document.getElementById('fusu_comision').disabled=true
+    }
+
   })
     .catch((error) => {
       console.error('Hubo un error:', error);

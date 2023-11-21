@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+//ultima version 21112023 0125
 const EDITAR = 'editar';
 const VER = 'ver';
 const DESCARGAR = 'descargar';
@@ -39,7 +39,7 @@ const roles = {
 
 //listar todos los usuarios
 async function cargarUsuariosAdmin(table) {
-    conexApi.get(`users`).then((res) => {
+    conexApi.get(`users?filter[role][_neq]=dbb74e25-bea2-4a87-a337-1c971307c3bf`).then((res) => {
         const data = res.data.data;
         console.log(data);
 
@@ -94,15 +94,15 @@ async function cargarOperacionesVendedor(id, filtro,table) {
 
         const data = res.data.data;
         const dataTable = [];
+        console.log(data)
         data.forEach((element) => {
             const row = [];
             row.push(element.doc_id);
             row.push(element.doc_fecha);
             row.push(element.usu_dir.emp_id.emp_razon_social);
             row.push(element.esr_id.esr_nombre);
-            row.push("-");
-            row.push("-");
-            row.push("-");
+            row.push(element.age_id.age_razon_social);
+            row.push(element.shipp_id.age_razon_social);
             row.push('element.usu_correo');
             dataTable.push(row);
         });
@@ -195,7 +195,9 @@ async function cargarCotizacionesVendedor( id,filtro,table) {
             row.push(element.doc_id);
             row.push(element.doc_fecha);
             row.push(element.usu_dir.first_name);
-            row.push(element.doc_total_venta);
+            //deberia salir el total solo de la columna de servicios cotizados
+            // row.push('-');
+            // row.push(element.doc_total_venta);
             row.push(element.usu_dir.emp_id.emp_razon_social);
              row.push(element.est_id.est_nombre);
             row.push('element.usu_correo');
@@ -241,7 +243,8 @@ async function cargarLiquidaciones(id,table) {
             row.push(element.doc_id.doc_id)
             row.push(element.liq_id);
             row.push(element.doc_id.usu_dir.emp_id.emp_razon_social);
-            row.push("-");
+            row.push(element.liq_banco);
+            row.push(element.liq_operacion);
             row.push(element.liq_rhe);
             row.push(element.liq_fecha);
             row.push('element.usu_correo');
@@ -249,21 +252,6 @@ async function cargarLiquidaciones(id,table) {
         });
         table.rows.add(dataTable).draw();
 
-
-      
-            // row.appendChild(createItem(element.liq_id));
-            // row.appendChild(createItem(element.doc_id.doc_id));
-            // //aqui nuevo
-            // row.appendChild(createItem(element.doc_id.usu_dir.emp_id.emp_razon_social));
-            // row.appendChild(createItem("-"));
-            // row.appendChild(createItem(element.liq_rhe));
-            // row.appendChild(createItem(element.liq_fecha));
-            // //columena acciones
-         
-
-      
-        // .catch((error) => {
-        //   console.error('Hubo un error:', error);
     });
 
 }
@@ -312,10 +300,10 @@ $(document).ready(function () {
         var table = $("#tableCotizaciones").DataTable({
             "data": [],
             "columns": [
-                { "title": "Código" },
+                { "title": "Nro Doc" },
                 { "title": "Fechas" },
                 { "title": "Cliente" },
-                { "title": "Total Cotizado" },
+                // { "title": "Total Cotizado" },
                 { "title": "Empresa" },
                 { "title": "Estado" },
                 { "title": "Acciones" }
@@ -358,9 +346,8 @@ $(document).ready(function () {
                 { "title": "Fecha" },
                 { "title": "Cliente" },
                 { "title": "Estado" },
-                { "title": "Detalle" },
-                { "title": "Booking" },
-                { "title": "Tracking" },
+                { "title": "Agente" },
+                { "title": "Shipper" },
                 { "title": "Acciones" }
                 
             ],
@@ -478,7 +465,8 @@ $(document).ready(function () {
                 { "title": "Nro Doc" },
                 { "title": "Nro Liquidacion" },
                 { "title": "Cliente" },
-                { "title": "Documentos Drive" },
+                { "title": "Banco" },
+                { "title": "Operación" },
                 { "title": "RHE" },
                 { "title": "Fecha de pago" },
                 { "title": "Acciones" }

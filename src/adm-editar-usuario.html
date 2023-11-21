@@ -240,10 +240,10 @@
                   <input type="text" class="form-control" id="fusu_telefono" required>
                 </div>
 
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <label> Dirección</label>
                   <input type="text" class="form-control" id="fusu_direccion" required>
-                </div>
+                </div> -->
                 <div class="col-md-3">
                   <label> Rol</label>
                   <select class="custom-select rounded-0" id="selectRolUsuario">
@@ -255,7 +255,7 @@
                 </div>
                 <div class="col-md-3">
                   <label> Comisión %</label>
-                  <input type="text" class="form-control" id="fusu_comision" value="0" required>
+                  <input type="text" class="form-control" id="fusu_comision" value="0" disable required>
                 </div>
                 <input type="text" class="form-control" id="fidEmpresa" value="2" hidden="true" required>
                 <input type="text" class="form-control" id="fidCliente" value="2" hidden="true" required>
@@ -340,6 +340,18 @@
 
   <!-- Page specific script -->
   <script>
+     document.getElementById('selectRolUsuario').addEventListener('change', function () {
+      var input = document.getElementById('fusu_comision');
+      // Verifica la opción seleccionada
+      if (this.value === '140de75d-8d7c-47e3-8ba9-f7e60cdb3ba4') {
+        // Habilita el input si la opción es 'vendedor'
+        input.disabled = false;
+      } else {
+        // Deshabilita el input para otras opciones
+        input.value=''
+        input.disabled = true;
+      }
+    });
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()

@@ -27,8 +27,11 @@ agregarButton.addEventListener('click', () => {
   conexApi.post(`items/empresa`, data).then((res) => {
     Swal.fire({
       icon: "success",
-      title: "Se creó correctamente la empresa!",
-    });
+      title: "Empresa creada correctamente",
+    }).then(() => {
+      // Redirige después de mostrar el alert
+      activar()
+  });
   })
     .catch((error) => {
       Swal.fire({
@@ -71,9 +74,19 @@ buscarButton.addEventListener('click', () => {
     document.getElementById('fusu_telefono').value = empresa.emp_telefono
     document.getElementById('fusu_direccionE').value = empresa.emp_direccion
     document.getElementById('fidEmpresa').value = empresa.emp_id
-    activar()
+    Swal.fire({
+      icon: "success",
+      title: `Empresa con RUC: ${ruc} fue encontrada`,
+    }).then(() => {
+      // Redirige después de mostrar el alert
+      activar()
+  });
   })
     .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: `No se encontró empresa con el RUC:  ${ruc} `,
+      })
       console.error('Hubo un error:', error);
     });
 });
@@ -130,7 +143,6 @@ agregarUsuarioButton.addEventListener('click', () => {
       Swal.fire({
         icon: "error",
         title: "Hubo un error al crear el cliente, el DNI o correo ya existe!",
-        text: error,
       });
       console.error('Hubo un error:', error);
 

@@ -54,52 +54,15 @@ agregarUsuarioSButton.addEventListener('click', () => {
     last_name: fusu_apellido,
     email: fusu_email,
     password: fusu_contrasena,
-    usu_telefono: fusu_telefono,
+    tel_usu_dir: fusu_telefono,
     status: "active",
     role: fusu_rol,
     dni: fusu_dni,
     comision: fusu_comision
-
-
-
-    // "first_name": "Yarango",
-    // "last_name": null,
-    // "email": "correo@prueba.com",
-    // "password": "**********",
-    // "status": "active",
-    // "role": "140de75d-8d7c-47e3-8ba9-f7e60cdb3ba4",
-    // "dni": null
-    // comision:fusu_comision
   }
 
 
 
-
-
-  // if(fusu_contrasena==fusu_contrasena2){
-  //   validarFormulario()
-  //   console.log(data)
-  // // conexApi.post(`users`, data).then((res) => {
-  // //   console.log(res)
-  //   Swal.fire({
-  //     icon: "success",
-  //     title: "Usuario creado",
-  //     text: "Se creó el usuario correctamente!",
-  //   });
-  // LimpiarFormUsuario()
-
-  // // })
-  // //   .catch((error) => {
-  // //     console.error('Hubo un error:', error);
-  // //   });
-  // }else{
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Las contraseñas no coinciden",
-  //     text: "Verifica la contraseña!",
-  //   });
-  //   // alert('las contraseñas no coinciden')
-  // }
 
 
 

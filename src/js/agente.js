@@ -84,6 +84,7 @@ agregarAgenteButton.addEventListener('click', () => {
         age_razon_social: fage_razon_social
     }
     console.log(data)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (emailRegex.test(fage_correo)) {
         conexApi.post(`agente`, data).then((res) => {
