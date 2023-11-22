@@ -500,6 +500,8 @@ actualizarDocumentoButton.addEventListener('click', () => {
 $(document).ready(function () {
   if (window.location.href.includes(`editar_cot.html`)) {
     inicializar();
+    $('.content').find("input, select,textarea").prop("disabled", true);
+    $('#btnActualizarDocumento, #btnGenerarRouting').hide();
   }
 });
 
