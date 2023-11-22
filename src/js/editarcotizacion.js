@@ -4,6 +4,11 @@ const conexApi = axios.create({
   baseURL: 'https://cna-cms.onrender.com/items/'
 });
 
+const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+
+
+const tipoRol = userInfo?.role?.name;
+
 let url = new URL(window.location.href);
 
 // Usar URLSearchParams para obtener el valor de 'miVariable'
@@ -500,8 +505,11 @@ actualizarDocumentoButton.addEventListener('click', () => {
 $(document).ready(function () {
   if (window.location.href.includes(`editar_cot.html`)) {
     inicializar();
-    $('.content').find("input, select,textarea").prop("disabled", true);
-    $('#btnActualizarDocumento, #btnGenerarRouting').hide();
+    if(tipoRol=='Cliente'){
+      $('.content').find("input, select,textarea").prop("disabled", true);
+      $('#btnActualizarDocumento, #btnGenerarRouting').hide();
+    }
+   
   }
 });
 

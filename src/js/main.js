@@ -67,7 +67,6 @@ if (!sessionStorage.getItem('userInfo')) {
     || currentPage.includes("nuevo-shipper.html")
     || currentPage.includes("nuevo-usuario.html")
 
-    || currentPage.includes("routing.html")
     || currentPage.includes("liq-routing.html")
     || currentPage.includes("liquidaciones-ven.html")
 
@@ -87,7 +86,6 @@ if (!sessionStorage.getItem('userInfo')) {
     || currentPage.includes("cotizacion.html")
     || currentPage.includes("cotizaciones-ven.html")
     || currentPage.includes("editar_cot.html")
-  
     || currentPage.includes("nuevo-usuario.html")
     || currentPage.includes("editar_usuario.html")
     || currentPage.includes("listarusuarios.html")
@@ -107,7 +105,6 @@ if (!sessionStorage.getItem('userInfo')) {
     if (
       currentPage.includes("nuevo-ususesion.html")
     || currentPage.includes("listarusuariosadm.html")
-    || currentPage.includes("routing.html")
     || currentPage.includes("liquidaciones.html")
     || currentPage.includes("nuevo-agente.html")
     || currentPage.includes("nuevo-shipper.html")

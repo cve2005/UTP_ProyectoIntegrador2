@@ -1,5 +1,5 @@
 import axios from 'axios';
-//ultima version 21112023 0125
+//ultima version 2345 21112023
 const EDITAR = 'editar';
 const VER = 'ver';
 const DESCARGAR = 'descargar';
@@ -161,7 +161,7 @@ async function cargarCotizacionesVendedor(id, filtro, table) {
             row.push(element.usu_dir.first_name);
             //deberia salir el total solo de la columna de servicios cotizados
             // row.push('-');
-            // row.push(element.doc_total_venta);
+            row.push(element.doc_total_venta);
             row.push(element.usu_dir.emp_id.emp_razon_social);
             row.push(element.est_id.est_nombre);
             row.push('element.usu_correo');
@@ -211,6 +211,7 @@ async function cargarLiquidaciones(id, table) {
             row.push(element.liq_operacion);
             row.push(element.liq_rhe);
             row.push(element.liq_fecha);
+            row.push(element.liq_pago_vendedor);
             row.push('element.usu_correo');
             dataTable.push(row);
         });
@@ -220,43 +221,7 @@ async function cargarLiquidaciones(id, table) {
 
 }
 
-const createItem = (value) => {
-    const td = document.createElement('td');
-    td.innerText = value;
-    return td;
-};
 
-const createItemAcction = (doc_id, type, url) => {
-
-    const icon = document.createElement('i');
-    const button = document.createElement('button');
-    if (type === EDITAR) {
-        button.addEventListener('click', () => {
-            //alert('editar'  + doc_id);  
-            window.location.href = url + `.html?id=${doc_id}`;
-        });
-        icon.classList.add('nav-icon', 'fas', 'fa-solid', 'fa-pen');
-    }
-    if (type === VER) {
-        button.addEventListener('click', () => {
-            alert('ver' + doc_id);
-            //window.location.href = `editar_cot.html?id=${doc_id}`;
-        });
-        icon.classList.add('nav-icon', 'fas', 'fa-solid', 'fa-file-invoice');
-    }
-    if (type === DESCARGAR) {
-        button.addEventListener('click', () => {
-
-            alert('descargar' + doc_id);
-            //window.location.href = `editar_cot.html?id=${doc_id}`;
-        });
-        icon.classList.add('nav-icon', 'fas', 'fa-solid', 'fa-file-pdf');
-    }
-
-    button.appendChild(icon);
-
-    return button;
-};
 
 //total cotizado=suma de los servicios
 $(document).ready(function () {
@@ -268,7 +233,7 @@ $(document).ready(function () {
                 { "title": "Nro Doc" },
                 { "title": "Fechas" },
                 { "title": "Cliente" },
-                // { "title": "Total Cotizado" },
+                { "title": "Monto Cotizado" },
                 { "title": "Empresa" },
                 { "title": "Estado" },
                 { "title": "Acciones" }
@@ -334,7 +299,14 @@ $(document).ready(function () {
                 {
                     "targets": -1, // Esto significa la última columna de la tabla
                     "data": null,
-                    "defaultContent": "<button class='edit-btn'><i class='nav-icon fas fa-solid fa-pen'/></button>"
+                    "render": function (data, type, row, meta) {
+                        // Verificar el rol y mostrar el botón correspondiente
+                        if (rolSesion === 'Cliente' || rolSesion === 'Vendedor') {
+                            return "<button class='ver-btn'><i class='nav-icon fas fa-eye'/></button>";
+                        } else {
+                            return "<button class='edit-btn'><i class='nav-icon fas fa-solid fa-pen'/></button>";
+                        }
+                    }
                 }
             ],
             "responsive": true,
@@ -347,6 +319,13 @@ $(document).ready(function () {
         $('#tblOperaciones tbody').on('click', '.edit-btn', function () {
             var data = table.row($(this).parents('tr')).data();
             window.location.href = 'routing' + `.html?id=${data[0]}`;
+            console.log(data);
+        });
+    
+        $('#tblOperaciones tbody').on('click', '.ver-btn', function () {
+            var data = table.row($(this).parents('tr')).data();
+            window.location.href = 'routing' + `.html?id=${data[0]}`;
+            // $('.content').find("input, select").prop("disabled", true);
             console.log(data);
         });
 
@@ -507,13 +486,21 @@ $(document).ready(function () {
                 { "title": "Operación" },
                 { "title": "RHE" },
                 { "title": "Fecha de pago" },
+                { "title": "Comisión Vendedor" },
                 { "title": "Acciones" }
             ],
             "columnDefs": [
                 {
                     "targets": -1, // Esto significa la última columna de la tabla
                     "data": null,
-                    "defaultContent": "<button class='edit-btn'><i class='nav-icon fas fa-solid fa-pen'/></button>"
+                    "render": function (data, type, row, meta) {
+                        // Verificar el rol y mostrar el botón correspondiente
+                        if (rolSesion === 'Vendedor') {
+                            return "<button class='ver-btn'><i class='nav-icon fas fa-eye'/></button>";
+                        } else {
+                            return "<button class='edit-btn'><i class='nav-icon fas fa-solid fa-pen'/></button>";
+                        }
+                    }
                 }
             ],
             "responsive": true,
@@ -523,12 +510,20 @@ $(document).ready(function () {
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         });
 
+
+        
         $('#tblLiquidaciones tbody').on('click', '.edit-btn', function () {
             var data = table.row($(this).parents('tr')).data();
             window.location.href = 'liq-routing' + `.html?id=${data[0]}`;
             console.log(data);
         });
-
+    
+        $('#tblLiquidaciones tbody').on('click', '.ver-btn', function () {
+            var data = table.row($(this).parents('tr')).data();
+            window.location.href = 'liq-routing' + `.html?id=${data[0]}`;
+            // $('.content').find("input, select").prop("disabled", true);
+            console.log(data);
+        });
 
         if (rolSesion === 'Administrator' || rolSesion === 'Contador') {
             cargarLiquidaciones(null, table);
@@ -538,6 +533,42 @@ $(document).ready(function () {
     }
 });
 
+const createItem = (value) => {
+    const td = document.createElement('td');
+    td.innerText = value;
+    return td;
+};
 
+const createItemAcction = (doc_id, type, url) => {
+
+    const icon = document.createElement('i');
+    const button = document.createElement('button');
+    if (type === EDITAR) {
+        button.addEventListener('click', () => {
+            //alert('editar'  + doc_id);  
+            window.location.href = url + `.html?id=${doc_id}`;
+        });
+        icon.classList.add('nav-icon', 'fas', 'fa-solid', 'fa-pen');
+    }
+    if (type === VER) {
+        button.addEventListener('click', () => {
+            alert('ver' + doc_id);
+            //window.location.href = `editar_cot.html?id=${doc_id}`;
+        });
+        icon.classList.add('nav-icon', 'fas', 'fa-solid', 'fa-file-invoice');
+    }
+    if (type === DESCARGAR) {
+        button.addEventListener('click', () => {
+
+            alert('descargar' + doc_id);
+            //window.location.href = `editar_cot.html?id=${doc_id}`;
+        });
+        icon.classList.add('nav-icon', 'fas', 'fa-solid', 'fa-file-pdf');
+    }
+
+    button.appendChild(icon);
+
+    return button;
+};
 
 
