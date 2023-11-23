@@ -10,6 +10,10 @@ let url = new URL(window.location.href);
 let id = url.searchParams.get("id");
 let pagosG
 
+const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+
+const tipoRol = userInfo?.role?.name;
+
 async function cargarEditarLiquidacion() {
   conexApi.get(`detalle_servicio?filter[doc_id]=${id}`).then((res) => {
     const servicios = res.data.data
@@ -169,12 +173,15 @@ actualizarLiquidacionButton.addEventListener('click', () => {
   const fliq_fecha = document.getElementById('ffecha').value
   const fliq_banco = document.getElementById('fbanco').value
   const fliq_operacion = document.getElementById('foperacion').value
+  const fliq_comision = document.getElementById('fcomision').value
+  
 
   const data = {
     liq_rhe: fliq_rhe,
     liq_fecha: fliq_fecha,
     liq_banco: fliq_banco,
-    liq_operacion: fliq_operacion
+    liq_operacion: fliq_operacion,
+    liq_pago_vendedor:fliq_comision
   }
 
   console.log(data)
@@ -345,8 +352,15 @@ actualizarLiquidacionButton.addEventListener('click', () => {
 
 
 
-window.addEventListener('load', function () {
+
+
+$(document).ready(function () {
   if (window.location.href.includes(`liq-routing.html`)) {
     cargarEditarLiquidacion();
+    if(tipoRol=='Vendedor'){
+      $('.content').find("input").prop("disabled", true);
+      $('#btnActualizarLiquidacion,#btnCalcular').hide();
+    }
+   
   }
 });

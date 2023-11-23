@@ -294,44 +294,82 @@
   <!-- AdminLTE for demo purposes -->
 
   <!-- Page specific script -->
+
+  <script>
+    $(document).ready(function () {
+      function validarEmail() {
+        var email = $("#fage_correo").val();
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+        if (!emailRegex.test(email)) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor, ingrese una dirección de correo electrónico válida.'
+          });
+          // Limpiar el campo si no cumple con las condiciones
+          $("#fage_correo").val("");
+        }
+      }
+  
+      function validarTelefono() {
+        var telefono = $("#fage_telefono").val().replace(/[^\d+\-]/g, ''); // Permite solo números, '+' o '-'
+        
+        // Asegurar que solo haya números y limitar la longitud
+        $("#fage_telefono").val(telefono);
+      }
+  
+      function validarIdFiscal() {
+        var idFiscal = $("#fage_id_fiscal").val().replace(/[^a-zA-Z0-9]/g, ''); // Solo letras y números
+        
+        // Actualizar el campo con el valor limpio
+        $("#fage_id_fiscal").val(idFiscal);
+      }
+  
+      $("#fage_correo").on("blur", validarEmail);
+      $("#fage_telefono").on("input", validarTelefono);
+      $("#fage_id_fiscal").on("input", validarIdFiscal);
+    });
+  </script>
+
   <script>
 
-      document.addEventListener('DOMContentLoaded', function () {
-        // Expresiones regulares para validar
-        var letrasNumerosRegex = /^[a-zA-Z0-9]+$/;
-        var telefonoRegex = /^[0-9+\-]+$/;
+      // document.addEventListener('DOMContentLoaded', function () {
+      //   // Expresiones regulares para validar
+      //   var letrasNumerosRegex = /^[a-zA-Z0-9]+$/;
+      //   var telefonoRegex = /^[0-9+\-]+$/;
 
-        // Función para validar el campo de ID Fiscal
-        function validarIdFiscal() {
-          var idFiscal = document.getElementById('fage_id_fiscal').value;
-          if (!letrasNumerosRegex.test(idFiscal)) {
-            Swal.fire({
-              icon: "error",
-              title: "Error de validación",
-              text: "El ID Fiscal solo debe contener letras y números"
-            });
-            document.getElementById('fage_id_fiscal').value = '';
-          }
-        }
+      //   // Función para validar el campo de ID Fiscal
+      //   function validarIdFiscal() {
+      //     var idFiscal = document.getElementById('fage_id_fiscal').value;
+      //     if (!letrasNumerosRegex.test(idFiscal)) {
+      //       Swal.fire({
+      //         icon: "error",
+      //         title: "Error de validación",
+      //         text: "El ID Fiscal solo debe contener letras y números"
+      //       });
+      //       document.getElementById('fage_id_fiscal').value = '';
+      //     }
+      //   }
 
-        // Función para validar el campo de Teléfono
-        function validarTelefono() {
-          var telefono = document.getElementById('fage_telefono').value;
-          if (!telefonoRegex.test(telefono)) {
-            Swal.fire({
-              icon: "error",
-              title: "Error de validación",
-              text: "El número de teléfono solo puede contener números, '+' y '-'"
-            });
-            document.getElementById('fage_telefono').value = '';
-          }
-        }
+      //   // Función para validar el campo de Teléfono
+      //   function validarTelefono() {
+      //     var telefono = document.getElementById('fage_telefono').value;
+      //     if (!telefonoRegex.test(telefono)) {
+      //       Swal.fire({
+      //         icon: "error",
+      //         title: "Error de validación",
+      //         text: "El número de teléfono solo puede contener números, '+' y '-'"
+      //       });
+      //       document.getElementById('fage_telefono').value = '';
+      //     }
+      //   }
 
-        // Asignamos las funciones de validación a los eventos correspondientes
-        document.getElementById('fage_id_fiscal').addEventListener('input', validarIdFiscal);
-        document.getElementById('fage_telefono').addEventListener('input', validarTelefono);
+      //   // Asignamos las funciones de validación a los eventos correspondientes
+      //   document.getElementById('fage_id_fiscal').addEventListener('input', validarIdFiscal);
+      //   document.getElementById('fage_telefono').addEventListener('input', validarTelefono);
         
-      });
+      // });
 
     $(function () {
       //Initialize Select2 Elements

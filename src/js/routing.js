@@ -5,7 +5,7 @@ const conexApi = axios.create({
 });
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-
+const tipoRol = userInfo?.role?.name;
 let url = new URL(window.location.href);
 
 // Usar URLSearchParams para obtener el valor de 'miVariable'
@@ -312,10 +312,13 @@ generarLiquidacionButton.addEventListener('click', () => {
 
 })
 
-
-
-window.addEventListener('load', function () {
+$(document).ready(function () {
     if (window.location.href.includes(`routing.html`)) {
         cargarEditarOperacion();
+        if(tipoRol=='Cliente' || tipoRol=='Vendedor' ){
+            $('.content').find("input, select,textarea").prop("disabled", true);
+            $('#btnActualizarRouting, #btnGenerarLiquidacion').hide();
+        }
+    
     }
-});
+  });

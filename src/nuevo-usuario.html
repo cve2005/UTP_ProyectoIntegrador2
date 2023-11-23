@@ -228,7 +228,7 @@
 
                 <div class="col-md-8">
                   <label for="validationCustom03" class="form-label">Dirección</label>
-                  <input type="text" class="form-control" id="fusu_direccion" required>
+                  <input type="text" class="form-control" id="fusu_direccionE" required>
                 </div>
                 <div class="col-md-4">
                   <label for="validationCustom05" class="form-label">Teléfono</label>
@@ -247,19 +247,19 @@
                 </div>
                 <div class="col-md-4">
                   <label> Nombres </label>
-                  <input type="text" class="form-control" id="fusu_nombre" required>
+                  <input type="text" class="form-control" id="fusu_nombre" disabled required>
                 </div>
 
                 <div class="col-md-4">
                   <label> Apellidos</label>
-                  <input type="text" class="form-control" id="fusu_apellido" required>
+                  <input type="text" class="form-control" id="fusu_apellido" disabled required>
                 </div>
 
                 <div class="col-md-4">
                   <label> DNI</label>
                   <div class="form-inline">
                     <input class="form-control" type="text" placeholder="DNI"
-                      aria-label="Search" id="fusu_dni">
+                      aria-label="Search" id="fusu_dni" disabled>
                     <button class="btn btn-navbar" id="btnBuscarCliente" hidden="true">
                     </button>
                     <button class="btn btn-navbar" id="btnAgregarCliente" hidden="true">
@@ -273,12 +273,15 @@
 
                 <div class="col-md-4">
                   <label> E-mail</label>
-                  <input type="text" class="form-control" id="fusu_email" required>
+                  <input type="text" class="form-control" id="fusu_email" disabled required>
                 </div>
 
                 <div class="col-md-4">
-                  <label> Celular</label>
-                  <input type="text" class="form-control" id="fusu_celular" required>
+                  <label> Celular</label> 
+                  <input type="text" class="form-control" id="fusu_celular" disabled required>
+                </div><div class="col-md-4">
+                  <label> Dirección Cliente</label> 
+                  <input type="text" class="form-control" id="fusu_direccionC" disabled required>
                 </div>
                 <input type="text" class="form-control" id="fidcliente" hidden="true" required>
                 <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->
@@ -353,118 +356,208 @@
   <!-- AdminLTE for demo purposes -->
 
   <!-- Page specific script -->
+
+  <script>
+    $(document).ready(function () {
+      function validarDNI() {
+        var dni = $("#fusu_dni").val().replace(/\D/g, ''); // Elimina no números
+  
+        // Si ya tiene 8 caracteres, ignorar cualquier ingreso adicional
+        if (dni.length >= 8) {
+          $("#fusu_dni").val(dni.substring(0, 8)); // Limita a 8 caracteres
+        } else if (/^\d{0,8}$/.test(dni)) {
+          $("#fusu_dni").val(dni); // Permite ingresar hasta 8 caracteres
+        } else {
+          // Puedes agregar aquí alguna lógica adicional si es necesario
+        }
+      }
+  
+      function blurDNI() {
+        var dni = $("#fusu_dni").val();
+  
+        // Validar longitud obligatoria de 8 caracteres
+        if (dni.length !== 8) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El DNI debe tener exactamente 8 caracteres numéricos.'
+          });
+          // Limpiar el campo si no cumple con las condiciones
+          $("#fusu_dni").val("");
+        }
+      }
+  
+      $("#fusu_dni").on("input", validarDNI);
+      $("#fusu_dni").on("blur", blurDNI);
+  
+      // Agregar más eventos de entrada/salida según sea necesario...
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      function validarRUC() {
+        var ruc = $("#fruc").val().replace(/\D/g, ''); // Elimina no números
+  
+        // Si ya tiene 11 caracteres, ignorar cualquier ingreso adicional
+        if (ruc.length >= 11) {
+          $("#fruc").val(ruc.substring(0, 11)); // Limita a 11 caracteres
+        } else if (/^\d{0,11}$/.test(ruc)) {
+          $("#fruc").val(ruc); // Permite ingresar hasta 11 caracteres
+        } else {
+          // Puedes agregar aquí alguna lógica adicional si es necesario
+        }
+      }
+  
+      function validarNumeros(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+          evt.preventDefault();
+        }
+      }
+  
+      function validarDNI() {
+        var dni = $("#fusu_dni").val().replace(/\D/g, ''); // Elimina no números
+  
+        // Asegurar que solo haya números y limitar a 8 caracteres
+        $("#fusu_dni").val(dni.substring(0, 8));
+      }
+  
+      function blurDNI() {
+        var dni = $("#fusu_dni").val();
+  
+        // Validar longitud obligatoria de 8 caracteres
+        if (dni.length !== 8) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El DNI debe tener exactamente 8 caracteres numéricos.'
+          });
+          // Limpiar el campo si no cumple con las condiciones
+          $("#fusu_dni").val("");
+        }
+      }
+  
+      function blurRUC() {
+        var ruc = $("#fruc").val();
+        if (ruc.length === 11 && (ruc.startsWith("10") || ruc.startsWith("20"))) {
+          // No hacer nada si cumple con las condiciones
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El RUC debe tener 11 caracteres y comenzar con "10" o "20".'
+          });
+          // Limpiar el campo solo si no cumple con las condiciones
+          $("#fruc").val("");
+        }
+      }
+  
+      function validarEmail() {
+        var email = $("#fusu_email").val();
+        // Expresión regular para validar el formato del correo electrónico
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+        if (!emailRegex.test(email)) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ingrese un formato de correo electrónico válido.'
+          });
+          // Limpiar el campo si no cumple con las condiciones
+          $("#fusu_email").val("");
+        }
+      }
+  
+      function validarTelefono() {
+        var telefono = $("#fusu_telefono").val().replace(/[^\d\+\-]/g, ''); // Permite solo números, '+' y '-'
+        $("#fusu_telefono").val(telefono);
+        
+      }
+
+          function validarTelefono2() {
+        var telefono2 = $("#fusu_celular").val().replace(/[^\d\+\-]/g, ''); // Permite solo números, '+' y '-'
+        $("#fusu_celular").val(telefono2);
+        
+      }
+  
+      $("#fruc").on("input", validarRUC);
+      $("#fruc").on("input", validarNumeros);
+      $("#fusu_dni").on("input", validarNumeros);
+      $("#fusu_dni").on("blur", blurDNI);
+      $("#fruc").on("blur", blurRUC);
+      $("#fusu_email").on("blur", validarEmail);
+      $("#fusu_telefono").on("input", validarTelefono);
+      $("#fusu_celular").on("input", validarTelefono2);
+  
+      // Agregar más eventos de entrada/salida según sea necesario...
+    });
+  </script>
+
   <script>
 
-    document.addEventListener('DOMContentLoaded', function () {
-      // ...
+    // document.addEventListener('DOMContentLoaded', function () {
+    // // Expresiones regulares para validar
+    // var numericosRegex = /^[0-9.]+$/;
+    // var rucRegex = /^(10|20)\d{9}$/;
+    // var dniRegex = /^\d{8}$/;
+    // var telefonoCelularRegex = /^[0-9+-]+$/;
 
-      // Obtener referencias a los campos
-      var razonSocialInput = document.getElementById('frazonSocial');
-      var rucInput = document.getElementById('fruc');
-      var direccionInput = document.getElementById('fusu_direccion');
-      var telefonoInput = document.getElementById('fusu_telefono');
-      var nombresInput = document.getElementById('fusu_nombre');
-      var apellidosInput = document.getElementById('fusu_apellido');
-      var dniInput = document.getElementById('fusu_dni');
-      var emailInput = document.getElementById('fusu_email');
-      var celularInput = document.getElementById('fusu_celular');
+    // // Función para validar y formatear números
+    // function validarNumero(e, mensaje) {
+    //   var valor = e.target.value;
+    //   if (!numericosRegex.test(valor)) {
+    //     mostrarError(mensaje);
+    //     e.target.value = '';
+    //   }
+    // }
 
-      // Función para verificar si al menos un campo requerido está vacío
-      function camposRequeridosVacios() {
-        return (
-          razonSocialInput.value.trim() === '' ||
-          rucInput.value.trim() === '' ||
-          direccionInput.value.trim() === '' ||
-          telefonoInput.value.trim() === ''
-        );
-      }
+    // // Función para validar RUC
+    // function validarRUC(e) {
+    //   var valor = e.target.value;
+    //   if (!rucRegex.test(valor)) {
+    //     mostrarError("El RUC debe contener solo números, tener 11 dígitos y comenzar con '10' o '20'");
+    //     e.target.value = '';
+    //   }
+    // }
 
-      // Función para habilitar o deshabilitar campos según la condición
-      function habilitarCampos() {
-        var camposHabilitados = camposRequeridosVacios();
-
-        nombresInput.disabled = camposHabilitados;
-        apellidosInput.disabled = camposHabilitados;
-        dniInput.disabled = camposHabilitados;
-        emailInput.disabled = camposHabilitados;
-        celularInput.disabled = camposHabilitados;
-      }
-
-      // Asignar la función de habilitarCampos al evento input de los campos requeridos
-      razonSocialInput.addEventListener('input', habilitarCampos);
-      rucInput.addEventListener('input', habilitarCampos);
-      direccionInput.addEventListener('input', habilitarCampos);
-      telefonoInput.addEventListener('input', habilitarCampos);
-
-      // Ejecutar habilitarCampos al cargar la página
-      habilitarCampos();
-
-      // ...
-    });
+    // // Función para validar DNI
+    // function validarDNI(e) {
+    //   var valor = e.target.value;
+    //   if (!dniRegex.test(valor)) {
+    //     mostrarError("El DNI debe contener solo 8 dígitos numéricos");
+    //     e.target.value = '';
+    //   }
+    // }
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-    // Expresiones regulares para validar
-    var numericosRegex = /^[0-9.]+$/;
-    var rucRegex = /^(10|20)\d{9}$/;
-    var dniRegex = /^\d{8}$/;
-    var telefonoCelularRegex = /^[0-9+-]+$/;
+    // // Función para validar Teléfono y Celular
+    // function validarTelefonoCelular(e) {
+    //   var valor = e.target.value;
+    //   if (!telefonoCelularRegex.test(valor)) {
+    //     mostrarError("El Teléfono y Celular solo deben contener números y los símbolos '-' y '+'");
+    //     e.target.value = '';
+    //   }
+    // }
 
-    // Función para validar y formatear números
-    function validarNumero(e, mensaje) {
-      var valor = e.target.value;
-      if (!numericosRegex.test(valor)) {
-        mostrarError(mensaje);
-        e.target.value = '';
-      }
-    }
+    // // Función para mostrar el mensaje de error con SweetAlert
+    // function mostrarError(mensaje) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Error de validación",
+    //     text: mensaje
+    //   });
+    // }
 
-    // Función para validar RUC
-    function validarRUC(e) {
-      var valor = e.target.value;
-      if (!rucRegex.test(valor)) {
-        mostrarError("El RUC debe contener solo números, tener 11 dígitos y comenzar con '10' o '20'");
-        e.target.value = '';
-      }
-    }
+    // // Asignamos las funciones de validación a los eventos correspondientes
+    // document.getElementById('fruc').addEventListener('blur', validarRUC);
+    // document.getElementById('fusu_dni').addEventListener('blur', validarDNI);
+    // document.getElementById('fusu_telefono').addEventListener('input', validarTelefonoCelular);
+    // document.getElementById('fusu_celular').addEventListener('input', validarTelefonoCelular);
 
-    // Función para validar DNI
-    function validarDNI(e) {
-      var valor = e.target.value;
-      if (!dniRegex.test(valor)) {
-        mostrarError("El DNI debe contener solo 8 dígitos numéricos");
-        e.target.value = '';
-      }
-    }
+    // // ... (otras asignaciones de eventos según sea necesario)
 
-
-    // Función para validar Teléfono y Celular
-    function validarTelefonoCelular(e) {
-      var valor = e.target.value;
-      if (!telefonoCelularRegex.test(valor)) {
-        mostrarError("El Teléfono y Celular solo deben contener números y los símbolos '-' y '+'");
-        e.target.value = '';
-      }
-    }
-
-    // Función para mostrar el mensaje de error con SweetAlert
-    function mostrarError(mensaje) {
-      Swal.fire({
-        icon: "error",
-        title: "Error de validación",
-        text: mensaje
-      });
-    }
-
-    // Asignamos las funciones de validación a los eventos correspondientes
-    document.getElementById('fruc').addEventListener('blur', validarRUC);
-    document.getElementById('fusu_dni').addEventListener('blur', validarDNI);
-    document.getElementById('fusu_telefono').addEventListener('input', validarTelefonoCelular);
-    document.getElementById('fusu_celular').addEventListener('input', validarTelefonoCelular);
-
-    // ... (otras asignaciones de eventos según sea necesario)
-
-    });
+    // });
 
     $(function () {
       //Initialize Select2 Elements

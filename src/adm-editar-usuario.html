@@ -232,7 +232,7 @@
                 </div>
                 <div class="col-md-4">
                   <label> Contraseña</label>
-                  <input type="password" class="form-control" id="fusu_contrasena" required>
+                  <input type="password" class="form-control" id="fusu_contrasena" value="" required>
                 </div>
 
                 <div class="col-md-4">
@@ -240,10 +240,10 @@
                   <input type="text" class="form-control" id="fusu_telefono" required>
                 </div>
 
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <label> Dirección</label>
                   <input type="text" class="form-control" id="fusu_direccion" required>
-                </div>
+                </div> -->
                 <div class="col-md-3">
                   <label> Rol</label>
                   <select class="custom-select rounded-0" id="selectRolUsuario">
@@ -255,7 +255,7 @@
                 </div>
                 <div class="col-md-3">
                   <label> Comisión %</label>
-                  <input type="text" class="form-control" id="fusu_comision" value="0" required>
+                  <input type="number" step="0.01" class="form-control" id="fusu_comision" value="0" disable required>
                 </div>
                 <input type="text" class="form-control" id="fidEmpresa" value="2" hidden="true" required>
                 <input type="text" class="form-control" id="fidCliente" value="2" hidden="true" required>
@@ -339,7 +339,78 @@
   <!-- AdminLTE for demo purposes -->
 
   <!-- Page specific script -->
+
   <script>
+    $(document).ready(function () {
+      function validarDNI() {
+        var dni = $("#fusu_dni").val().replace(/\D/g, ''); // Elimina no números
+  
+        // Asegurar que solo haya números y limitar a 8 caracteres
+        $("#fusu_dni").val(dni.substring(0, 8));
+      }
+  
+      function blurDNI() {
+        var dni = $("#fusu_dni").val();
+  
+        // Validar longitud obligatoria de 8 caracteres
+        if (dni.length !== 8) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El DNI debe tener exactamente 8 caracteres numéricos.'
+          });
+          // Limpiar el campo si no cumple con las condiciones
+          $("#fusu_dni").val("");
+        }
+      }
+  
+      $("#fusu_dni").on("input", validarDNI);
+      $("#fusu_dni").on("blur", blurDNI);
+    });
+  </script>
+
+<script>
+  $(document).ready(function () {
+    function validarEmail() {
+      var email = $("#fusu_email").val();
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(email)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Por favor, ingrese una dirección de correo electrónico válida.'
+        });
+        // Limpiar el campo si no cumple con las condiciones
+        $("#fusu_email").val("");
+      }
+    }
+
+    function validarCelular() {
+      var celular = $("#fusu_telefono").val().replace(/[^\d+\-]/g, ''); // Permite solo números, '+' o '-'
+      
+      // Asegurar que solo haya números y limitar la longitud
+      $("#fusu_telefono").val(celular);
+    }
+
+    $("#fusu_email").on("blur", validarEmail);
+    $("#fusu_telefono").on("input", validarCelular);
+  });
+</script>
+
+  <script>
+     document.getElementById('selectRolUsuario').addEventListener('change', function () {
+      var input = document.getElementById('fusu_comision');
+      // Verifica la opción seleccionada
+      if (this.value === '140de75d-8d7c-47e3-8ba9-f7e60cdb3ba4') {
+        // Habilita el input si la opción es 'vendedor'
+        input.disabled = false;
+      } else {
+        // Deshabilita el input para otras opciones
+        input.value=''
+        input.disabled = true;
+      }
+    });
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()
@@ -415,63 +486,7 @@
       })
 
     })
-    // BS-Stepper Init
-    // document.addEventListener('DOMContentLoaded', function () {
-    //   window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-    // })
 
-    // // DropzoneJS Demo Code Start
-    // Dropzone.autoDiscover = false
-
-    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-    // var previewNode = document.querySelector("#template")
-    // previewNode.id = ""
-    // var previewTemplate = previewNode.parentNode.innerHTML
-    // previewNode.parentNode.removeChild(previewNode)
-
-    // var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-    //   url: "/target-url", // Set the url
-    //   thumbnailWidth: 80,
-    //   thumbnailHeight: 80,
-    //   parallelUploads: 20,
-    //   previewTemplate: previewTemplate,
-    //   autoQueue: false, // Make sure the files aren't queued until manually added
-    //   previewsContainer: "#previews", // Define the container to display the previews
-    //   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-    // })
-
-    // myDropzone.on("addedfile", function (file) {
-    //   // Hookup the start button
-    //   file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
-    // })
-
-    // // Update the total progress bar
-    // myDropzone.on("totaluploadprogress", function (progress) {
-    //   document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-    // })
-
-    // myDropzone.on("sending", function (file) {
-    //   // Show the total progress bar when upload starts
-    //   document.querySelector("#total-progress").style.opacity = "1"
-    //   // And disable the start button
-    //   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-    // })
-
-    // // Hide the total progress bar when nothing's uploading anymore
-    // myDropzone.on("queuecomplete", function (progress) {
-    //   document.querySelector("#total-progress").style.opacity = "0"
-    // })
-
-    // // Setup the buttons for all transfers
-    // // The "add files" button doesn't need to be setup because the config
-    // // `clickable` has already been specified.
-    // document.querySelector("#actions .start").onclick = function () {
-    //   myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-    // }
-    // document.querySelector("#actions .cancel").onclick = function () {
-    //   myDropzone.removeAllFiles(true)
-    // }
-    // DropzoneJS Demo Code End
   </script>
 </body>
 

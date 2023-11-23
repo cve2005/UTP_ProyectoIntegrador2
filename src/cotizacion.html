@@ -316,7 +316,7 @@
                         </div>
 
                         <div class="col-md-4">
-                          <label> Puerto de recojo</label>
+                          <label> Punto de recojo</label>
                           <input type="text" class="form-control" id="fdoc_recojo" required>
                         </div>
 
@@ -342,7 +342,7 @@
                         </div>
 
                         <div class="col-md-4">
-                          <label> Puerto de entrega</label>
+                          <label> Punto de entrega</label>
                           <input type="text" class="form-control" id="fdoc_entrega" required>
                         </div>
                       </div>
@@ -362,7 +362,7 @@
                         <div class="col-md-3">
                           <label class="form-label">Bultos (Cant)</label>
                           <!-- numero entero -->
-                          <input type="text" class="form-control" id="fdoc_bultos" required>
+                          <input type="number" step="1" class="form-control" id="fdoc_bultos" required>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label">Medidas (Ref)</label>
@@ -372,12 +372,12 @@
                         <div class="col-md-3">
                           <label class="form-label">Peso - Kg</label>
                           <!-- decimal -->
-                          <input type="text" class="form-control" id="fdoc_peso" required>
+                          <input type="number" step="0.01" class="form-control" id="fdoc_peso" required>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label">Peso / Volumen (CBM)</label>
                           <!-- decimal -->
-                          <input type="text" class="form-control" id="fdoc_volumen" required>
+                          <input type="number" step="0.01" class="form-control" id="fdoc_volumen" required>
                         </div>
 
                       </div>
@@ -402,8 +402,8 @@
                           <input type="text" class="form-control" id="fdoc_moneda" value="USD" required>
                         </div>
                         <div class="col-md-4">
-                          <label class="form-label">Validez</label>
-                          <input type="text" class="form-control" id="fdoc_validez" placeholder="EN DIAS" required>
+                          <label class="form-label">Validez en dias</label>
+                          <input type="number" step="1" class="form-control" id="fdoc_validez" placeholder="EN DIAS" required>
                         </div>
                       </div>
                       <!-- FORM-->
@@ -426,31 +426,31 @@
                               <hr>
                               <br>
                               <label class="form-label">Flete</label>
-                              <input type="text" class="form-control" id="fdoc_dsFlete" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsFlete" required>
                               <label class="form-label">Gastos Extranjero</label>
-                              <input type="text" class="form-control" id="fdoc_dsGasExt" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsGasExt" required>
                               <label class="form-label">BL / AWB / C.Porte</label>
-                              <input type="text" class="form-control" id="fdoc_dsBLAWB" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsBLAWB" required>
                               <label class="form-label">Handling</label>
-                              <input type="text" class="form-control" id="fdoc_dsHandling" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsHandling" required>
                               <label class="form-label">Seguro</label>
-                              <input type="text" class="form-control" id="fdoc_dsSeguro" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsSeguro" required>
                               <label class="form-label">Ag. Aduanas</label>
-                              <input type="text" class="form-control" id="fdoc_dsAgAduanas" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsAgAduanas" required>
                               <label class="form-label">Gastos Operativos</label>
-                              <input type="text" class="form-control" id="fdoc_dsGasOpe" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsGasOpe" required>
                               <label class="form-label">Visto Bueno</label>
-                              <input type="text" class="form-control" id="fdoc_dsVistoBueno" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsVistoBueno" required>
                               <label class="form-label">Gate IN</label>
-                              <input type="text" class="form-control" id="fdoc_dsGateIn" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsGateIn" required>
                               <label class="form-label">Desconsolidación</label>
-                              <input type="text" class="form-control" id="fdoc_dsDescon" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsDescon" required>
                               <label class="form-label">Almacén / D.Antic.</label>
-                              <input type="text" class="form-control" id="fdoc_dsAlmacen" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsAlmacen" required>
                               <label class="form-label">Transporte Interno</label>
-                              <input type="text" class="form-control" id="fdoc_dsTransInt" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsTransInt" required>
                               <label class="form-label">Otros N.E.</label>
-                              <input type="text" class="form-control" id="fdoc_dsOtros" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_dsOtros" required>
                             </div>
                           </div>
                         </div>
@@ -464,49 +464,52 @@
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Valor FOB</label>
-                              <input type="text" class="form-control" id="fdoc_daValorFOB" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_daValorFOB" required>
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Ad Valorem</label>
-                              <input type="text" class="form-control" id="fdoc_daAdValorem" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_daAdValorem" required>
 
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Valor Flete</label>
-                              <input type="text" class="form-control" id="fdoc_daValorFlete" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_daValorFlete" required>
 
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">ISC</label>
-                              <input type="text" class="form-control" id="fdoc_daISC" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_daISC" required>
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Seguro</label>
-                              <input type="text" class="form-control" id="fdoc_daSeguro" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_daSeguro" required>
 
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">IPM</label>
-
-                              <input type="text" class="form-control" id="fdoc_daIPM" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_daIPM" value="0.02" disabled>
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Valor CIF</label>
-                              <input type="text" class="form-control" id="fdoc_daValorCIF" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_daValorCIF" required>
 
 
 
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">IGV</label>
-                              <input type="text" class="form-control" id="fdoc_daIGV" required>
+                              <input type="number" step="0.01" class="form-control" id="fdoc_daIGV" value="0.16" disabled>
                             </div>
                             <div class="col-md-5 mx-1">
 
                             </div>
                             <div class="col-md-5 mx-1">
                               <label class="form-label">Percepción</label>
-                              <input type="text" class="form-control" id="fdoc_daPercepcion" required>
+                              <select class="custom-select rounded-0" id="fdoc_daPercepcion" required>
+                                  <option value="0.035">0.035</option>
+                                  <option value="0.05">0.05</option>
+                                  <option value="0.1">0.1</option>
+                              </select>
                             </div>
                           </div>
                           <br>
@@ -593,6 +596,128 @@
   <!-- Page specific script -->
 
   <script>
+    $(document).ready(function () {
+      function validarDNI() {
+        var dni = $("#fusu_dni").val().replace(/\D/g, ''); // Elimina no números
+  
+        // Si ya tiene 8 caracteres, ignorar cualquier ingreso adicional
+        if (dni.length >= 8) {
+          $("#fusu_dni").val(dni.substring(0, 8)); // Limita a 8 caracteres
+        } else if (/^\d{0,8}$/.test(dni)) {
+          $("#fusu_dni").val(dni); // Permite ingresar hasta 8 caracteres
+        } else {
+          // Puedes agregar aquí alguna lógica adicional si es necesario
+        }
+      }
+  
+      function blurDNI() {
+        var dni = $("#fusu_dni").val();
+  
+        // Validar longitud obligatoria de 8 caracteres
+        if (dni.length !== 8) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El DNI debe tener exactamente 8 caracteres numéricos.'
+          });
+          // Limpiar el campo si no cumple con las condiciones
+          $("#fusu_dni").val("");
+        }
+      }
+  
+      $("#fusu_dni").on("input", validarDNI);
+      $("#fusu_dni").on("blur", blurDNI);
+  
+      // Agregar más eventos de entrada/salida según sea necesario...
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      function validarRUC() {
+        var ruc = $("#fruc").val().replace(/\D/g, ''); // Elimina no números
+      
+        // Si ya tiene 11 caracteres, ignorar cualquier ingreso adicional
+        if (ruc.length >= 11) {
+          $("#fruc").val(ruc.substring(0, 11)); // Limita a 11 caracteres
+        } else if (/^\d{0,11}$/.test(ruc)) {
+          $("#fruc").val(ruc); // Permite ingresar hasta 11 caracteres
+        } else {
+          // Puedes agregar aquí alguna lógica adicional si es necesario
+        }
+      }
+  
+      function validarDNI() {
+        var dni = $("#fusu_dni").val().replace(/\D/g, ''); // Elimina no números
+        
+        // Asegurar que solo haya números y limitar a 8 caracteres
+        $("#fusu_dni").val(dni.substring(0, 8));
+      }
+  
+      function blurDNI() {
+        var dni = $("#fusu_dni").val();
+        
+        // Validar longitud obligatoria de 8 caracteres
+        if (dni.length !== 8) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El DNI debe tener exactamente 8 caracteres numéricos.'
+          });
+          // Limpiar el campo si no cumple con las condiciones
+          $("#fusu_dni").val("");
+        }
+      }
+  
+      function blurRUC() {
+        var ruc = $("#fruc").val();
+        if (ruc.length === 11 && (ruc.startsWith("10") || ruc.startsWith("20"))) {
+          // No hacer nada si cumple con las condiciones
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El RUC debe tener 11 caracteres y comenzar con "10" o "20".'
+          });
+          // Limpiar el campo solo si no cumple con las condiciones
+          $("#fruc").val("");
+        }
+      }
+  
+      function validarEmail() {
+        var email = $("#fusu_email").val();
+        // Expresión regular para validar el formato del correo electrónico
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+        if (!emailRegex.test(email)) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ingrese un formato de correo electrónico válido.'
+          });
+          // Limpiar el campo si no cumple con las condiciones
+          $("#fusu_email").val("");
+        }
+      }
+  
+      function validarTelefono() {
+        var telefono = $("#fusu_telefono").val().replace(/[^\d\+\-]/g, ''); // Permite solo números, '+' y '-'
+        $("#fusu_telefono").val(telefono);
+      }
+  
+      $("#fruc").on("input", validarRUC);
+      $("#fusu_dni").on("input", validarDNI);
+      $("#fusu_dni").on("blur", blurDNI);
+      $("#fruc").on("blur", blurRUC);
+      $("#fusu_email").on("blur", validarEmail);
+      $("#fusu_telefono").on("input", validarTelefono);
+  
+      // Agregar más eventos de entrada/salida según sea necesario...
+    });
+  </script>
+  
+
+  <script>
     
     $(function () {
       //Initialize Select2 Elements
@@ -677,55 +802,7 @@
     // DropzoneJS Demo Code Start
     Dropzone.autoDiscover = false
 
-    // // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-    // var previewNode = document.querySelector("#template")
-    // previewNode.id = ""
-    // var previewTemplate = previewNode.parentNode.innerHTML
-    // previewNode.parentNode.removeChild(previewNode)
 
-    // var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-    //   url: "/target-url", // Set the url
-    //   thumbnailWidth: 80,
-    //   thumbnailHeight: 80,
-    //   parallelUploads: 20,
-    //   previewTemplate: previewTemplate,
-    //   autoQueue: false, // Make sure the files aren't queued until manually added
-    //   previewsContainer: "#previews", // Define the container to display the previews
-    //   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-    // })
-
-    // myDropzone.on("addedfile", function (file) {
-    //   // Hookup the start button
-    //   file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file) }
-    // })
-
-    // Update the total progress bar
-    // myDropzone.on("totaluploadprogress", function (progress) {
-    //   document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-    // })
-
-    // myDropzone.on("sending", function (file) {
-    //   // Show the total progress bar when upload starts
-    //   document.querySelector("#total-progress").style.opacity = "1"
-    //   // And disable the start button
-    //   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-    // })
-
-    // // Hide the total progress bar when nothing's uploading anymore
-    // myDropzone.on("queuecomplete", function (progress) {
-    //   document.querySelector("#total-progress").style.opacity = "0"
-    // })
-
-    // Setup the buttons for all transfers
-    // The "add files" button doesn't need to be setup because the config
-    // // `clickable` has already been specified.
-    // document.querySelector("#actions .start").onclick = function () {
-    //   myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-    // }
-    // document.querySelector("#actions .cancel").onclick = function () {
-    //   myDropzone.removeAllFiles(true)
-    // }
-    // DropzoneJS Demo Code End
   </script>
 </body>
 

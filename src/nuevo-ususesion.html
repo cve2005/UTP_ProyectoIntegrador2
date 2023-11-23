@@ -51,9 +51,9 @@
   <!-- dropzonejs -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/dropzone/min/dropzone.min.css">
 
-   <!-- sweet alert -->
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-     <!-- SweetAlert2 JS -->
+  <!-- sweet alert -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <!-- SweetAlert2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
@@ -232,7 +232,8 @@
                 <div class="col-md-4">
                   <label> Celular</label>
                   <!-- <input type="number" class="form-control" id="fusu_telefono" required> -->
-                  <input type="text" class="form-control" id="fusu_telefono" oninput="validarCampoTelefono(this)"  maxlength="15">
+                  <input type="text" class="form-control" id="fusu_telefono" oninput="validarCampoTelefono(this)"
+                     maxlength="15">
                 </div>
 
                 <div class="col-md-3">
@@ -247,7 +248,8 @@
                 <div class="col-md-3">
                   <label> Comisión</label>
                   <!-- <input type="text" class="form-control" id="fusu_comision" value="0" required> -->
-                  <input type="text" class="form-control" id="fusu_comision" value="0.00" oninput="validarCampoComision(this)" required>
+                  <input type="text" class="form-control" id="fusu_comision" value="0.00"
+                    oninput="validarCampoComision(this)" disabled required>
                 </div>
 
                 <!-- falta rol usu_rol, usu_comision, emp_id,usu_dni-->
@@ -331,25 +333,41 @@
   <!-- AdminLTE for demo purposes -->
 
   <!-- Page specific script -->
+
   <script>
-     function validarCampoComision(input) {
-    // Reemplazar cualquier carácter no numérico o "." con una cadena vacía
-    input.value = input.value.replace(/[^0-9.]/g, '');
 
-    // Si hay más de un punto decimal, eliminar los adicionales
-    if (input.value.split('.').length > 2) {
-      input.value = input.value.slice(0, input.value.lastIndexOf('.'));
+    document.getElementById('selectRolUsuario').addEventListener('change', function () {
+      var input = document.getElementById('fusu_comision');
+      // Verifica la opción seleccionada
+      if (this.value === '140de75d-8d7c-47e3-8ba9-f7e60cdb3ba4') {
+        // Habilita el input si la opción es 'vendedor'
+        input.disabled = false;
+      } else {
+        // Deshabilita el input para otras opciones
+        input.value=''
+        input.disabled = true;
+      }
+    });
+
+    function validarCampoComision(input) {
+      // Reemplazar cualquier carácter no numérico o "." con una cadena vacía
+      input.value = input.value.replace(/[^0-9.]/g, '');
+
+
+      // Si hay más de un punto decimal, eliminar los adicionales
+      if (input.value.split('.').length > 2) {
+        input.value = input.value.slice(0, input.value.lastIndexOf('.'));
+      }
+
+      // Convertir el valor a un número decimal
+      let valorDecimal = parseFloat(input.value);
+
+      // Verificar si el valor está en el rango de 0.00 a 1.00
+      if (isNaN(valorDecimal) || valorDecimal < 0 || valorDecimal > 1) {
+        // Reiniciar el valor a "0.00"
+        input.value = "0.00";
+      }
     }
-
-    // Convertir el valor a un número decimal
-    let valorDecimal = parseFloat(input.value);
-
-    // Verificar si el valor está en el rango de 0.00 a 1.00
-    if (isNaN(valorDecimal) || valorDecimal < 0 || valorDecimal > 1) {
-      // Reiniciar el valor a "0.00"
-      input.value = "0.00";
-    }
-  }
 
 
     function validarCampoTelefono(input) {

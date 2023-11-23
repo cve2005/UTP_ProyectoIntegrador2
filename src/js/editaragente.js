@@ -77,8 +77,19 @@ async function actualizarShippers() {
     console.log(data)
     conexApi.patch(`agente/${fage_id}`,data).then((res) => {
         console.log(res)
+        Swal.fire({
+            icon: "success",
+            title: "Se actualizó el shipper con éxito!",
+        }).then(() => {
+            // Redirige después de mostrar el alert
+            window.location.href = "listarshippers.html";
+        });
     })
         .catch((error) => {
+            Swal.fire({
+                icon: "error",
+                title: "Error al actualizar el shipper!",
+            })
             console.error('Hubo un error:', error);
         });
 }
@@ -110,9 +121,19 @@ async function actualizarAgentes() {
     }
     console.log(data)
     conexApi.patch(`agente/${fage_id}`,data).then((res) => {
-        console.log(res)
+        Swal.fire({
+            icon: "success",
+            title: "Se actualizó el agente con éxito!",
+        }).then(() => {
+            // Redirige después de mostrar el alert
+            window.location.href = "listaragentes.html";
+        });
     })
         .catch((error) => {
+            Swal.fire({
+                icon: "error",
+                title: "Error al actualizar el agente!",
+            })
             console.error('Hubo un error:', error);
         });
 }

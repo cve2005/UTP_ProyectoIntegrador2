@@ -83,44 +83,7 @@ agregarDocumentoButton.addEventListener('click', () => {
   const fdoc_cotizacion_notas = document.getElementById('fdoc_cotizacion_notas').value;
   //const fest_id = document.getElementById('fest_id').value;
   const fest_id = 1;
-
-
-  //data para documento
-  const data = {
-    doc_fecha: year + "-" + mes + "-" + dia,
-    usu_dir: fcliente_id,
-    vendedor_id_dir: userInfo.id,
-    top_id: ftop_id,
-    mtx_id: fmtx_id,
-    doc_incoterm: fdoc_incoterm,
-    doc_tcarga: fdoc_tcarga,
-    pais_origen_id: fpais_origen_id,
-    doc_puerto_ori: fdoc_puerto_ori,
-    doc_recojo: fdoc_recojo,
-    pais_destino_id: fpais_destino_id,
-    doc_puerto_dest: fdoc_puerto_dest,
-    doc_entrega: fdoc_entrega,
-    doc_producto: fdoc_producto,
-    doc_bultos: fdoc_bultos,
-    doc_medidas: fdoc_medidas,
-    doc_peso: fdoc_peso,
-    doc_volumen: fdoc_volumen,
-    doc_pago: fdoc_pago,
-    doc_moneda: fdoc_moneda,
-    doc_validez: fdoc_validez,
-    doc_cotizacion_notas: fdoc_cotizacion_notas,
-    est_id: fest_id,
-    age_id: 1,
-    shipp_id: 2,
-    esr_id: 1,
-    doc_routing_id: null,
-    doc_total_venta: null,
-    doc_total_costo: null
-
-  }
-  console.log(data)
-
-  //detalle_servicio
+ //detalle_servicio
   // fdoc_dsFlete
   // fdoc_dsGasExt
   // fdoc_dsBLAWB
@@ -154,6 +117,61 @@ agregarDocumentoButton.addEventListener('click', () => {
   const fdoc_dsAlmacen = document.getElementById('fdoc_dsAlmacen').value;
   const fdoc_dsTransInt = document.getElementById('fdoc_dsTransInt').value;
   const fdoc_dsOtros = document.getElementById('fdoc_dsOtros').value;
+  var sumaServicios=0
+  function serviciosSuma(){
+    sumaServicios=parseInt(fdoc_dsFlete)+
+    parseInt(fdoc_dsGasExt)+
+    parseInt(fdoc_dsBLAWB)+
+    parseInt(fdoc_dsHandling)+
+    parseInt(fdoc_dsSeguro)+
+    parseInt(fdoc_dsAgAduanas)+
+    parseInt(fdoc_dsGasOpe)+
+    parseInt(fdoc_dsVistoBueno)+
+    parseInt(fdoc_dsGateIn)+
+    parseInt(fdoc_dsDescon)+
+    parseInt(fdoc_dsAlmacen)+
+    parseInt(fdoc_dsTransInt)+
+    parseInt(fdoc_dsOtros)    
+    return sumaServicios
+  }
+  
+  //data para documento
+  const data = {
+    doc_fecha: year + "-" + mes + "-" + dia,
+    usu_dir: fcliente_id,
+    vendedor_id_dir: userInfo.id,
+    top_id: ftop_id,
+    mtx_id: fmtx_id,
+    doc_incoterm: fdoc_incoterm,
+    doc_tcarga: fdoc_tcarga,
+    pais_origen_id: fpais_origen_id,
+    doc_puerto_ori: fdoc_puerto_ori,
+    doc_recojo: fdoc_recojo,
+    pais_destino_id: fpais_destino_id,
+    doc_puerto_dest: fdoc_puerto_dest,
+    doc_entrega: fdoc_entrega,
+    doc_producto: fdoc_producto,
+    doc_bultos: fdoc_bultos,
+    doc_medidas: fdoc_medidas,
+    doc_peso: fdoc_peso,
+    doc_volumen: fdoc_volumen,
+    doc_pago: fdoc_pago,
+    doc_moneda: fdoc_moneda,
+    doc_validez: fdoc_validez,
+    doc_cotizacion_notas: fdoc_cotizacion_notas,
+    est_id: fest_id,
+    age_id: 1,
+    shipp_id: 2,
+    esr_id: 1,
+    doc_routing_id: null,
+    doc_total_venta:serviciosSuma() ,
+    doc_total_costo: null
+    //sumar los servicios total venta
+
+  }
+  console.log(data)
+
+ 
 
 
   //para el derecho aduanas
