@@ -25,6 +25,11 @@ agregarButton.addEventListener('click', () => {
   }
 
   conexApi.post(`items/empresa`, data).then((res) => {
+
+    const id3 =res.data.data
+     document.getElementById('fidEmpresa').value =id3.emp_id
+     const vari =document.getElementById('fidEmpresa').value;
+     console.log(vari)
     Swal.fire({
       icon: "success",
       title: "Empresa creada correctamente",

@@ -291,6 +291,45 @@
   <!-- AdminLTE for demo purposes -->
 
   <!-- Page specific script -->
+
+  <script>
+    $(document).ready(function () {
+      function validarEmail() {
+        var email = $("#fage_correo").val();
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+        if (!emailRegex.test(email)) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor, ingrese una dirección de correo electrónico válida.'
+          });
+          // Limpiar el campo si no cumple con las condiciones
+          $("#fage_correo").val("");
+        }
+      }
+  
+      function validarTelefono() {
+        var telefono = $("#fage_telefono").val().replace(/[^\d+\-]/g, ''); // Permite solo números, '+' o '-'
+        
+        // Asegurar que solo haya números y limitar la longitud
+        $("#fage_telefono").val(telefono);
+      }
+  
+      function validarIdFiscal() {
+        var idFiscal = $("#fage_id_fiscal").val().replace(/[^a-zA-Z0-9]/g, ''); // Solo letras y números
+        
+        // Actualizar el campo con el valor limpio
+        $("#fage_id_fiscal").val(idFiscal);
+      }
+  
+      $("#fage_correo").on("blur", validarEmail);
+      $("#fage_telefono").on("input", validarTelefono);
+      $("#fage_id_fiscal").on("input", validarIdFiscal);
+    });
+  </script>
+
+
   <script>
     $(function () {
       //Initialize Select2 Elements
