@@ -48,8 +48,16 @@ if (!sessionStorage.getItem('userInfo')) {
       || currentPage.includes("operaciones.html")
 
     ) {
-      alert("Acceso no permitido para un Contador!");
-      window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
+      // alert("Acceso no permitido para un Contador!");
+      // window.location = 'index.html'; 
+      // // Puedes redirigir a otra página si lo deseas.
+
+      Swal.fire({
+        icon: "error",
+        title: "Acceso no permitido para un Contador!",
+      })
+    window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
+
     }
     //Restricciones Cliente
   }else if(userInfo?.role?.name === "Cliente"){
@@ -74,8 +82,9 @@ if (!sessionStorage.getItem('userInfo')) {
     Swal.fire({
       icon: "error",
       title: "Acceso no permitido para un cliente!",
-    });
+    }) 
     window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
+    
   }
   }
   //Restricciones Operativo
@@ -96,7 +105,7 @@ if (!sessionStorage.getItem('userInfo')) {
     Swal.fire({
       icon: "error",
       title: "Acceso no permitido para un operativo!",
-    });
+    }) 
     window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
   }
   }//Restricciones Vendedor
@@ -113,8 +122,13 @@ if (!sessionStorage.getItem('userInfo')) {
     || currentPage.includes("editar_agente.html")
     || currentPage.includes("editar_shipper.html")
   ){
-    alert("Acceso no permitido para un vendedor!")
-    window.location = 'index.html';
+    // alert("Acceso no permitido para un vendedor!")
+    // window.location = 'index.html';
+    Swal.fire({
+      icon: "error",
+      title: "Acceso no permitido para un vendedor!",
+    }) 
+    window.location = 'index.html'; // Puedes redirigir a otra página si lo deseas.
   }
   }
   else {

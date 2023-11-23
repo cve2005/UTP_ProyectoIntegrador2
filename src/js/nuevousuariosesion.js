@@ -99,7 +99,6 @@ agregarUsuarioSButton.addEventListener('click', () => {
             // Redirige después de mostrar el alert
             window.location.href = "listarusuariosadm.html";
         });
-          LimpiarFormUsuario();
         })
           .catch((error) => {
             Swal.fire({
