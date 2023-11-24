@@ -411,7 +411,7 @@
                     </div>
                     <!-- Cuerpo -->
 
-                    <button class="btn btn-primary" onclick="stepper.next()">Siguiente</button>
+                    <button class="btn btn-primary" id="next" onclick="stepper.next()">Siguiente</button>
                   </div>
                   <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
                     <!-- Cuerpo -->
@@ -597,6 +597,10 @@
 
   <script>
     $(document).ready(function () {
+
+      $('.content').find("input, select").not('#fusu_dni').prop("disabled", true);
+      $('#next').hide();
+
       function validarDNI() {
         var dni = $("#fusu_dni").val().replace(/\D/g, ''); // Elimina no números
   
