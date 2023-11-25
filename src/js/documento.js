@@ -29,7 +29,7 @@ buscarClienteButton.addEventListener('click', () => {
     document.getElementById('fruc').value = cliente.emp_id.emp_ruc
     // const idEmpresa = cliente.emp_id;
     // buscarEmpresaId(idEmpresa)
-    $('.content').find("input, select").not('#fdoc_daIPM,#fdoc_daIGV').prop("disabled", false);
+    $('.content').find("input, select").not('#fdoc_daIPM,#fdoc_daIGV,#fdoc_daValorCIF').prop("disabled", false);
     $('#next').show();
     const fusu_nombre_apellido = document.getElementById('fusu_nombre_apellido')
     // const fusu_dni = document.getElementById('fusu_dni')

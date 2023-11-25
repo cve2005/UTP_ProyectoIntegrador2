@@ -67,6 +67,11 @@ async function cargarEditarLiquidacion() {
     console.log(doc)
     document.getElementById('fvendedor').value = doc.usu_dir.emp_id.emp_razon_social
     document.getElementById('fporcentaje').value = doc.vendedor_id_dir.comision
+    document.getElementById('ftotalIngresos').value = doc.doc_total_venta
+    document.getElementById('ftotalGastos').value = doc.doc_total_costo
+    document.getElementById('futilidad').value =  document.getElementById('ftotalIngresos').value-    document.getElementById('ftotalGastos').value 
+    document.getElementById('fcomision').value = document.getElementById('futilidad').value*document.getElementById('fporcentaje').value
+    
   })
     .catch((error) => {
       console.error('Hubo un error:', error);

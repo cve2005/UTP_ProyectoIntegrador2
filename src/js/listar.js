@@ -15,7 +15,15 @@ const conexApi = axios.create({
     baseURL: 'https://cna-cms.onrender.com/',
 });
 
+//capturar fecha de hoy
+var fec = new Date(),
+    mes = fec.getMonth() + 1,
+    dia = fec.getDay(),
+    year = fec.getFullYear();
 
+var dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+
+var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -292,14 +300,7 @@ $(document).ready(function () {
         // Agregar lógica para el botón PDF independientemente del rol
         $('#tableCotizaciones tbody').on('click', '.pdf-btn', function () {
             var data = table.row($(this).parents('tr')).data();
-            // Lógica para generar el PDF, si es necesario
-            // const consulta =
-            // filtro === 'cliente'
-            //     ? `items/documento?filter[usu_dir]=${id}&fields=*.*.*`
-            //     : filtro === 'vendedor'
-            //         ? `items/documento?filter[vendedor_id_dir]=${id}&fields=*.*.*`
-            //         : 'items/documento?fields=*.*.*';
-            // 'items/documento?fields=*.*.*'
+
             conexApi.get(`items/documento?filter[doc_id]=${data[0]}&fields=*.*.*`).then((res) => {
                 const datas = res.data.data[0];
                 console.log(datas)
@@ -308,271 +309,262 @@ $(document).ready(function () {
                 //var pdf = new jsPDF();
 
                 // Datos de ejemplo
-                var data = {
-                    business: {
-                        name: 'Hola',
-                        address: "Dirección de la empresa",
-                        // ...otros detalles de la empresa
-                    },
-                    logo: {
-                        src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
-                        type: 'PNG', //optional, when src= data:uri (nodejs case)
-                        width: 53.33, //aspect ratio = width/height
-                        height: 26.66,
-                        margin: {
-                            top: 0, //negative or positive num, from the current position
-                            left: 0 //negative or positive num, from the current position
-                        }
-                    },
-                    stamp: {
-                        inAllPages: true, //by default = false, just in the last page
-                        src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
-                        type: 'JPG', //optional, when src= data:uri (nodejs case)
-                        width: 20, //aspect ratio = width/height
-                        height: 20,
-                        margin: {
-                            top: 0, //negative or positive num, from the current position
-                            left: 0 //negative or positive num, from the current position
-                        }
-                    },
-                    business: {
-                        name: "Hola"+datas.doc_id,
-                        address: "Albania, Tirane ish-Dogana, Durres 2001",
-                        phone: "(+355) 069 11 11 111",
-                        email: "email@example.com",
-                        email_1: "info@example.al",
-                        website: `${datas.doc_id}`,
-                    },
-                    contact: {
-                        label: "Invoice issued for:",
-                        name: "Client Name",
-                        address: "Albania, Tirane, Astir",
-                        phone: "(+355) 069 22 22 222",
-                        email: "client@website.al",
-                        otherInfo: "www.website.al",
-                    },
-                    invoice: {
-                                label: "Invoice #: ",
-                                num: 19,
-                                invDate: "Payment Date: 01/01/2021 18:12",
-                                invGenDate: "Invoice Date: 02/02/2021 10:17",
+                conexApi.get(`items/detalle_servicio?filter[doc_id]=${data[0]}`).then((resp) => {
+                    const servicios = resp.data.data
+                    console.log(servicios)
+
+                    conexApi.get(`items/derechos_aduanas?filter[doc_id]=${data[0]}`).then((res) => {
+                        const daduanas = res.data.data
+                        console.log(daduanas)
+                  
+                        var data = {
+                            logo: {
+                                //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
+                                src: "../extra/img/AdminLTELogo.png",
+                                type: 'PNG', //optional, when src= data:uri (nodejs case)
+                                width: 53.33, //aspect ratio = width/height
+                                height: 26.66,
+                                margin: {
+                                    top: 0, //negative or positive num, from the current position
+                                    left: 0 //negative or positive num, from the current position
+                                }
+                            },
+                            stamp: {
+                                inAllPages: true, //by default = false, just in the last page
+                                src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+                                type: 'JPG', //optional, when src= data:uri (nodejs case)
+                                width: 20, //aspect ratio = width/height
+                                height: 20,
+                                margin: {
+                                    top: 0, //negative or positive num, from the current position
+                                    left: 0 //negative or positive num, from the current position
+                                }
+                            },
+                            business: {
+                                name: "CNA International Logistics S.A.C.",
+                                address: "Av. Elmer Faucett 2823, Oficina 501. Lima Cargo City",
+                                phone: "(+51) 919 297 992",
+                                email: "info@cna-int.com.pe",
+                                website: 'https://cna-int.com.pe/',
+                            },
+                            contact:
+                            {
+                                label: "Cotización para:",
+                                name: `Cliente : ${datas.usu_dir.first_name} ${datas.usu_dir.last_name}`,
+                                email: `Email : ${datas.usu_dir.email}`,
+                                phone: `Teléfono : ${datas.usu_dir.tel_usu_dir}`,
+                                address: `Dirección : ${datas.usu_dir.location}`,
+                            },
+                            // {
+                            //     label: "Cotizada por:",
+                            //     name: `Vendedor : ${datas.vendedor_id_dir.first_name}`,
+                            //     email: `Email : ${datas.vendedor_id_dir.email}`,
+                            // }
+    
+                            invoice: {
+                                label: "Cotización #: ",
+                                num: `${datas.doc_id}`,
+                                invDate: `Fecha de cotización: Lima, ${dias[dia]} ${dia} de ${meses[mes]} del ${year}`,
+                                // invGenDate: "Invoice Date: 02/02/2021 10:17",
+    
+                                invGenDate: `Vendedor : ${datas.vendedor_id_dir.first_name} ${datas.vendedor_id_dir.last_name} | Email : ${datas.vendedor_id_dir.email}`,
                                 headerBorder: false,
                                 tableBodyBorder: false,
                                 header: [
                                     {
                                         title: "#",
                                         style: {
-                                            width: 10
+                                            width: 15
                                         }
                                     },
                                     {
-                                        title: "Title",
+                                        title: "Servicio",
                                         style: {
-                                            width: 30
+                                            width: 50
                                         }
                                     },
                                     {
-                                        title: "Description",
+                                        title: "Precio",
                                         style: {
-                                            width: 80
+                                            width: 50
                                         }
                                     },
-                                    { title: "Price" },
-                                    { title: "Quantity" },
-                                    { title: "Unit" },
-                                    { title: "Total" }
+                                    {
+                                        title: "#",
+                                        style: {
+                                            width: 15
+                                        }
+                                    },
+                                    {
+                                        title: "Derecho Aduana",
+                                        style: {
+                                            width: 50
+                                        }
+                                    },
+                                    {
+                                        title: "Precio",
+                                        style: {
+                                            width: 50
+                                        }
+                                    },
+                                    // { title: "Price" },
+                                    // { title: "Quantity" },
+                                    // { title: "Unit" },
+                                    // { title: "Total" }
                                 ],
-                                table: Array.from(Array(10), (item, index) => ([
+    
+                                // table: Array.from(Array(12), (item, index) => ([
+                                //     index + 1,
+                                //     `${servicios[index].dse_nombre}`,
+                                //     `${servicios[index].dse_precio}`,
+                                //     index + 1,
+                                //     //no se puede porque no tienen los mismos valores
+                                //  `${daduanas[index].dad_nombre}`, 
+                                //    `${daduanas[index].dad_precio}`
+                                // // 'hola',
+                                // // 'hola'
+                                // ])),
+    
+                                table: servicios.map((servicio, index) => ([
                                     index + 1,
-                                    "There are many variations ",
-                                    "Lorem Ipsum is simply dummy text dummy text ",
-                                    200.5,
-                                    4.5,
-                                    "m2",
-                                    400.5
+                                    `${servicio.dse_nombre}`,
+                                    // "Lorem Ipsum is simply dummy text dummy text ", ESTE FUE LA DESCRIPCION
+                                    `${servicio.dse_precio}`,
+                                    // 1,
+                                    // "m2",
+                                    // `${servicio.dse_precio}`
+                                    index + 1,
+                                   `${ daduanas[index] ? daduanas[index].dad_nombre: ''}`, 
+                                    `${ daduanas[index] ? daduanas[index].dad_precio: ''}`
                                 ])),
-                                additionalRows: [{
-                                    col1: 'Total:',
-                                    col2: '145,250.50',
-                                    col3: 'ALL',
-                                    style: {
-                                        fontSize: 14 //optional, default 12
-                                    }
-                                },
-                                {
-                                    col1: 'VAT:',
-                                    col2: '20',
-                                    col3: '%',
-                                    style: {
-                                        fontSize: 10 //optional, default 12
-                                    }
-                                },
-                                {
-                                    col1: 'SubTotal:',
-                                    col2: '116,199.90',
-                                    col3: 'ALL',
-                                    style: {
-                                        fontSize: 10 //optional, default 12
-                                    }
-                                }],
-                                invDescLabel: "Invoice Note",
-                                invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
+                              
+                                additionalRows: [
+                                    {
+                                        col1: 'TOTAL SERVICIOS:',
+                                        // col2: '145,250.50',
+                                        col2: `${datas.doc_total_venta}`,
+                                        col3: `${datas.doc_moneda}`,
+                                        style: {
+                                            fontSize: 14 //optional, default 12
+                                        }
+                                    },
+                                    {
+                                        col1: '            ',
+                                        // col2: '145,250.50',
+                                        col2: '             ',
+                                        col3: '             ',
+    
+                                    },
+    
+                                    //Empieza aditional rows  
+                                    {
+    
+                                        col1: 'PAIS ORIGEN:',
+                                        // col2: '145,250.50',
+                                        col2: `${datas.pais_origen_id.pais_nombre}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    },
+                                    {
+    
+                                        col1: 'PUERTO ORIGEN:',
+                                        // col2: '145,250.50',
+                                        col2: `${datas.doc_puerto_ori}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    },
+                                    {
+    
+                                        col1: 'PAIS DESTINO:',
+                                        // col2: '145,250.50',
+                                        col2: `${datas.pais_destino_id.pais_nombre}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    },
+                                    {
+                                        col1: 'PUERTO DESTINO:',
+                                        col2: `${datas.doc_puerto_dest}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    },
+                                    {
+                                        col1: 'INCOTERMS:',
+                                        // col2: '116,199.90',
+                                        col2: `${datas.doc_incoterm}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    }, {
+                                        col1: 'MONEDA:',
+                                        // col2: '116,199.90',
+                                        col2: `${datas.doc_moneda}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    },
+    
+                                    //pruebaaaaaaaaaaaaaaaaaa
+    
+    
+                                ],
+                                invDescLabel: "NOTA:",
+                                invDesc: " EL MONTO CALCULADO DE LOS IMPUESTOS ES REFERENCIAL Y NO INCLUYEN IGV\n EN CASO DE AFORO (CANAL ROJO, SE CONSIDERARÁ UN COSTO ADICIONAL DE US$. 30.00 +IGV)",
                             },
                             footer: {
-                                text: "The invoice is created on a computer and is valid without the signature and stamp.",
+                                text: "La factura se crea en una computadora y es válida sin firma ni sello.",
                             },
                             pageEnable: true,
                             pageLabel: "Page ",
-                    // ...otros datos
-                };
-
-                // Crear el documento PDF
-                const pdf = new jsPDFInvoiceTemplate({
-                    outputType: "Save", // Cambiado de jsPDFInvoiceTemplate.OutputType.Save a "Save"
-                    returnJsPDFDocObject: true,
-                    fileName: "Prueba",
-                    orientationLandscape: false,
-                    compress: true,
-                });
-
-                // Agregar datos a la plantilla
-                jsPDFInvoiceTemplate({
-                    jsPDFDoc: pdf,
-                    ...data,
-                });
-
-                // Guardar o mostrar el PDF
-                //pdf.save();
-                // Guardar o mostrar el PDF
-                const pdfData = pdf.output(); // Obtener los datos del PDF
-
-                // Crear un Blob desde los datos del PDF
-                const blob = new Blob([pdfData], { type: 'application/pdf' });
-
-                // Crear una URL de objeto para el Blob
-                const blobUrl = URL.createObjectURL(blob);
-
-                // Abrir una nueva pestaña con el PDF
-                window.open(blobUrl);
-
+    
+    
+    
+                        };
+                        // Crear el documento PDF
+                        const pdf = new jsPDFInvoiceTemplate({
+                            outputType: "Save", // Cambiado de jsPDFInvoiceTemplate.OutputType.Save a "Save"
+                            returnJsPDFDocObject: true,
+                            fileName: "Prueba",
+                            orientationLandscape: false,
+                            compress: true,
+                        });
+                        // Agregar datos a la plantilla
+                        jsPDFInvoiceTemplate({
+                            jsPDFDoc: pdf,
+                            ...data,
+                        });
+                        console.log(data)
+    
+                        // Guardar o mostrar el PDF
+                        //pdf.save();
+                        // Guardar o mostrar el PDF
+                        const pdfData = pdf.output(); // Obtener los datos del PDF
+    
+                        // Crear un Blob desde los datos del PDF
+                        const blob = new Blob([pdfData], { type: 'application/pdf' });
+    
+                        // Crear una URL de objeto para el Blob
+                        const blobUrl = URL.createObjectURL(blob);
+    
+                        // Abrir una nueva pestaña con el PDF
+                        window.open(blobUrl);
+                    
+                    
+                      })
+                  
+ //termina get servicios
+                })
             });
-            // var props = {
-            //     outputType: OutputType.Save,
-            //     returnJsPDFDocObject: true,
-            //     fileName: "Invoice 2021",
-            //     orientationLandscape: false,
-            //     compress: true,
-            //     logo: {
-            //         src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
-            //         type: 'PNG', //optional, when src= data:uri (nodejs case)
-            //         width: 53.33, //aspect ratio = width/height
-            //         height: 26.66,
-            //         margin: {
-            //             top: 0, //negative or positive num, from the current position
-            //             left: 0 //negative or positive num, from the current position
-            //         }
-            //     },
-            //     stamp: {
-            //         inAllPages: true, //by default = false, just in the last page
-            //         src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
-            //         type: 'JPG', //optional, when src= data:uri (nodejs case)
-            //         width: 20, //aspect ratio = width/height
-            //         height: 20,
-            //         margin: {
-            //             top: 0, //negative or positive num, from the current position
-            //             left: 0 //negative or positive num, from the current position
-            //         }
-            //     },
-            //     business: {
-            //         name: "Business Name",
-            //         address: "Albania, Tirane ish-Dogana, Durres 2001",
-            //         phone: "(+355) 069 11 11 111",
-            //         email: "email@example.com",
-            //         email_1: "info@example.al",
-            //         website: "www.example.al",
-            //     },
-            //     contact: {
-            //         label: "Invoice issued for:",
-            //         name: "Client Name",
-            //         address: "Albania, Tirane, Astir",
-            //         phone: "(+355) 069 22 22 222",
-            //         email: "client@website.al",
-            //         otherInfo: "www.website.al",
-            //     },
-            //     invoice: {
-            //         label: "Invoice #: ",
-            //         num: 19,
-            //         invDate: "Payment Date: 01/01/2021 18:12",
-            //         invGenDate: "Invoice Date: 02/02/2021 10:17",
-            //         headerBorder: false,
-            //         tableBodyBorder: false,
-            //         header: [
-            //             {
-            //                 title: "#",
-            //                 style: {
-            //                     width: 10
-            //                 }
-            //             },
-            //             {
-            //                 title: "Title",
-            //                 style: {
-            //                     width: 30
-            //                 }
-            //             },
-            //             {
-            //                 title: "Description",
-            //                 style: {
-            //                     width: 80
-            //                 }
-            //             },
-            //             { title: "Price" },
-            //             { title: "Quantity" },
-            //             { title: "Unit" },
-            //             { title: "Total" }
-            //         ],
-            //         table: Array.from(Array(10), (item, index) => ([
-            //             index + 1,
-            //             "There are many variations ",
-            //             "Lorem Ipsum is simply dummy text dummy text ",
-            //             200.5,
-            //             4.5,
-            //             "m2",
-            //             400.5
-            //         ])),
-            //         additionalRows: [{
-            //             col1: 'Total:',
-            //             col2: '145,250.50',
-            //             col3: 'ALL',
-            //             style: {
-            //                 fontSize: 14 //optional, default 12
-            //             }
-            //         },
-            //         {
-            //             col1: 'VAT:',
-            //             col2: '20',
-            //             col3: '%',
-            //             style: {
-            //                 fontSize: 10 //optional, default 12
-            //             }
-            //         },
-            //         {
-            //             col1: 'SubTotal:',
-            //             col2: '116,199.90',
-            //             col3: 'ALL',
-            //             style: {
-            //                 fontSize: 10 //optional, default 12
-            //             }
-            //         }],
-            //         invDescLabel: "Invoice Note",
-            //         invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
-            //     },
-            //     footer: {
-            //         text: "The invoice is created on a computer and is valid without the signature and stamp.",
-            //     },
-            //     pageEnable: true,
-            //     pageLabel: "Page ",
-            // };
-
+            //termina get documento
         });
 
         if (rolSesion === 'Administrator') {

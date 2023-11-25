@@ -6,7 +6,8 @@ export default {
       viteStaticCopy({
         targets: [
           { src: '*.html', dest: '../dist' },
-          { src: 'img/*', dest: '../dist/img' }
+          { src: 'img/*', dest: '../dist/img' },
+         // { src: 'img/*', dest: '../extra/img' }
         ]
       })
     ],
