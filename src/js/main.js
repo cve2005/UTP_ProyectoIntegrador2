@@ -132,7 +132,6 @@ if (!sessionStorage.getItem('userInfo')) {
   }
   }
   else {
-
     // Usuario sin el rol "Contador"
     // Puedes manejar este caso según tus necesidades.
   }

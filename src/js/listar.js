@@ -1,4 +1,11 @@
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import 'jspdf-invoice-template';
+import 'jspdf-autotable';
+import jsPDFInvoiceTemplate from "jspdf-invoice-template";
+//import jsPDF from "jspdf"
+
+
 //ultima version 2345 21112023
 const EDITAR = 'editar';
 const VER = 'ver';
@@ -7,6 +14,18 @@ const DESCARGAR = 'descargar';
 const conexApi = axios.create({
     baseURL: 'https://cna-cms.onrender.com/',
 });
+
+//capturar fecha de hoy
+var fec = new Date(),
+    mes = fec.getMonth() + 1,
+    dia = fec.getDay(),
+    diaN=fec.getDate(),
+    year = fec.getFullYear();
+
+var dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+
+var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
 
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
@@ -88,7 +107,7 @@ async function cargarOperacionesVendedor(id, filtro, table) {
 //listar agentes tag_id=1
 async function cargarAgentes(table) {
     conexApi.get(`items/agente?filter[tag_id]=1&fields=*.*`).then((res) => {
-    
+
         const data = res.data.data;
         const dataTable = [];
         console.log(data);
@@ -226,7 +245,7 @@ async function cargarLiquidaciones(id, table) {
 //total cotizado=suma de los servicios
 $(document).ready(function () {
     if (window.location.href.includes('cotizaciones-ven.html')) {
-   
+
         var table = $("#tableCotizaciones").DataTable({
             "data": [],
             "columns": [
@@ -244,11 +263,18 @@ $(document).ready(function () {
                     "data": null,
                     "render": function (data, type, row, meta) {
                         // Verificar el rol y mostrar el botón correspondiente
+                        var buttonsHtml = '';
+
                         if (rolSesion === 'Cliente') {
-                            return "<button class='ver-btn'><i class='nav-icon fas fa-eye'/></button>";
+                            buttonsHtml += "<button class='ver-btn'><i class='nav-icon fas fa-eye'></i></button>";
                         } else {
-                            return "<button class='edit-btn'><i class='nav-icon fas fa-solid fa-pen'/></button>";
+                            buttonsHtml += "<button class='edit-btn'><i class='nav-icon fas fa-solid fa-pen'></i></button>";
                         }
+
+                        // Agregar botón de PDF para ambos roles
+                        buttonsHtml += "<button class='pdf-btn'><i class='nav-icon fas fa-file-pdf'></i></button>";
+
+                        return buttonsHtml;
                     }
                 }
             ],
@@ -265,12 +291,281 @@ $(document).ready(function () {
             window.location.href = 'editar_cot' + `.html?id=${data[0]}`;
             console.log(data);
         });
-    
+
         $('#tableCotizaciones tbody').on('click', '.ver-btn', function () {
             var data = table.row($(this).parents('tr')).data();
             window.location.href = 'editar_cot' + `.html?id=${data[0]}`;
             // $('.content').find("input, select").prop("disabled", true);
             console.log(data);
+        });
+        // Agregar lógica para el botón PDF independientemente del rol
+        $('#tableCotizaciones tbody').on('click', '.pdf-btn', function () {
+            var data = table.row($(this).parents('tr')).data();
+
+            conexApi.get(`items/documento?filter[doc_id]=${data[0]}&fields=*.*.*`).then((res) => {
+                const datas = res.data.data[0];
+                console.log(datas)
+                console.log(datas.doc_id)
+
+                //var pdf = new jsPDF();
+
+                // Datos de ejemplo
+                conexApi.get(`items/detalle_servicio?filter[doc_id]=${data[0]}`).then((resp) => {
+                    const servicios = resp.data.data
+                    console.log(servicios)
+
+                    conexApi.get(`items/derechos_aduanas?filter[doc_id]=${data[0]}`).then((res) => {
+                        const daduanas = res.data.data
+                        console.log(daduanas)
+                  
+                        var data = {
+                            logo: {
+                                //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
+                                src: "../extra/img/AdminLTELogo.png",
+                                type: 'PNG', //optional, when src= data:uri (nodejs case)
+                                width: 53.33, //aspect ratio = width/height
+                                height: 26.66,
+                                margin: {
+                                    top: 0, //negative or positive num, from the current position
+                                    left: 0 //negative or positive num, from the current position
+                                }
+                            },
+                            stamp: {
+                                inAllPages: true, //by default = false, just in the last page
+                                src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+                                type: 'JPG', //optional, when src= data:uri (nodejs case)
+                                width: 20, //aspect ratio = width/height
+                                height: 20,
+                                margin: {
+                                    top: 0, //negative or positive num, from the current position
+                                    left: 0 //negative or positive num, from the current position
+                                }
+                            },
+                            business: {
+                                name: "CNA International Logistics S.A.C.",
+                                address: "Av. Elmer Faucett 2823, Oficina 501. Lima Cargo City",
+                                phone: "(+51) 919 297 992",
+                                email: "info@cna-int.com.pe",
+                                website: 'https://cna-int.com.pe/',
+                            },
+                            contact:
+                            {
+                                label: "Cotización para:",
+                                name: `Cliente : ${datas.usu_dir.first_name} ${datas.usu_dir.last_name}`,
+                                email: `Email : ${datas.usu_dir.email}`,
+                                phone: `Teléfono : ${datas.usu_dir.tel_usu_dir}`,
+                                address: `Dirección : ${datas.usu_dir.location}`,
+                            },
+                            // {
+                            //     label: "Cotizada por:",
+                            //     name: `Vendedor : ${datas.vendedor_id_dir.first_name}`,
+                            //     email: `Email : ${datas.vendedor_id_dir.email}`,
+                            // }
+    
+                            invoice: {
+                                label: "Cotización #: ",
+                                num: `${datas.doc_id}`,
+                                invDate: `Fecha de cotización: Lima, ${dias[dia]} ${diaN} de ${meses[mes]} del ${year}`,
+                                // invGenDate: "Invoice Date: 02/02/2021 10:17",
+    
+                                invGenDate: `Vendedor : ${datas.vendedor_id_dir.first_name} ${datas.vendedor_id_dir.last_name} | Email : ${datas.vendedor_id_dir.email}`,
+                                headerBorder: false,
+                                tableBodyBorder: false,
+                                header: [
+                                    {
+                                        title: "#",
+                                        style: {
+                                            width: 15
+                                        }
+                                    },
+                                    {
+                                        title: "Servicio",
+                                        style: {
+                                            width: 50
+                                        }
+                                    },
+                                    {
+                                        title: "Precio",
+                                        style: {
+                                            width: 50
+                                        }
+                                    },
+                                    {
+                                        title: "#",
+                                        style: {
+                                            width: 15
+                                        }
+                                    },
+                                    {
+                                        title: "Derecho Aduana",
+                                        style: {
+                                            width: 50
+                                        }
+                                    },
+                                    {
+                                        title: "Precio",
+                                        style: {
+                                            width: 50
+                                        }
+                                    },
+                                    // { title: "Price" },
+                                    // { title: "Quantity" },
+                                    // { title: "Unit" },
+                                    // { title: "Total" }
+                                ],
+    
+                                // table: Array.from(Array(12), (item, index) => ([
+                                //     index + 1,
+                                //     `${servicios[index].dse_nombre}`,
+                                //     `${servicios[index].dse_precio}`,
+                                //     index + 1,
+                                //     //no se puede porque no tienen los mismos valores
+                                //  `${daduanas[index].dad_nombre}`, 
+                                //    `${daduanas[index].dad_precio}`
+                                // // 'hola',
+                                // // 'hola'
+                                // ])),
+    
+                                table: servicios.map((servicio, index) => ([
+                                    index + 1,
+                                    `${servicio.dse_nombre}`,
+                                    // "Lorem Ipsum is simply dummy text dummy text ", ESTE FUE LA DESCRIPCION
+                                    `${servicio.dse_precio}`,
+                                    // 1,
+                                    // "m2",
+                                    // `${servicio.dse_precio}`
+                                    index + 1,
+                                   `${ daduanas[index] ? daduanas[index].dad_nombre: ''}`, 
+                                    `${ daduanas[index] ? daduanas[index].dad_precio: ''}`
+                                ])),
+                              
+                                additionalRows: [
+                                    {
+                                        col1: 'TOTAL SERVICIOS:',
+                                        // col2: '145,250.50',
+                                        col2: `${datas.doc_total_venta}`,
+                                        col3: `${datas.doc_moneda}`,
+                                        style: {
+                                            fontSize: 14 //optional, default 12
+                                        }
+                                    },
+                                    {
+                                        col1: '            ',
+                                        // col2: '145,250.50',
+                                        col2: '             ',
+                                        col3: '             ',
+    
+                                    },
+    
+                                    //Empieza aditional rows  
+                                    {
+    
+                                        col1: 'PAIS ORIGEN:',
+                                        // col2: '145,250.50',
+                                        col2: `${datas.pais_origen_id.pais_nombre}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    },
+                                    {
+    
+                                        col1: 'PUERTO ORIGEN:',
+                                        // col2: '145,250.50',
+                                        col2: `${datas.doc_puerto_ori}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    },
+                                    {
+    
+                                        col1: 'PAIS DESTINO:',
+                                        // col2: '145,250.50',
+                                        col2: `${datas.pais_destino_id.pais_nombre}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    },
+                                    {
+                                        col1: 'PUERTO DESTINO:',
+                                        col2: `${datas.doc_puerto_dest}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    },
+                                    {
+                                        col1: 'INCOTERMS:',
+                                        // col2: '116,199.90',
+                                        col2: `${datas.doc_incoterm}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    }, {
+                                        col1: 'MONEDA:',
+                                        // col2: '116,199.90',
+                                        col2: `${datas.doc_moneda}`,
+                                        style: {
+                                            fontSize: 8 //optional, default 12
+                                        }
+    
+                                    },
+    
+                                    //pruebaaaaaaaaaaaaaaaaaa
+    
+    
+                                ],
+                                invDescLabel: "NOTA:",
+                                invDesc: " EL MONTO CALCULADO DE LOS IMPUESTOS ES REFERENCIAL Y NO INCLUYEN IGV\n EN CASO DE AFORO (CANAL ROJO, SE CONSIDERARÁ UN COSTO ADICIONAL DE US$. 30.00 +IGV)",
+                            },
+                            footer: {
+                                text: "La factura se crea en una computadora y es válida sin firma ni sello.",
+                            },
+                            pageEnable: true,
+                            pageLabel: "Page ",
+    
+    
+    
+                        };
+                        // Crear el documento PDF
+                        const pdf = new jsPDFInvoiceTemplate({
+                            outputType: "Save", // Cambiado de jsPDFInvoiceTemplate.OutputType.Save a "Save"
+                            returnJsPDFDocObject: true,
+                            fileName: "Prueba",
+                            orientationLandscape: false,
+                            compress: true,
+                        });
+                        // Agregar datos a la plantilla
+                        jsPDFInvoiceTemplate({
+                            jsPDFDoc: pdf,
+                            ...data,
+                        });
+                        console.log(data)
+    
+                        // Guardar o mostrar el PDF
+                        //pdf.save();
+                        // Guardar o mostrar el PDF
+                        const pdfData = pdf.output(); // Obtener los datos del PDF
+    
+                        // Crear un Blob desde los datos del PDF
+                        const blob = new Blob([pdfData], { type: 'application/pdf' });
+    
+                        // Crear una URL de objeto para el Blob
+                        const blobUrl = URL.createObjectURL(blob);
+    
+                        // Abrir una nueva pestaña con el PDF
+                        window.open(blobUrl);
+                    
+                    
+                      })
+                  
+ //termina get servicios
+                })
+            });
+            //termina get documento
         });
 
         if (rolSesion === 'Administrator') {
@@ -321,7 +616,7 @@ $(document).ready(function () {
             window.location.href = 'routing' + `.html?id=${data[0]}`;
             console.log(data);
         });
-    
+
         $('#tblOperaciones tbody').on('click', '.ver-btn', function () {
             var data = table.row($(this).parents('tr')).data();
             window.location.href = 'routing' + `.html?id=${data[0]}`;
@@ -407,37 +702,37 @@ $(document).ready(function () {
 
         cargarUsuarios(table);
     }
-    if (window.location.href.includes("listaragentes.html")) {  
+    if (window.location.href.includes("listaragentes.html")) {
         var table = $("#tblAgentes").DataTable({
-        "data": [],
-        "columns": [
-            { "title": "Cod Agente" },
-            { "title": "Agente" },
-            { "title": "Teléfono" },
-            { "title": "Correo" },
-            { "title": "Contacto" },
-            { "title": "Tipo" },
-            { "title": "Acciones" }
-        ],
-        "columnDefs": [
-            {
-                "targets": -1, // Esto significa la última columna de la tabla
-                "data": null,
-                "defaultContent": "<button class='edit-btn'><i class='nav-icon fas fa-solid fa-pen'/></button>"
-            }
-        ],
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "dom": 'Bfrtip',
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    });
+            "data": [],
+            "columns": [
+                { "title": "Cod Agente" },
+                { "title": "Agente" },
+                { "title": "Teléfono" },
+                { "title": "Correo" },
+                { "title": "Contacto" },
+                { "title": "Tipo" },
+                { "title": "Acciones" }
+            ],
+            "columnDefs": [
+                {
+                    "targets": -1, // Esto significa la última columna de la tabla
+                    "data": null,
+                    "defaultContent": "<button class='edit-btn'><i class='nav-icon fas fa-solid fa-pen'/></button>"
+                }
+            ],
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "dom": 'Bfrtip',
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        });
 
-    $('#tblAgentes tbody').on('click', '.edit-btn', function () {
-        var data = table.row($(this).parents('tr')).data();
-        window.location.href = 'editar-agente' + `.html?id=${data[0]}`;
-        console.log(data);
-    });
+        $('#tblAgentes tbody').on('click', '.edit-btn', function () {
+            var data = table.row($(this).parents('tr')).data();
+            window.location.href = 'editar-agente' + `.html?id=${data[0]}`;
+            console.log(data);
+        });
 
         cargarAgentes(table);
     }
@@ -511,13 +806,13 @@ $(document).ready(function () {
         });
 
 
-        
+
         $('#tblLiquidaciones tbody').on('click', '.edit-btn', function () {
             var data = table.row($(this).parents('tr')).data();
             window.location.href = 'liq-routing' + `.html?id=${data[0]}`;
             console.log(data);
         });
-    
+
         $('#tblLiquidaciones tbody').on('click', '.ver-btn', function () {
             var data = table.row($(this).parents('tr')).data();
             window.location.href = 'liq-routing' + `.html?id=${data[0]}`;

@@ -17,6 +17,7 @@ const buscarClienteButton = document.getElementById('btnBuscarCliente')
 buscarClienteButton.addEventListener('click', () => {
   const dni = document.getElementById('fusu_dni').value;
   conexApi.get(`users?filter[dni]=${dni}&fields=*.*.*`).then((res) => {
+    
     const cliente = res.data.data[0]
     document.getElementById('fcliente_id').value = cliente.id;
     document.getElementById('fusu_nombre_apellido').value = cliente.first_name + " " + cliente.last_name;
@@ -28,10 +29,28 @@ buscarClienteButton.addEventListener('click', () => {
     document.getElementById('fruc').value = cliente.emp_id.emp_ruc
     // const idEmpresa = cliente.emp_id;
     // buscarEmpresaId(idEmpresa)
+    $('.content').find("input, select").not('#fdoc_daIPM,#fdoc_daIGV,#fdoc_daValorCIF').prop("disabled", false);
+    $('#next').show();
+    const fusu_nombre_apellido = document.getElementById('fusu_nombre_apellido')
+    // const fusu_dni = document.getElementById('fusu_dni')
+    const fusu_email = document.getElementById('fusu_email')
+    const fusu_telefono = document.getElementById('fusu_telefono')
+    const frazonSocial = document.getElementById('frazonSocial')
+    const fruc = document.getElementById('fruc')
+    fusu_nombre_apellido.disabled = true
+    // fusu_dni.disabled = true
+    fusu_email.disabled = true
+    fusu_telefono.disabled = true
+    frazonSocial.disabled = true
+    fruc.disabled = true
 
   })
     .catch((error) => {
-      console.error('Hubo un error:', error);
+      Swal.fire({
+        icon: "error",
+        title: "No se econtró cliente con ese DNI!",
+
+      });
     });
 });
 
@@ -570,7 +589,7 @@ agregarDocumentoButton.addEventListener('click', () => {
         Swal.fire({
           icon: "error",
           title: "Hubo un error al crear la cotización!",
-          text: error,
+          text: "Datos incompletos",
         });
       console.error('Hubo un error:', error);
     });

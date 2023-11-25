@@ -317,8 +317,7 @@ $(document).ready(function () {
         cargarEditarOperacion();
         if(tipoRol=='Cliente' || tipoRol=='Vendedor' ){
             $('.content').find("input, select,textarea").prop("disabled", true);
-            $('#btnActualizarRouting, #btnGenerarLiquidacion').hide();
+            $('#btnActualizarRouting, #btnGenerarLiquidacion,#buscarAgente,#buscarAgente2').hide();
         }
-    
     }
   });
