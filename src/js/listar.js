@@ -19,6 +19,7 @@ const conexApi = axios.create({
 var fec = new Date(),
     mes = fec.getMonth() + 1,
     dia = fec.getDay(),
+    diaN=fec.getDate(),
     year = fec.getFullYear();
 
 var dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
@@ -364,7 +365,7 @@ $(document).ready(function () {
                             invoice: {
                                 label: "Cotización #: ",
                                 num: `${datas.doc_id}`,
-                                invDate: `Fecha de cotización: Lima, ${dias[dia]} ${dia} de ${meses[mes]} del ${year}`,
+                                invDate: `Fecha de cotización: Lima, ${dias[dia]} ${diaN} de ${meses[mes]} del ${year}`,
                                 // invGenDate: "Invoice Date: 02/02/2021 10:17",
     
                                 invGenDate: `Vendedor : ${datas.vendedor_id_dir.first_name} ${datas.vendedor_id_dir.last_name} | Email : ${datas.vendedor_id_dir.email}`,
